@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelSync.WinForms", "ModelSync.WinForms\ModelSync.WinForms.csproj", "{D88B6E1B-2241-444E-AEFE-36DDA4AE13F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelSync.App", "ModelSync.App\ModelSync.App.csproj", "{D88B6E1B-2241-444E-AEFE-36DDA4AE13F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
