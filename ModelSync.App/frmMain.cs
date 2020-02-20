@@ -3,6 +3,7 @@ using System;
 using System.Windows.Forms;
 using WinForms.Library.Models;
 using WinForms.Library;
+using ModelSync.App.Controls;
 
 namespace ModelSync.App
 {
@@ -45,8 +46,11 @@ namespace ModelSync.App
         {
             int lastIndex = tabMain.TabPages.Count - 1;
             if (tabMain.SelectedIndex == lastIndex)
-            {                
-                tabMain.TabPages.Insert(lastIndex, new TabPage($"profile {tabMain.TabPages.Count}"));
+            {
+                var tab = new TabPage($"profile {tabMain.TabPages.Count}");
+                var ui = new SyncUI() { Dock = DockStyle.Fill };
+                tab.Controls.Add(ui);
+                tabMain.TabPages.Insert(lastIndex, tab);
                 tabMain.SelectedIndex = lastIndex;
             }
         }
