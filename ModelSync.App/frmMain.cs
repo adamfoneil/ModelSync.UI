@@ -40,5 +40,15 @@ namespace ModelSync.App
                 MessageBox.Show(exc.Message);
             }
         }
+
+        private void tabMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int lastIndex = tabMain.TabPages.Count - 1;
+            if (tabMain.SelectedIndex == lastIndex)
+            {                
+                tabMain.TabPages.Insert(lastIndex, new TabPage($"profile {tabMain.TabPages.Count}"));
+                tabMain.SelectedIndex = lastIndex;
+            }
+        }
     }
 }
