@@ -15,6 +15,8 @@ namespace ModelSync.App.Models
     {
         public string Title { get; set; }
 
+        public SourceType SourceType { get; set; }
+
         [JsonProtect(DataProtectionScope.CurrentUser)]
         public string Source { get; set; }
 

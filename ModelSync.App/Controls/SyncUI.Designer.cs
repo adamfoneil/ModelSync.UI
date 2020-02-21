@@ -31,8 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SyncUI));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.builderTextBox2 = new WinForms.Library.Controls.BuilderTextBox();
-            this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
+            this.tbDest = new WinForms.Library.Controls.BuilderTextBox();
+            this.tbSource = new WinForms.Library.Controls.BuilderTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbSourceType = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -54,8 +54,8 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.builderTextBox2);
-            this.panel1.Controls.Add(this.builderTextBox1);
+            this.panel1.Controls.Add(this.tbDest);
+            this.panel1.Controls.Add(this.tbSource);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.cbSourceType);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -65,29 +65,29 @@
             this.panel1.Size = new System.Drawing.Size(682, 73);
             this.panel1.TabIndex = 0;
             // 
-            // builderTextBox2
+            // tbDest
             // 
-            this.builderTextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbDest.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.builderTextBox2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.builderTextBox2.Location = new System.Drawing.Point(164, 41);
-            this.builderTextBox2.Name = "builderTextBox2";
-            this.builderTextBox2.Size = new System.Drawing.Size(507, 26);
-            this.builderTextBox2.Suggestions = null;
-            this.builderTextBox2.TabIndex = 5;
-            this.builderTextBox2.Value = "";
+            this.tbDest.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDest.Location = new System.Drawing.Point(164, 41);
+            this.tbDest.Name = "tbDest";
+            this.tbDest.Size = new System.Drawing.Size(507, 26);
+            this.tbDest.Suggestions = null;
+            this.tbDest.TabIndex = 5;
+            this.tbDest.Value = "";
             // 
-            // builderTextBox1
+            // tbSource
             // 
-            this.builderTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.builderTextBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.builderTextBox1.Location = new System.Drawing.Point(164, 9);
-            this.builderTextBox1.Name = "builderTextBox1";
-            this.builderTextBox1.Size = new System.Drawing.Size(507, 26);
-            this.builderTextBox1.Suggestions = null;
-            this.builderTextBox1.TabIndex = 4;
-            this.builderTextBox1.Value = "";
+            this.tbSource.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbSource.Location = new System.Drawing.Point(164, 9);
+            this.tbSource.Name = "tbSource";
+            this.tbSource.Size = new System.Drawing.Size(507, 26);
+            this.tbSource.Suggestions = null;
+            this.tbSource.TabIndex = 4;
+            this.tbSource.Value = "";
             // 
             // label1
             // 
@@ -102,9 +102,6 @@
             // 
             this.cbSourceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSourceType.FormattingEnabled = true;
-            this.cbSourceType.Items.AddRange(new object[] {
-            "From Assembly",
-            "From Connection"});
             this.cbSourceType.Location = new System.Drawing.Point(17, 12);
             this.cbSourceType.Name = "cbSourceType";
             this.cbSourceType.Size = new System.Drawing.Size(141, 21);
@@ -254,8 +251,8 @@
         private System.Windows.Forms.ComboBox cbSourceType;
         private System.Windows.Forms.TreeView tvObjects;
         private FastColoredTextBoxNS.FastColoredTextBox fastColoredTextBox1;
-        private WinForms.Library.Controls.BuilderTextBox builderTextBox2;
-        private WinForms.Library.Controls.BuilderTextBox builderTextBox1;
+        private WinForms.Library.Controls.BuilderTextBox tbDest;
+        private WinForms.Library.Controls.BuilderTextBox tbSource;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnGenerateScript;

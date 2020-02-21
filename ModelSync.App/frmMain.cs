@@ -4,6 +4,7 @@ using ModelSync.App.Controls;
 using ModelSync.App.Models;
 using System;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using WinForms.Library.Models;
 
@@ -67,8 +68,18 @@ namespace ModelSync.App
             {
                 _solution = JsonFile.Load<Solution>(fileName);
                 SolutionFile = fileName;
-                tabMain.TabPages.Clear();
 
+                if (_solution.Merges.Any())
+                {
+                    tabMain.TabPages.Clear();
+                    foreach (var merge in _solution.Merges)
+                    {
+                        var tab = new TabPage(merge.Title);
+                        var ui = new SyncUI() { Dock = DockStyle.Fill, Document = merge };
+                        tab.Controls.Add(ui);
+                        tabMain.TabPages.Add(tab);
+                    }
+                }
             }
             finally
             {
