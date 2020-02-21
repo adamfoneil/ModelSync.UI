@@ -58,6 +58,7 @@
             this.tabMain.Size = new System.Drawing.Size(767, 397);
             this.tabMain.TabIndex = 0;
             this.tabMain.SelectedIndexChanged += new System.EventHandler(this.tabMain_SelectedIndexChanged);
+            this.tabMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabMain_MouseDown);
             // 
             // cmTabControls
             // 
@@ -67,7 +68,7 @@
             this.toolStripSeparator1,
             this.deleteToolStripMenuItem});
             this.cmTabControls.Name = "cmTabControls";
-            this.cmTabControls.Size = new System.Drawing.Size(181, 98);
+            this.cmTabControls.Size = new System.Drawing.Size(132, 76);
             // 
             // renameToolStripMenuItem
             // 

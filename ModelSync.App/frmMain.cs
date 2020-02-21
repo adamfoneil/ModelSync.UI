@@ -17,6 +17,7 @@ namespace ModelSync.App
         private Settings _settings;
         private Solution _solution;
         private string _solutionFile;
+        private MouseEventArgs _tabRightClick;
 
         public string[] StartupArgs { get; set; }       
 
@@ -159,21 +160,23 @@ namespace ModelSync.App
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var tab = GetSelectedTab(tabMain);
+
             var dlg = new frmRename()
             {
-                RenameText = tabMain.SelectedTab.Text
+                RenameText = tab.Text
             };
 
             if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                tabMain.SelectedTab.Text = dlg.RenameText;
-                (tabMain.SelectedTab.Controls[0] as SyncUI).Document.Title = dlg.RenameText;
+            {                
+                tab.Text = dlg.RenameText;
+                (tab.Controls[0] as SyncUI).Document.Title = dlg.RenameText;
             }
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var tab = tabMain.SelectedTab;
+            var tab = GetSelectedTab(tabMain);
             var merge = (tab.Controls[0] as SyncUI).Document;
             if (MessageBox.Show($"This will delete the merge '{merge.Title}'.", "Delete Merge", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
@@ -187,11 +190,39 @@ namespace ModelSync.App
             var dlg = new ColorDialog();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                var tab = tabMain.SelectedTab;
+                var tab = GetSelectedTab(tabMain);
                 var merge = (tab.Controls[0] as SyncUI).Document;
                 merge.BackgroundColor = dlg.Color;
                 tab.BackColor = dlg.Color;
             }
         }
+
+        private void tabMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right) _tabRightClick = e;
+        }
+
+        /// <summary>
+        /// thanks to https://social.msdn.microsoft.com/Forums/windows/en-US/e09d081d-a7f5-479d-bd29-44b6d163ebc8/tabcontrol-how-to-capture-mouse-rightclick-on-tab?forum=winforms
+        /// </summary>
+        private TabPage GetSelectedTab(TabControl tabControl)
+        {
+            if (_tabRightClick == null) return tabControl.SelectedTab;
+
+            TabPage result = null;
+            for (int i = 0; i < tabControl.TabPages.Count; i++)
+            {
+                var rect = tabControl.GetTabRect(i);
+                if (rect.Contains(_tabRightClick.Location))
+                {
+                    result = tabControl.TabPages[i];
+                    break;
+                }
+            }
+
+            _tabRightClick = null;
+            return result;
+        }
+
     }
 }
