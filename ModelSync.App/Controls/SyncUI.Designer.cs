@@ -31,15 +31,15 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SyncUI));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.builderTextBox2 = new WinForms.Library.Controls.BuilderTextBox();
+            this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbSourceType = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.tvObjects = new System.Windows.Forms.TreeView();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.fastColoredTextBox1 = new FastColoredTextBoxNS.FastColoredTextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
-            this.builderTextBox2 = new WinForms.Library.Controls.BuilderTextBox();
             this.btnGenerateScript = new System.Windows.Forms.ToolStripButton();
             this.btnExecute = new System.Windows.Forms.ToolStripButton();
             this.btnSaveAs = new System.Windows.Forms.ToolStripButton();
@@ -65,10 +65,34 @@
             this.panel1.Size = new System.Drawing.Size(682, 73);
             this.panel1.TabIndex = 0;
             // 
+            // builderTextBox2
+            // 
+            this.builderTextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.builderTextBox2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.builderTextBox2.Location = new System.Drawing.Point(164, 41);
+            this.builderTextBox2.Name = "builderTextBox2";
+            this.builderTextBox2.Size = new System.Drawing.Size(507, 26);
+            this.builderTextBox2.Suggestions = null;
+            this.builderTextBox2.TabIndex = 5;
+            this.builderTextBox2.Value = "";
+            // 
+            // builderTextBox1
+            // 
+            this.builderTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.builderTextBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.builderTextBox1.Location = new System.Drawing.Point(164, 9);
+            this.builderTextBox1.Name = "builderTextBox1";
+            this.builderTextBox1.Size = new System.Drawing.Size(507, 26);
+            this.builderTextBox1.Suggestions = null;
+            this.builderTextBox1.TabIndex = 4;
+            this.builderTextBox1.Value = "";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(108, 46);
+            this.label1.Location = new System.Drawing.Point(65, 48);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(93, 13);
             this.label1.TabIndex = 3;
@@ -78,9 +102,12 @@
             // 
             this.cbSourceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSourceType.FormattingEnabled = true;
+            this.cbSourceType.Items.AddRange(new object[] {
+            "From Assembly",
+            "From Connection"});
             this.cbSourceType.Location = new System.Drawing.Point(17, 12);
             this.cbSourceType.Name = "cbSourceType";
-            this.cbSourceType.Size = new System.Drawing.Size(184, 21);
+            this.cbSourceType.Size = new System.Drawing.Size(141, 21);
             this.cbSourceType.TabIndex = 0;
             // 
             // splitContainer1
@@ -92,7 +119,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
+            this.splitContainer1.Panel1.Controls.Add(this.tvObjects);
             this.splitContainer1.Panel1.Controls.Add(this.toolStrip2);
             // 
             // splitContainer1.Panel2
@@ -104,13 +131,22 @@
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 1;
             // 
-            // treeView1
+            // tvObjects
             // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(0, 25);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(227, 243);
-            this.treeView1.TabIndex = 0;
+            this.tvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvObjects.Location = new System.Drawing.Point(0, 25);
+            this.tvObjects.Name = "tvObjects";
+            this.tvObjects.Size = new System.Drawing.Size(227, 243);
+            this.tvObjects.TabIndex = 0;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(227, 25);
+            this.toolStrip2.TabIndex = 1;
+            this.toolStrip2.Text = "toolStrip2";
             // 
             // fastColoredTextBox1
             // 
@@ -134,6 +170,7 @@
             this.fastColoredTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fastColoredTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.fastColoredTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fastColoredTextBox1.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.fastColoredTextBox1.IsReplaceMode = false;
             this.fastColoredTextBox1.Language = FastColoredTextBoxNS.Language.SQL;
             this.fastColoredTextBox1.LeftBracket = '(';
@@ -160,39 +197,6 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStrip2
-            // 
-            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(227, 25);
-            this.toolStrip2.TabIndex = 1;
-            this.toolStrip2.Text = "toolStrip2";
-            // 
-            // builderTextBox1
-            // 
-            this.builderTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.builderTextBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.builderTextBox1.Location = new System.Drawing.Point(209, 9);
-            this.builderTextBox1.Name = "builderTextBox1";
-            this.builderTextBox1.Size = new System.Drawing.Size(462, 26);
-            this.builderTextBox1.Suggestions = null;
-            this.builderTextBox1.TabIndex = 4;
-            this.builderTextBox1.Value = "";
-            // 
-            // builderTextBox2
-            // 
-            this.builderTextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.builderTextBox2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.builderTextBox2.Location = new System.Drawing.Point(209, 41);
-            this.builderTextBox2.Name = "builderTextBox2";
-            this.builderTextBox2.Size = new System.Drawing.Size(462, 26);
-            this.builderTextBox2.Suggestions = null;
-            this.builderTextBox2.TabIndex = 5;
-            this.builderTextBox2.Value = "";
-            // 
             // btnGenerateScript
             // 
             this.btnGenerateScript.Image = ((System.Drawing.Image)(resources.GetObject("btnGenerateScript.Image")));
@@ -200,6 +204,7 @@
             this.btnGenerateScript.Name = "btnGenerateScript";
             this.btnGenerateScript.Size = new System.Drawing.Size(107, 22);
             this.btnGenerateScript.Text = "Generate Script";
+            this.btnGenerateScript.Click += new System.EventHandler(this.btnGenerateScript_Click);
             // 
             // btnExecute
             // 
@@ -247,7 +252,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbSourceType;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView tvObjects;
         private FastColoredTextBoxNS.FastColoredTextBox fastColoredTextBox1;
         private WinForms.Library.Controls.BuilderTextBox builderTextBox2;
         private WinForms.Library.Controls.BuilderTextBox builderTextBox1;
