@@ -13,7 +13,7 @@ namespace ModelSync.App.Models
 
     public class MergeDefinition
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = "merge";
 
         public SourceType SourceType { get; set; }
 

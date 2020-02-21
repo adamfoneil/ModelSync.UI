@@ -40,18 +40,13 @@ namespace ModelSync.App
                 _settings = SettingsBase.Load<Settings>();
                 _settings.Position?.Apply(this);
 
-                if (LoadSolutionOnStartup())
-                {
-                    _solution = LoadSolution();
-                }
-                else
-                {
-                    _solution = new Solution()
-                    {
-                        Merges = new MergeDefinition[] { new MergeDefinition() }.ToList()
-                    };
-                    syncUI1.Document = _solution.Merges[0];
-                }
+                _solution = (LoadSolutionOnStartup(out string fileName)) ?
+                    JsonFile.Load<Solution>(fileName) :
+                    Solution.Create();
+
+                _solutionFile = fileName;
+
+                LoadSolution(_solution);
             }
             catch (Exception exc)
             {
@@ -59,45 +54,44 @@ namespace ModelSync.App
             }
         }
 
-        private bool LoadSolutionOnStartup()
+        private bool LoadSolutionOnStartup(out string fileName)
         {
             if (StartupArgs?.Length > 0)
             {
                 string baseFile = Path.GetFileNameWithoutExtension(StartupArgs[0]);
 
-                SolutionFile = Path.Combine(
+                fileName = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "ModelSync", baseFile + ".json");
 
-                return File.Exists(SolutionFile);
+                return File.Exists(fileName);
             }
 
-            SolutionFile = null;
+            fileName = null;
             return false;
         }
 
-        private Solution LoadSolution()
+        private void LoadSolution(Solution solution)
         {
             // todo: save current solution
 
             SuspendLayout();
 
             try
-            {
-                var solution = JsonFile.Load<Solution>(SolutionFile);
-                if (solution.Merges.Any())
+            {                
+                if (solution?.Merges.Any() ?? false)
                 {
-                    tabMain.TabPages.Clear();
+                    int index = 0;
                     foreach (var merge in _solution.Merges)
                     {
-                        var tab = new TabPage(merge.Title);
+                        var tab = new TabPage(merge.Title ?? $"merge {index}");
                         var ui = new SyncUI() { Dock = DockStyle.Fill, Document = merge };
                         tab.Controls.Add(ui);
-                        tabMain.TabPages.Add(tab);
+                        tabMain.TabPages.Insert(index, tab);
+                        index++;
                     }
+                    tabMain.SelectedIndex = 0;
                 }
-
-                return solution;
             }
             finally
             {
