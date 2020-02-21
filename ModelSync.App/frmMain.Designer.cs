@@ -31,16 +31,18 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.tabMain = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.cmTabControls = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.setColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabMain.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.cmTabControls.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabMain
@@ -57,14 +59,45 @@
             this.tabMain.TabIndex = 0;
             this.tabMain.SelectedIndexChanged += new System.EventHandler(this.tabMain_SelectedIndexChanged);
             // 
+            // cmTabControls
+            // 
+            this.cmTabControls.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.renameToolStripMenuItem,
+            this.setColorToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.deleteToolStripMenuItem});
+            this.cmTabControls.Name = "cmTabControls";
+            this.cmTabControls.Size = new System.Drawing.Size(181, 98);
+            // 
+            // renameToolStripMenuItem
+            // 
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.renameToolStripMenuItem.Text = "Rename...";
+            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.deleteToolStripMenuItem.Text = "Delete...";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 36);
+            this.tabPage2.Location = new System.Drawing.Point(4, 37);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(759, 357);
+            this.tabPage2.Size = new System.Drawing.Size(759, 356);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "new sync";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "database");
+            this.imageList1.Images.SetKeyName(1, "assembly");
             // 
             // statusStrip1
             // 
@@ -85,34 +118,17 @@
             this.toolStripStatusLabel1.Text = "Options...";
             this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // cmTabControls
+            // toolStripSeparator1
             // 
-            this.cmTabControls.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.renameToolStripMenuItem,
-            this.deleteToolStripMenuItem});
-            this.cmTabControls.Name = "cmTabControls";
-            this.cmTabControls.Size = new System.Drawing.Size(181, 70);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(128, 6);
             // 
-            // renameToolStripMenuItem
+            // setColorToolStripMenuItem
             // 
-            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.renameToolStripMenuItem.Text = "Rename...";
-            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.deleteToolStripMenuItem.Text = "Delete...";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
-            // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "database");
-            this.imageList1.Images.SetKeyName(1, "assembly");
+            this.setColorToolStripMenuItem.Name = "setColorToolStripMenuItem";
+            this.setColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setColorToolStripMenuItem.Text = "Set Color...";
+            this.setColorToolStripMenuItem.Click += new System.EventHandler(this.setColorToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -128,9 +144,9 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.tabMain.ResumeLayout(false);
+            this.cmTabControls.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.cmTabControls.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,6 +162,8 @@
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ToolStripMenuItem setColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

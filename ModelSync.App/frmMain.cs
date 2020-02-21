@@ -48,7 +48,10 @@ namespace ModelSync.App
                     JsonFile.Load<Solution>(fileName) :
                     Solution.Create();
 
-                SolutionFile = fileName;
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    SolutionFile = fileName;
+                }                
 
                 LoadSolution(this, _solution);
             }
@@ -89,7 +92,11 @@ namespace ModelSync.App
                     int index = 0;
                     foreach (var merge in solution.Merges)
                     {
-                        var tab = new TabPage(merge.Title ?? $"merge {index}") { ImageKey = GetTabImage(merge.SourceType) };
+                        var tab = new TabPage(merge.Title ?? $"merge {index}") 
+                        { 
+                            ImageKey = GetTabImage(merge.SourceType),
+                            BackColor = merge.BackgroundColor
+                        };
                         var ui = new SyncUI() { Dock = DockStyle.Fill, Document = merge };
                         tab.Controls.Add(ui);
                         form.TabControl.TabPages.Insert(index, tab);
@@ -123,10 +130,10 @@ namespace ModelSync.App
                 _settings.Position = FormPosition.FromForm(this);
                 _settings.Save();
 
-                if (_solution != null)
+                if (!string.IsNullOrEmpty(SolutionFile) && _solution != null)
                 {
                     JsonFile.Save(SolutionFile, _solution);
-                }                
+                }
             }
             catch (Exception exc)
             {
@@ -172,6 +179,18 @@ namespace ModelSync.App
             {
                 tabMain.TabPages.Remove(tab);
                 _solution.Merges.Remove(merge);
+            }
+        }
+
+        private void setColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+            var dlg = new ColorDialog();
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                var tab = tabMain.SelectedTab;
+                var merge = (tab.Controls[0] as SyncUI).Document;
+                merge.BackgroundColor = dlg.Color;
+                tab.BackColor = dlg.Color;
             }
         }
     }

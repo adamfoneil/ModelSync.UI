@@ -23,7 +23,7 @@ namespace ModelSync.App.Models
         [JsonProtect(DataProtectionScope.CurrentUser)]
         public string Destination { get; set; }
 
-        public Color BackgroundColor { get; set; }
+        public Color BackgroundColor { get; set; } = Color.Transparent;
 
         public List<string> IgnoreObjects { get; set; }
     }
