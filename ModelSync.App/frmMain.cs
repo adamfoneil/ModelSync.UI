@@ -77,6 +77,7 @@ namespace ModelSync.App
         {
             // todo: save current solution
 
+            form.TabControl.TabIndexChanged -= form.tabMain_SelectedIndexChanged;
             form.SuspendLayout();
 
             try
@@ -97,6 +98,7 @@ namespace ModelSync.App
             }
             finally
             {
+                form.TabControl.TabIndexChanged += form.tabMain_SelectedIndexChanged;
                 form.ResumeLayout();
             }            
         }
@@ -124,8 +126,11 @@ namespace ModelSync.App
             int lastIndex = tabMain.TabPages.Count - 1;
             if (tabMain.SelectedIndex == lastIndex)
             {
+                var merge = new MergeDefinition();
+                _solution.Merges.Add(merge);
+
                 var tab = new TabPage($"merge {tabMain.TabPages.Count}");
-                var ui = new SyncUI() { Dock = DockStyle.Fill };
+                var ui = new SyncUI() { Dock = DockStyle.Fill, Document = merge };
                 tab.Controls.Add(ui);
                 tabMain.TabPages.Insert(lastIndex, tab);
                 tabMain.SelectedIndex = lastIndex;
