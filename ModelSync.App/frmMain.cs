@@ -1,8 +1,10 @@
 ﻿using JsonSettings;
 using JsonSettings.Library;
 using ModelSync.App.Controls;
+using ModelSync.App.Forms;
 using ModelSync.App.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -87,7 +89,7 @@ namespace ModelSync.App
                     int index = 0;
                     foreach (var merge in solution.Merges)
                     {
-                        var tab = new TabPage(merge.Title ?? $"merge {index}");
+                        var tab = new TabPage(merge.Title ?? $"merge {index}") { ImageKey = GetTabImage(merge.SourceType) };
                         var ui = new SyncUI() { Dock = DockStyle.Fill, Document = merge };
                         tab.Controls.Add(ui);
                         form.TabControl.TabPages.Insert(index, tab);
@@ -101,6 +103,17 @@ namespace ModelSync.App
                 form.TabControl.TabIndexChanged += form.tabMain_SelectedIndexChanged;
                 form.ResumeLayout();
             }            
+        }
+
+        private static string GetTabImage(SourceType sourceType)
+        {
+            Dictionary<SourceType, string> icons = new Dictionary<SourceType, string>()
+            {
+                { SourceType.Assembly, "assembly" },
+                { SourceType.Connection, "connection" }
+            };
+
+            return icons[sourceType];
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -134,6 +147,20 @@ namespace ModelSync.App
                 tab.Controls.Add(ui);
                 tabMain.TabPages.Insert(lastIndex, tab);
                 tabMain.SelectedIndex = lastIndex;
+            }
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dlg = new frmRename()
+            {
+                RenameText = tabMain.SelectedTab.Text
+            };
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                tabMain.SelectedTab.Text = dlg.RenameText;
+                (tabMain.SelectedTab.Controls[0] as SyncUI).Document.Title = dlg.RenameText;
             }
         }
     }

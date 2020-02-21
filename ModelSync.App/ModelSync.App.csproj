@@ -52,6 +52,12 @@
     <Compile Include="Controls\SyncUI.Designer.cs">
       <DependentUpon>SyncUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmRename.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmRename.Designer.cs">
+      <DependentUpon>frmRename.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +71,9 @@
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Controls\SyncUI.resx">
       <DependentUpon>SyncUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmRename.resx">
+      <DependentUpon>frmRename.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
