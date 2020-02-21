@@ -22,6 +22,8 @@ namespace ModelSync.App
         {
             InitializeComponent();
         }
+
+        public TabControl TabControl { get { return tabMain; } }
         
         public string SolutionFile
         {
@@ -40,13 +42,13 @@ namespace ModelSync.App
                 _settings = SettingsBase.Load<Settings>();
                 _settings.Position?.Apply(this);
 
-                _solution = (LoadSolutionOnStartup(out string fileName)) ?
+                _solution = (LoadSolutionOnStartup(StartupArgs, out string fileName)) ?
                     JsonFile.Load<Solution>(fileName) :
                     Solution.Create();
 
-                _solutionFile = fileName;
+                SolutionFile = fileName;
 
-                LoadSolution(_solution);
+                LoadSolution(this, _solution);
             }
             catch (Exception exc)
             {
@@ -54,11 +56,11 @@ namespace ModelSync.App
             }
         }
 
-        private bool LoadSolutionOnStartup(out string fileName)
+        private static bool LoadSolutionOnStartup(string[] startupArgs, out string fileName)
         {
-            if (StartupArgs?.Length > 0)
+            if (startupArgs?.Length > 0)
             {
-                string baseFile = Path.GetFileNameWithoutExtension(StartupArgs[0]);
+                string baseFile = Path.GetFileNameWithoutExtension(startupArgs[0]);
 
                 fileName = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -71,31 +73,31 @@ namespace ModelSync.App
             return false;
         }
 
-        private void LoadSolution(Solution solution)
+        private static void LoadSolution(frmMain form, Solution solution)
         {
             // todo: save current solution
 
-            SuspendLayout();
+            form.SuspendLayout();
 
             try
             {                
                 if (solution?.Merges.Any() ?? false)
                 {
                     int index = 0;
-                    foreach (var merge in _solution.Merges)
+                    foreach (var merge in solution.Merges)
                     {
                         var tab = new TabPage(merge.Title ?? $"merge {index}");
                         var ui = new SyncUI() { Dock = DockStyle.Fill, Document = merge };
                         tab.Controls.Add(ui);
-                        tabMain.TabPages.Insert(index, tab);
+                        form.TabControl.TabPages.Insert(index, tab);
                         index++;
                     }
-                    tabMain.SelectedIndex = 0;
+                    form.TabControl.SelectedIndex = 0;
                 }
             }
             finally
             {
-                ResumeLayout();
+                form.ResumeLayout();
             }            
         }
 
