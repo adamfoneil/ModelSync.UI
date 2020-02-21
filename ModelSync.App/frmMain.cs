@@ -40,7 +40,7 @@ namespace ModelSync.App
                 _settings = SettingsBase.Load<Settings>();
                 _settings.Position?.Apply(this);
 
-                if (HasSolution(out string solutionFile)) LoadSolution(solutionFile);                
+                if (LoadSolutionOnStartup(out string solutionFile)) LoadSolution(solutionFile);                
             }
             catch (Exception exc)
             {
@@ -48,20 +48,27 @@ namespace ModelSync.App
             }
         }
 
-        private bool HasSolution(out string solutionFile)
+        private bool LoadSolutionOnStartup(out string mergeSolutionFile)
         {
-            if (StartupArgs != null && File.Exists(StartupArgs[0]))
+            if (StartupArgs?.Length > 0)
             {
-                solutionFile = StartupArgs[0];
-                return true;
+                string baseFile = Path.GetFileNameWithoutExtension(StartupArgs[0]);
+
+                mergeSolutionFile = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "ModelSync", baseFile + ".json");
+
+                return File.Exists(mergeSolutionFile);
             }
 
-            solutionFile = null;
+            mergeSolutionFile = null;
             return false;
         }
 
         private void LoadSolution(string fileName)
         {
+            // todo: save current solution
+
             SuspendLayout();
 
             try
