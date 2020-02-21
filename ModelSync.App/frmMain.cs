@@ -40,7 +40,18 @@ namespace ModelSync.App
                 _settings = SettingsBase.Load<Settings>();
                 _settings.Position?.Apply(this);
 
-                if (LoadSolutionOnStartup(out string solutionFile)) LoadSolution(solutionFile);                
+                if (LoadSolutionOnStartup())
+                {
+                    _solution = LoadSolution();
+                }
+                else
+                {
+                    _solution = new Solution()
+                    {
+                        Merges = new MergeDefinition[] { new MergeDefinition() }.ToList()
+                    };
+                    syncUI1.Document = _solution.Merges[0];
+                }
             }
             catch (Exception exc)
             {
@@ -48,24 +59,24 @@ namespace ModelSync.App
             }
         }
 
-        private bool LoadSolutionOnStartup(out string mergeSolutionFile)
+        private bool LoadSolutionOnStartup()
         {
             if (StartupArgs?.Length > 0)
             {
                 string baseFile = Path.GetFileNameWithoutExtension(StartupArgs[0]);
 
-                mergeSolutionFile = Path.Combine(
+                SolutionFile = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "ModelSync", baseFile + ".json");
 
-                return File.Exists(mergeSolutionFile);
+                return File.Exists(SolutionFile);
             }
 
-            mergeSolutionFile = null;
+            SolutionFile = null;
             return false;
         }
 
-        private void LoadSolution(string fileName)
+        private Solution LoadSolution()
         {
             // todo: save current solution
 
@@ -73,10 +84,8 @@ namespace ModelSync.App
 
             try
             {
-                _solution = JsonFile.Load<Solution>(fileName);
-                SolutionFile = fileName;
-
-                if (_solution.Merges.Any())
+                var solution = JsonFile.Load<Solution>(SolutionFile);
+                if (solution.Merges.Any())
                 {
                     tabMain.TabPages.Clear();
                     foreach (var merge in _solution.Merges)
@@ -87,6 +96,8 @@ namespace ModelSync.App
                         tabMain.TabPages.Add(tab);
                     }
                 }
+
+                return solution;
             }
             finally
             {
@@ -100,6 +111,11 @@ namespace ModelSync.App
             {
                 _settings.Position = FormPosition.FromForm(this);
                 _settings.Save();
+
+                if (_solution != null)
+                {
+                    JsonFile.Save(SolutionFile, _solution);
+                }                
             }
             catch (Exception exc)
             {
