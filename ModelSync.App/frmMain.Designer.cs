@@ -91,7 +91,7 @@
             this.renameToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.cmTabControls.Name = "cmTabControls";
-            this.cmTabControls.Size = new System.Drawing.Size(127, 48);
+            this.cmTabControls.Size = new System.Drawing.Size(181, 70);
             // 
             // renameToolStripMenuItem
             // 
@@ -103,8 +103,9 @@
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteToolStripMenuItem.Text = "Delete...";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // imageList1
             // 

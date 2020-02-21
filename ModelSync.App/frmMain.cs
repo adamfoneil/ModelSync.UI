@@ -163,5 +163,16 @@ namespace ModelSync.App
                 (tabMain.SelectedTab.Controls[0] as SyncUI).Document.Title = dlg.RenameText;
             }
         }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var tab = tabMain.SelectedTab;
+            var merge = (tab.Controls[0] as SyncUI).Document;
+            if (MessageBox.Show($"This will delete the merge '{merge.Title}'.", "Delete Merge", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                tabMain.TabPages.Remove(tab);
+                _solution.Merges.Remove(merge);
+            }
+        }
     }
 }
