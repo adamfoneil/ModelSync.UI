@@ -1,6 +1,5 @@
 ﻿using ModelSync.App.Helpers;
 using System;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace ModelSync.App
