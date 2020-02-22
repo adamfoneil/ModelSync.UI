@@ -89,9 +89,8 @@ namespace ModelSync.App.Controls
         {
             try
             {
-                OperationStarted?.Invoke("Analyzing assembly...", new EventArgs());
-                //var assembly = Assembly.ReflectionOnlyLoadFrom(text);                                
-                var assembly = Assembly.LoadFrom(text);
+                OperationStarted?.Invoke("Analyzing assembly...", new EventArgs());                                    
+                var assembly = Assembly.LoadFile(text);
                 return await DataModel.FromAssemblyAsync(assembly);
             }
             catch (Exception exc)
