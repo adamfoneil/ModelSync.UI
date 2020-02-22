@@ -6,7 +6,7 @@ namespace ModelSync.App.Helpers
 {
     public static class AssemblyHelper
     {
-        public static Assembly LoadDependencies(object sender, ResolveEventArgs args)
+        public static Assembly LoadReflectionOnlyDependencies(object sender, ResolveEventArgs args)
         {
             if (FindNugetPackageFromAssemblyName(args.Name, out string fileName))
             {

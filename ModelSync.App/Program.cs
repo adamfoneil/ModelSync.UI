@@ -13,7 +13,7 @@ namespace ModelSync.App
         [STAThread]
         static void Main(string[] args)
         {
-            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += AssemblyHelper.LoadDependencies;
+            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += AssemblyHelper.LoadReflectionOnlyDependencies;            
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
