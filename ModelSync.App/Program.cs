@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ModelSync.App.Helpers;
+using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace ModelSync.App
@@ -11,6 +13,8 @@ namespace ModelSync.App
         [STAThread]
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += AssemblyHelper.LoadDependencies;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain() { StartupArgs = args });

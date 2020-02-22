@@ -3,6 +3,7 @@ using ModelSync.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinForms.Library;
@@ -20,7 +21,7 @@ namespace ModelSync.App.Controls
 
         public SyncUI()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         public string SolutionPath { get; set; }
@@ -89,7 +90,8 @@ namespace ModelSync.App.Controls
             try
             {
                 OperationStarted?.Invoke("Analyzing assembly...", new EventArgs());
-                return await DataModel.FromAssemblyAsync(text);
+                var assembly = Assembly.ReflectionOnlyLoadFrom(text);                
+                return await DataModel.FromAssemblyAsync(assembly);
             }
             catch (Exception exc)
             {
