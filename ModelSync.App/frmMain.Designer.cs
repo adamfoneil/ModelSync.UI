@@ -33,13 +33,15 @@
             this.tabMain = new System.Windows.Forms.TabControl();
             this.cmTabControls = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.setColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tslStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pbMain = new System.Windows.Forms.ToolStripProgressBar();
             this.tabMain.SuspendLayout();
             this.cmTabControls.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -77,6 +79,18 @@
             this.renameToolStripMenuItem.Text = "Rename...";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
+            // setColorToolStripMenuItem
+            // 
+            this.setColorToolStripMenuItem.Name = "setColorToolStripMenuItem";
+            this.setColorToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.setColorToolStripMenuItem.Text = "Set Color...";
+            this.setColorToolStripMenuItem.Click += new System.EventHandler(this.setColorToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(128, 6);
+            // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
@@ -103,6 +117,8 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tslStatus,
+            this.pbMain,
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 397);
             this.statusStrip1.Name = "statusStrip1";
@@ -114,22 +130,23 @@
             // 
             this.toolStripStatusLabel1.IsLink = true;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(752, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(580, 17);
             this.toolStripStatusLabel1.Spring = true;
             this.toolStripStatusLabel1.Text = "Options...";
             this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // toolStripSeparator1
+            // tslStatus
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(128, 6);
+            this.tslStatus.Name = "tslStatus";
+            this.tslStatus.Size = new System.Drawing.Size(39, 17);
+            this.tslStatus.Text = "Ready";
             // 
-            // setColorToolStripMenuItem
+            // pbMain
             // 
-            this.setColorToolStripMenuItem.Name = "setColorToolStripMenuItem";
-            this.setColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.setColorToolStripMenuItem.Text = "Set Color...";
-            this.setColorToolStripMenuItem.Click += new System.EventHandler(this.setColorToolStripMenuItem_Click);
+            this.pbMain.Name = "pbMain";
+            this.pbMain.Size = new System.Drawing.Size(100, 16);
+            this.pbMain.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.pbMain.Visible = false;
             // 
             // frmMain
             // 
@@ -165,6 +182,8 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ToolStripMenuItem setColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripStatusLabel tslStatus;
+        private System.Windows.Forms.ToolStripProgressBar pbMain;
     }
 }
 

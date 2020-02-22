@@ -5,6 +5,7 @@ using ModelSync.App.Forms;
 using ModelSync.App.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -54,7 +55,7 @@ namespace ModelSync.App
                     SolutionFile = fileName;
                 }                
 
-                LoadSolution(this, _solution);
+                LoadSolution(this, _solution, fileName);
             }
             catch (Exception exc)
             {
@@ -79,12 +80,16 @@ namespace ModelSync.App
             return false;
         }
 
-        private static void LoadSolution(frmMain form, Solution solution)
+        private void LoadSolution(frmMain form, Solution solution, string solutionFile)
         {
             // todo: save current solution
 
             form.TabControl.TabIndexChanged -= form.tabMain_SelectedIndexChanged;
             form.SuspendLayout();
+
+            string solutionPath = (!string.IsNullOrEmpty(solutionFile)) ?
+                Path.GetDirectoryName(solutionFile) :
+                null;
 
             try
             {                
@@ -98,7 +103,17 @@ namespace ModelSync.App
                             ImageKey = GetTabImage(merge.SourceType),
                             BackColor = merge.BackgroundColor
                         };
-                        var ui = new SyncUI() { Dock = DockStyle.Fill, Document = merge };
+
+                        var ui = new SyncUI() 
+                        { 
+                            Dock = DockStyle.Fill, 
+                            Document = merge,
+                            SolutionPath = solutionPath,                            
+                        };
+                        ui.OperationStarted += StartOperation;
+                        ui.OperationComplete += CompleteOperation;
+                        ui.GetConnection = (text) => new SqlConnection(text);
+
                         tab.Controls.Add(ui);
                         form.TabControl.TabPages.Insert(index, tab);
                         index++;
@@ -111,6 +126,18 @@ namespace ModelSync.App
                 form.TabControl.TabIndexChanged += form.tabMain_SelectedIndexChanged;
                 form.ResumeLayout();
             }            
+        }
+
+        private void CompleteOperation(object sender, EventArgs e)
+        {
+            tslStatus.Text = "Ready";
+            pbMain.Visible = false;
+        }
+
+        private void StartOperation(object sender, EventArgs e)
+        {
+            tslStatus.Text = sender.ToString();
+            pbMain.Visible = true;
         }
 
         private static string GetTabImage(SourceType sourceType)
