@@ -43,6 +43,7 @@
             this.btnGenerateScript = new System.Windows.Forms.ToolStripButton();
             this.btnExecute = new System.Windows.Forms.ToolStripButton();
             this.btnSaveAs = new System.Windows.Forms.ToolStripButton();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -131,8 +132,11 @@
             // tvObjects
             // 
             this.tvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvObjects.ImageIndex = 0;
+            this.tvObjects.ImageList = this.imageList1;
             this.tvObjects.Location = new System.Drawing.Point(0, 25);
             this.tvObjects.Name = "tvObjects";
+            this.tvObjects.SelectedImageIndex = 0;
             this.tvObjects.Size = new System.Drawing.Size(227, 243);
             this.tvObjects.TabIndex = 0;
             // 
@@ -167,7 +171,6 @@
             this.fastColoredTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fastColoredTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.fastColoredTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fastColoredTextBox1.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.fastColoredTextBox1.IsReplaceMode = false;
             this.fastColoredTextBox1.Language = FastColoredTextBoxNS.Language.SQL;
             this.fastColoredTextBox1.LeftBracket = '(';
@@ -219,6 +222,21 @@
             this.btnSaveAs.Size = new System.Drawing.Size(74, 22);
             this.btnSaveAs.Text = "Save as...";
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "create");
+            this.imageList1.Images.SetKeyName(1, "delete");
+            this.imageList1.Images.SetKeyName(2, "update");
+            this.imageList1.Images.SetKeyName(3, "database");
+            this.imageList1.Images.SetKeyName(4, "script");
+            this.imageList1.Images.SetKeyName(5, "table");
+            this.imageList1.Images.SetKeyName(6, "schema");
+            this.imageList1.Images.SetKeyName(7, "shortcut");
+            this.imageList1.Images.SetKeyName(8, "column");
+            this.imageList1.Images.SetKeyName(9, "key");
+            // 
             // SyncUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -258,5 +276,6 @@
         private System.Windows.Forms.ToolStripButton btnGenerateScript;
         private System.Windows.Forms.ToolStripButton btnExecute;
         private System.Windows.Forms.ToolStripButton btnSaveAs;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

@@ -7,6 +7,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinForms.Library;
+using System.Linq;
+using ModelSync.Library.Abstract;
+using ModelSync.Library.Services;
 
 namespace ModelSync.App.Controls
 {    
@@ -21,7 +24,7 @@ namespace ModelSync.App.Controls
 
         public SyncUI()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         public string SolutionPath { get; set; }
@@ -58,6 +61,58 @@ namespace ModelSync.App.Controls
                 DataModel destModel = await GetConnectionModelAsync(tbDest.Text);
                 var diff = DataModel.Compare(sourceModel, destModel);
 
+                tvObjects.Nodes.Clear();
+
+                var rootNode = new TreeNode("SQL Script") { ImageKey = "script", SelectedImageKey = "script" };
+                tvObjects.Nodes.Add(rootNode);
+
+                var show = diff.Where(scr => !_binder.Document.IgnoreObjects?.Contains(scr.Object.Name) ?? true);
+
+                Dictionary<ActionType, string> actionTypeIcons = new Dictionary<ActionType, string>()
+                {
+                    { ActionType.Create, "create" },
+                    { ActionType.Alter, "update" },
+                    { ActionType.Drop, "delete" }
+                };
+
+                Dictionary<ObjectType, string> objectTypeIcons = new Dictionary<ObjectType, string>()
+                {
+                    { ObjectType.Schema, "schema" },
+                    { ObjectType.Table, "table" },
+                    { ObjectType.Column, "column" },
+                    { ObjectType.Index, "key" },
+                    { ObjectType.ForeignKey, "shortcut" }
+                };
+
+                foreach (var actionGrp in show.GroupBy(scr => scr.Type).Select(grp => new { grp.Key, Icon = actionTypeIcons[grp.Key], Items = grp }))
+                {
+                    var actionNode = new TreeNode(actionGrp.Key.ToString()) 
+                    { 
+                        ImageKey = actionGrp.Icon, 
+                        SelectedImageKey = actionGrp.Icon 
+                    };
+                    rootNode.Nodes.Add(actionNode);
+
+                    foreach (var typeGrp in actionGrp.Items.GroupBy(scr => scr.Object.ObjectType))
+                    {
+                        var objTypeNode = new TreeNode($"{typeGrp.Key.ToString()} ({typeGrp.Count()})")
+                        {
+                            ImageKey = objectTypeIcons[typeGrp.Key],
+                            SelectedImageKey = objectTypeIcons[typeGrp.Key]
+                        };
+                        actionNode.Nodes.Add(objTypeNode);
+
+                        foreach (var obj in typeGrp.OrderBy(scr => scr.Object.Name))
+                        {
+                            var objNode = new TreeNode(obj.Object.Name) 
+                            { 
+                                ImageKey = objTypeNode.ImageKey, 
+                                SelectedImageKey = objTypeNode.SelectedImageKey 
+                            };
+                            objTypeNode.Nodes.Add(objNode);
+                        }
+                    }
+                }
             }
             catch (Exception exc)
             {
@@ -72,7 +127,7 @@ namespace ModelSync.App.Controls
                 OperationStarted?.Invoke("Analyzing database...", new EventArgs());
                 using (var cn = GetConnection(text))
                 {
-                    return await DataModel.FromSqlServerAsync(cn);
+                    return await new SqlServerModelBuilder().GetDataModelAsync(cn);
                 }
             }
             catch (Exception exc)
@@ -91,7 +146,8 @@ namespace ModelSync.App.Controls
             {
                 OperationStarted?.Invoke("Analyzing assembly...", new EventArgs());                                    
                 var assembly = Assembly.LoadFile(text);
-                return await DataModel.FromAssemblyAsync(assembly);
+                var result = new AssemblyModelBuilder().GetDataModel(assembly);
+                return await Task.FromResult(result);
             }
             catch (Exception exc)
             {
