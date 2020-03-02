@@ -144,8 +144,9 @@ namespace ModelSync.App.Controls
         {
             try
             {
-                OperationStarted?.Invoke("Analyzing assembly...", new EventArgs());                                    
-                var assembly = Assembly.LoadFile(text);
+                // help from https://docs.microsoft.com/en-us/dotnet/framework/deployment/best-practices-for-assembly-loading
+                OperationStarted?.Invoke("Analyzing assembly...", new EventArgs());                                                    
+                var assembly = Assembly.LoadFrom(text);
                 var result = new AssemblyModelBuilder().GetDataModel(assembly);
                 return await Task.FromResult(result);
             }
