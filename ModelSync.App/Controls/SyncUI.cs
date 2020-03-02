@@ -75,15 +75,6 @@ namespace ModelSync.App.Controls
                     { ActionType.Drop, "delete" }
                 };
 
-                Dictionary<ObjectType, string> objectTypeIcons = new Dictionary<ObjectType, string>()
-                {
-                    { ObjectType.Schema, "schema" },
-                    { ObjectType.Table, "table" },
-                    { ObjectType.Column, "column" },
-                    { ObjectType.Index, "key" },
-                    { ObjectType.ForeignKey, "shortcut" }
-                };
-
                 foreach (var actionGrp in show.GroupBy(scr => scr.Type).Select(grp => new { grp.Key, Icon = actionTypeIcons[grp.Key], Items = grp }))
                 {
                     var actionNode = new TreeNode(actionGrp.Key.ToString()) 
@@ -95,24 +86,18 @@ namespace ModelSync.App.Controls
 
                     foreach (var typeGrp in actionGrp.Items.GroupBy(scr => scr.Object.ObjectType))
                     {
-                        var objTypeNode = new TreeNode($"{typeGrp.Key.ToString()} ({typeGrp.Count()})")
-                        {
-                            ImageKey = objectTypeIcons[typeGrp.Key],
-                            SelectedImageKey = objectTypeIcons[typeGrp.Key]
-                        };
+                        var objTypeNode = new ObjectTypeNode(typeGrp.Key, typeGrp.Count());
                         actionNode.Nodes.Add(objTypeNode);
 
-                        foreach (var obj in typeGrp.OrderBy(scr => scr.Object.Name))
+                        foreach (var scriptAction in typeGrp.OrderBy(scr => scr.Object.Name))
                         {
-                            var objNode = new TreeNode(obj.Object.Name) 
-                            { 
-                                ImageKey = objTypeNode.ImageKey, 
-                                SelectedImageKey = objTypeNode.SelectedImageKey 
-                            };
-                            objTypeNode.Nodes.Add(objNode);
+                            var objNode = new ScriptActionNode(scriptAction);
+                            objTypeNode.Nodes.Add(objNode);                            
                         }
                     }
                 }
+
+                tvObjects.ExpandAll();
             }
             catch (Exception exc)
             {
@@ -157,6 +142,25 @@ namespace ModelSync.App.Controls
             finally
             {
                 OperationComplete?.Invoke(this, new EventArgs());
+            }
+        }
+
+        private void tvObjects_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            try
+            {
+                List<ScriptActionNode> nodes = new List<ScriptActionNode>();
+                var thisAction = e.Node as ScriptActionNode;
+                if (thisAction != null) nodes.Add(thisAction);
+
+                nodes.AddRange(e.Node.Nodes.OfType<ScriptActionNode>());
+                              
+                tbScriptOutput.Clear();
+                tbScriptOutput.Text = new SqlServerDialect().FormatScript(nodes.Select(node => node.ScriptAction));
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
         }
     }

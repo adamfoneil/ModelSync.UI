@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ObjectTypeNode.cs" />
+    <Compile Include="Controls\ScriptActionNode.cs" />
     <Compile Include="Controls\SyncUI.cs">
       <SubType>UserControl</SubType>
     </Compile>

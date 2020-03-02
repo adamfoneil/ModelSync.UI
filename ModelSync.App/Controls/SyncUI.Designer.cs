@@ -37,19 +37,19 @@
             this.cbSourceType = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tvObjects = new System.Windows.Forms.TreeView();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.fastColoredTextBox1 = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.tbScriptOutput = new FastColoredTextBoxNS.FastColoredTextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnGenerateScript = new System.Windows.Forms.ToolStripButton();
             this.btnExecute = new System.Windows.Forms.ToolStripButton();
             this.btnSaveAs = new System.Windows.Forms.ToolStripButton();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbScriptOutput)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -122,7 +122,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.fastColoredTextBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.tbScriptOutput);
             this.splitContainer1.Panel2.Controls.Add(this.toolStrip1);
             this.splitContainer1.Size = new System.Drawing.Size(682, 268);
             this.splitContainer1.SplitterDistance = 227;
@@ -139,6 +139,22 @@
             this.tvObjects.SelectedImageIndex = 0;
             this.tvObjects.Size = new System.Drawing.Size(227, 243);
             this.tvObjects.TabIndex = 0;
+            this.tvObjects.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvObjects_AfterSelect);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "create");
+            this.imageList1.Images.SetKeyName(1, "delete");
+            this.imageList1.Images.SetKeyName(2, "update");
+            this.imageList1.Images.SetKeyName(3, "database");
+            this.imageList1.Images.SetKeyName(4, "script");
+            this.imageList1.Images.SetKeyName(5, "table");
+            this.imageList1.Images.SetKeyName(6, "schema");
+            this.imageList1.Images.SetKeyName(7, "shortcut");
+            this.imageList1.Images.SetKeyName(8, "column");
+            this.imageList1.Images.SetKeyName(9, "key");
             // 
             // toolStrip2
             // 
@@ -149,9 +165,9 @@
             this.toolStrip2.TabIndex = 1;
             this.toolStrip2.Text = "toolStrip2";
             // 
-            // fastColoredTextBox1
+            // tbScriptOutput
             // 
-            this.fastColoredTextBox1.AutoCompleteBracketsList = new char[] {
+            this.tbScriptOutput.AutoCompleteBracketsList = new char[] {
         '(',
         ')',
         '{',
@@ -162,27 +178,28 @@
         '\"',
         '\'',
         '\''};
-            this.fastColoredTextBox1.AutoIndentCharsPatterns = "";
-            this.fastColoredTextBox1.AutoScrollMinSize = new System.Drawing.Size(27, 14);
-            this.fastColoredTextBox1.BackBrush = null;
-            this.fastColoredTextBox1.CharHeight = 14;
-            this.fastColoredTextBox1.CharWidth = 8;
-            this.fastColoredTextBox1.CommentPrefix = "--";
-            this.fastColoredTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.fastColoredTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.fastColoredTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fastColoredTextBox1.IsReplaceMode = false;
-            this.fastColoredTextBox1.Language = FastColoredTextBoxNS.Language.SQL;
-            this.fastColoredTextBox1.LeftBracket = '(';
-            this.fastColoredTextBox1.Location = new System.Drawing.Point(0, 25);
-            this.fastColoredTextBox1.Name = "fastColoredTextBox1";
-            this.fastColoredTextBox1.Paddings = new System.Windows.Forms.Padding(0);
-            this.fastColoredTextBox1.RightBracket = ')';
-            this.fastColoredTextBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.fastColoredTextBox1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fastColoredTextBox1.ServiceColors")));
-            this.fastColoredTextBox1.Size = new System.Drawing.Size(450, 243);
-            this.fastColoredTextBox1.TabIndex = 0;
-            this.fastColoredTextBox1.Zoom = 100;
+            this.tbScriptOutput.AutoIndentCharsPatterns = "";
+            this.tbScriptOutput.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.tbScriptOutput.BackBrush = null;
+            this.tbScriptOutput.CharHeight = 14;
+            this.tbScriptOutput.CharWidth = 8;
+            this.tbScriptOutput.CommentPrefix = "--";
+            this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
+            this.tbScriptOutput.IsReplaceMode = false;
+            this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
+            this.tbScriptOutput.LeftBracket = '(';
+            this.tbScriptOutput.Location = new System.Drawing.Point(0, 25);
+            this.tbScriptOutput.Name = "tbScriptOutput";
+            this.tbScriptOutput.Paddings = new System.Windows.Forms.Padding(0);
+            this.tbScriptOutput.RightBracket = ')';
+            this.tbScriptOutput.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.tbScriptOutput.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("tbScriptOutput.ServiceColors")));
+            this.tbScriptOutput.Size = new System.Drawing.Size(450, 243);
+            this.tbScriptOutput.TabIndex = 0;
+            this.tbScriptOutput.Zoom = 100;
             // 
             // toolStrip1
             // 
@@ -211,7 +228,7 @@
             this.btnExecute.Image = ((System.Drawing.Image)(resources.GetObject("btnExecute.Image")));
             this.btnExecute.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnExecute.Name = "btnExecute";
-            this.btnExecute.Size = new System.Drawing.Size(67, 22);
+            this.btnExecute.Size = new System.Drawing.Size(68, 22);
             this.btnExecute.Text = "Execute";
             // 
             // btnSaveAs
@@ -221,21 +238,6 @@
             this.btnSaveAs.Name = "btnSaveAs";
             this.btnSaveAs.Size = new System.Drawing.Size(74, 22);
             this.btnSaveAs.Text = "Save as...";
-            // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "create");
-            this.imageList1.Images.SetKeyName(1, "delete");
-            this.imageList1.Images.SetKeyName(2, "update");
-            this.imageList1.Images.SetKeyName(3, "database");
-            this.imageList1.Images.SetKeyName(4, "script");
-            this.imageList1.Images.SetKeyName(5, "table");
-            this.imageList1.Images.SetKeyName(6, "schema");
-            this.imageList1.Images.SetKeyName(7, "shortcut");
-            this.imageList1.Images.SetKeyName(8, "column");
-            this.imageList1.Images.SetKeyName(9, "key");
             // 
             // SyncUI
             // 
@@ -254,7 +256,7 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbScriptOutput)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -268,7 +270,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbSourceType;
         private System.Windows.Forms.TreeView tvObjects;
-        private FastColoredTextBoxNS.FastColoredTextBox fastColoredTextBox1;
+        private FastColoredTextBoxNS.FastColoredTextBox tbScriptOutput;
         private WinForms.Library.Controls.BuilderTextBox tbDest;
         private WinForms.Library.Controls.BuilderTextBox tbSource;
         private System.Windows.Forms.ToolStrip toolStrip2;
