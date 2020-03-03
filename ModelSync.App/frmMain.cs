@@ -333,5 +333,13 @@ namespace ModelSync.App
             deleteToolStripMenuItem.Enabled = enabled;
             setColorToolStripMenuItem.Enabled = enabled;
         }
+
+        private void frmMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.O && e.Control)
+            {
+                llOpenSolution_Click(sender, e);
+            }
+        }
     }
 }
