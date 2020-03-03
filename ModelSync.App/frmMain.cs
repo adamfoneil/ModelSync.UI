@@ -46,16 +46,18 @@ namespace ModelSync.App
                 _settings = SettingsBase.Load<Settings>();
                 _settings.Position?.Apply(this);
 
-                _solution = (LoadSolutionOnStartup(StartupArgs, out string fileName)) ?
-                    JsonFile.Load<Solution>(fileName) :
-                    Solution.Create();
-
-                if (!string.IsNullOrEmpty(fileName))
+                string solutionFolder = _settings.SolutionFolder;
+                if (GetSolutionFile(StartupArgs, ref solutionFolder, out string fileName))
                 {
-                    SolutionFile = fileName;
+                    _settings.SolutionFolder = solutionFolder;
+                    _solution = LoadSolution(this, fileName);
+                }
+                else
+                {
+                    _settings.SolutionFolder = solutionFolder;
+                    Close();
+                    Application.Exit();
                 }                
-
-                LoadSolution(this, _solution, fileName);
             }
             catch (Exception exc)
             {
@@ -63,40 +65,63 @@ namespace ModelSync.App
             }
         }
 
-        private static bool LoadSolutionOnStartup(string[] startupArgs, out string fileName)
+        private static bool GetSolutionFile(string[] startupArgs, ref string solutionFolder, out string fileName)
         {
             if (startupArgs?.Length > 0)
             {
-                string baseFile = Path.GetFileNameWithoutExtension(startupArgs[0]);
+                fileName = Solution.GetFilename(startupArgs[0]);
+                return true;
+            }
+            else
+            {
+                frmOpenSolution dlg = new frmOpenSolution()
+                {
+                    SolutionFolder = solutionFolder
+                };
 
-                fileName = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "ModelSync", baseFile + ".json");
-
-                return File.Exists(fileName);
+                while (true)
+                {
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        fileName = dlg.SelectedFilename;
+                        solutionFolder = dlg.SolutionFolder;
+                        return true;
+                    }
+                    else
+                    {
+                        solutionFolder = dlg.SolutionFolder;
+                        if (MessageBox.Show("Please select a solution or Cancel to exit.", "Open Solution", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                        {
+                            break;
+                        }
+                    }
+                }                
             }
 
             fileName = null;
             return false;
         }
 
-        private void LoadSolution(frmMain form, Solution solution, string solutionFile)
+        private Solution LoadSolution(frmMain form, string fileName)
         {
             // todo: save current solution
-
+            
             form.TabControl.TabIndexChanged -= form.tabMain_SelectedIndexChanged;
             form.SuspendLayout();
 
-            string solutionPath = (!string.IsNullOrEmpty(solutionFile)) ?
-                Path.GetDirectoryName(solutionFile) :
-                null;
+            string solutionPath = (!string.IsNullOrEmpty(fileName)) ?
+                Path.GetDirectoryName(fileName) :
+                null;            
 
             try
-            {                
-                if (solution?.Merges.Any() ?? false)
+            {
+                Solution result = JsonFile.Load<Solution>(fileName);
+                SolutionFile = fileName;
+
+                if (result?.Merges.Any() ?? false)
                 {
                     int index = 0;
-                    foreach (var merge in solution.Merges)
+                    foreach (var merge in result.Merges)
                     {
                         var tab = new TabPage(merge.Title ?? $"merge {index}") 
                         { 
@@ -120,6 +145,8 @@ namespace ModelSync.App
                     }
                     form.TabControl.SelectedIndex = 0;
                 }
+
+                return result;
             }
             finally
             {

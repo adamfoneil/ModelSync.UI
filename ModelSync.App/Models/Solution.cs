@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace ModelSync.App.Models
@@ -13,6 +15,12 @@ namespace ModelSync.App.Models
             {
                 Merges = new MergeDefinition[] { new MergeDefinition() }.ToList()
             };
+        }
+
+        public static string GetFilename(string visualStudioSolution)
+        {
+            string baseFile = Path.GetFileNameWithoutExtension(visualStudioSolution);
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ModelSync", baseFile + ".json");
         }
     }
 }
