@@ -83,7 +83,7 @@ namespace ModelSync.App
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        fileName = dlg.SelectedFilename;
+                        fileName = Solution.GetFilename(dlg.SelectedFilename);
                         solutionFolder = dlg.SolutionFolder;
                         return true;
                     }
@@ -109,13 +109,14 @@ namespace ModelSync.App
             form.TabControl.TabIndexChanged -= form.tabMain_SelectedIndexChanged;
             form.SuspendLayout();
 
-            string solutionPath = (!string.IsNullOrEmpty(fileName)) ?
-                Path.GetDirectoryName(fileName) :
-                null;            
-
+            string solutionPath = Path.GetDirectoryName(fileName);
+                
             try
             {
-                Solution result = JsonFile.Load<Solution>(fileName);
+                Solution result = (File.Exists(fileName)) ? 
+                    JsonFile.Load<Solution>(fileName) :
+                    Solution.Create();
+
                 SolutionFile = fileName;
 
                 if (result?.Merges.Any() ?? false)

@@ -34,6 +34,8 @@
             this.cbSolution = new System.Windows.Forms.ComboBox();
             this.llSolutionFolder = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.lblSolutionCount = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -54,6 +56,7 @@
             this.btnOK.TabIndex = 4;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // label1
             // 
@@ -66,6 +69,8 @@
             // 
             // cbSolution
             // 
+            this.cbSolution.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbSolution.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbSolution.FormattingEnabled = true;
             this.cbSolution.Location = new System.Drawing.Point(12, 33);
             this.cbSolution.Name = "cbSolution";
@@ -92,6 +97,24 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Solution Folder:";
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(12, 63);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(331, 15);
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar1.TabIndex = 6;
+            this.progressBar1.Visible = false;
+            // 
+            // lblSolutionCount
+            // 
+            this.lblSolutionCount.Location = new System.Drawing.Point(349, 63);
+            this.lblSolutionCount.Name = "lblSolutionCount";
+            this.lblSolutionCount.Size = new System.Drawing.Size(122, 15);
+            this.lblSolutionCount.TabIndex = 7;
+            this.lblSolutionCount.Text = "0 solutions found";
+            this.lblSolutionCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // frmOpenSolution
             // 
             this.AcceptButton = this.btnOK;
@@ -99,6 +122,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(483, 137);
+            this.Controls.Add(this.lblSolutionCount);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.llSolutionFolder);
             this.Controls.Add(this.cbSolution);
@@ -125,5 +150,7 @@
         private System.Windows.Forms.ComboBox cbSolution;
         private System.Windows.Forms.LinkLabel llSolutionFolder;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label lblSolutionCount;
     }
 }

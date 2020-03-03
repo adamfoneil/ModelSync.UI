@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinForms.Library;
 using WinForms.Library.Extensions.ComboBoxes;
@@ -21,12 +22,13 @@ namespace ModelSync.App.Forms
             get { return cbSolution.GetValue<string>(); }
         }
 
-        private void frmOpenSolution_Load(object sender, EventArgs e)
+        private async void frmOpenSolution_Load(object sender, EventArgs e)
         {
             try
             {
-                cbSolution.Fill(FindSolutions());
                 llSolutionFolder.Text = SolutionFolder;
+                var solutions = await FindSolutionsAsync();
+                cbSolution.Fill(solutions);                
             }
             catch (Exception exc)
             {
@@ -34,25 +36,52 @@ namespace ModelSync.App.Forms
             }
         }
 
-        private IEnumerable<ListItem<string>> FindSolutions()
+        private async Task<IEnumerable<ListItem<string>>> FindSolutionsAsync()
         {
             List<ListItem<string>> results = new List<ListItem<string>>();
-            FileSystem.EnumFiles(SolutionFolder, "*.sln", fileFound: (fi) =>
+
+            IProgress<int> showProgress = new Progress<int>(ShowProgress);
+
+            progressBar1.Visible = true;
+            await Task.Run(() =>
             {
-                results.Add(new ListItem<string>(fi.FullName, fi.FullName.Substring(SolutionFolder.Length) + 1));
-                return EnumFileResult.Continue;
+                FileSystem.EnumFiles(SolutionFolder, "*.sln", fileFound: (fi) =>
+                {
+                    results.Add(new ListItem<string>(fi.FullName, fi.FullName.Substring(SolutionFolder.Length + 1)));
+                    showProgress.Report(results.Count);
+                    return EnumFileResult.NextFolder;
+                });
             });
+            progressBar1.Visible = false;
+
             return results;
         }
 
-        private void llSolutionFolder_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void ShowProgress(int obj)
+        {
+            lblSolutionCount.Text = $"{obj} solutions found";
+        }
+
+        private async void llSolutionFolder_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 SolutionFolder = dlg.SelectedPath;
-                llSolutionFolder.Text = dlg.SelectedPath;
-                cbSolution.Fill(FindSolutions());
+                var solutions = await FindSolutionsAsync();
+                cbSolution.Fill(solutions);
+            }
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            if (cbSolution.SelectedItem != null)
+            {
+                DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                MessageBox.Show("Please select a solution.");
             }
         }
     }
