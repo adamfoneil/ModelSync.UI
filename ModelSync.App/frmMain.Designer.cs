@@ -41,8 +41,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.pbMain = new System.Windows.Forms.ToolStripProgressBar();
+            this.llOpenSolution = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabMain.SuspendLayout();
             this.cmTabControls.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -72,6 +72,7 @@
             this.deleteToolStripMenuItem});
             this.cmTabControls.Name = "cmTabControls";
             this.cmTabControls.Size = new System.Drawing.Size(132, 76);
+            this.cmTabControls.Opening += new System.ComponentModel.CancelEventHandler(this.cmTabControls_Opening);
             // 
             // renameToolStripMenuItem
             // 
@@ -120,7 +121,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tslStatus,
             this.pbMain,
-            this.toolStripStatusLabel2,
+            this.llOpenSolution,
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 397);
             this.statusStrip1.Name = "statusStrip1";
@@ -141,6 +142,16 @@
             this.pbMain.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.pbMain.Visible = false;
             // 
+            // llOpenSolution
+            // 
+            this.llOpenSolution.IsLink = true;
+            this.llOpenSolution.Name = "llOpenSolution";
+            this.llOpenSolution.Size = new System.Drawing.Size(655, 17);
+            this.llOpenSolution.Spring = true;
+            this.llOpenSolution.Text = "Open Solution...";
+            this.llOpenSolution.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.llOpenSolution.Click += new System.EventHandler(this.llOpenSolution_Click);
+            // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.IsLink = true;
@@ -148,16 +159,6 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(58, 17);
             this.toolStripStatusLabel1.Text = "Options...";
             this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.IsLink = true;
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(522, 17);
-            this.toolStripStatusLabel2.Spring = true;
-            this.toolStripStatusLabel2.Text = "Open Solution...";
-            this.toolStripStatusLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolStripStatusLabel2.Click += new System.EventHandler(this.toolStripStatusLabel2_Click);
             // 
             // frmMain
             // 
@@ -195,7 +196,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripStatusLabel tslStatus;
         private System.Windows.Forms.ToolStripProgressBar pbMain;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel llOpenSolution;
     }
 }
 

@@ -292,12 +292,11 @@ namespace ModelSync.App
                     break;
                 }
             }
-
-            _tabRightClick = null;
+            
             return result;
         }
 
-        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
+        private void llOpenSolution_Click(object sender, EventArgs e)
         {
             try
             {
@@ -323,6 +322,15 @@ namespace ModelSync.App
             {
                 MessageBox.Show(exc.Message);
             }
+        }
+
+        private void cmTabControls_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var tab = GetSelectedTab(tabMain);
+            bool enabled = !tab.Text.Equals("new sync");
+            renameToolStripMenuItem.Enabled = enabled;
+            deleteToolStripMenuItem.Enabled = enabled;
+            setColorToolStripMenuItem.Enabled = enabled;
         }
     }
 }
