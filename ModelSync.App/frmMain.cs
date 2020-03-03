@@ -47,17 +47,27 @@ namespace ModelSync.App
                 _settings.Position?.Apply(this);
 
                 string solutionFolder = _settings.SolutionFolder;
-                if (GetSolutionFile(StartupArgs, ref solutionFolder, out string fileName))
-                {
-                    _settings.SolutionFolder = solutionFolder;
+                string[] solutionFiles = _settings.SolutionFiles?.ToArray() ?? new string[0];
+
+                bool exit = false;
+                if (GetSolutionFile(StartupArgs, ref solutionFiles, ref solutionFolder, out string fileName))
+                {                    
                     _solution = LoadSolution(this, fileName);
                 }
                 else
                 {
-                    _settings.SolutionFolder = solutionFolder;
+                    // user didn't pick a solution, so we have to exit
+                    exit = true;
+                }
+
+                _settings.SolutionFolder = solutionFolder;
+                _settings.SolutionFiles = solutionFiles.ToList();
+
+                if (exit)
+                {
                     Close();
                     Application.Exit();
-                }                
+                }
             }
             catch (Exception exc)
             {
@@ -65,7 +75,7 @@ namespace ModelSync.App
             }
         }
 
-        private static bool GetSolutionFile(string[] startupArgs, ref string solutionFolder, out string fileName)
+        private static bool GetSolutionFile(string[] startupArgs, ref string[] cachedSolutionFiles, ref string solutionFolder, out string fileName)
         {
             if (startupArgs?.Length > 0)
             {
@@ -76,7 +86,8 @@ namespace ModelSync.App
             {
                 frmOpenSolution dlg = new frmOpenSolution()
                 {
-                    SolutionFolder = solutionFolder
+                    SolutionFolder = solutionFolder,
+                    SolutionFiles = cachedSolutionFiles
                 };
 
                 while (true)
@@ -85,11 +96,13 @@ namespace ModelSync.App
                     {
                         fileName = Solution.GetFilename(dlg.SelectedFilename);
                         solutionFolder = dlg.SolutionFolder;
+                        cachedSolutionFiles = dlg.SolutionFiles;
                         return true;
                     }
                     else
                     {
                         solutionFolder = dlg.SolutionFolder;
+                        cachedSolutionFiles = dlg.SolutionFiles;
                         if (MessageBox.Show("Please select a solution or Cancel to exit.", "Open Solution", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                         {
                             break;

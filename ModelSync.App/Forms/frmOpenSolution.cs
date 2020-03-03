@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinForms.Library;
@@ -16,6 +18,7 @@ namespace ModelSync.App.Forms
         }
 
         public string SolutionFolder { get; set; }
+        public string[] SolutionFiles { get; set; }
 
         public string SelectedFilename 
         {
@@ -27,7 +30,12 @@ namespace ModelSync.App.Forms
             try
             {
                 llSolutionFolder.Text = SolutionFolder;
-                var solutions = await FindSolutionsAsync();
+                lblSolutionCount.Visible = false;
+
+                var solutions = (SolutionFiles?.Any() ?? false) ? 
+                    SolutionFiles.Select(fileName => new ListItem<string>(fileName, fileName.Substring(SolutionFolder.Length + 1))) :
+                    await FindSolutionsAsync();
+
                 cbSolution.Fill(solutions);                
             }
             catch (Exception exc)
@@ -43,6 +51,8 @@ namespace ModelSync.App.Forms
             IProgress<int> showProgress = new Progress<int>(ShowProgress);
 
             progressBar1.Visible = true;
+            lblSolutionCount.Visible = true;
+
             await Task.Run(() =>
             {
                 FileSystem.EnumFiles(SolutionFolder, "*.sln", fileFound: (fi) =>
@@ -52,7 +62,11 @@ namespace ModelSync.App.Forms
                     return EnumFileResult.NextFolder;
                 });
             });
+            
             progressBar1.Visible = false;
+            lblSolutionCount.Visible = false;
+
+            SolutionFiles = results.Select(li => li.Value).ToArray();
 
             return results;
         }
@@ -77,7 +91,18 @@ namespace ModelSync.App.Forms
         {
             if (cbSolution.SelectedItem != null)
             {
-                DialogResult = DialogResult.OK;
+                string fileName = cbSolution.GetValue<string>();
+                if (File.Exists(fileName))
+                {
+                    DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    var fileList = SolutionFiles.ToList();
+                    fileList.Remove(fileName);
+                    SolutionFiles = fileList.ToArray();
+                    MessageBox.Show($"The solution file {fileName} no longer exists, and will be removed.");
+                }
             }
             else
             {
