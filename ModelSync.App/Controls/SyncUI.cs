@@ -153,10 +153,28 @@ namespace ModelSync.App.Controls
                 var thisAction = e.Node as ScriptActionNode;
                 if (thisAction != null) nodes.Add(thisAction);
 
-                nodes.AddRange(e.Node.Nodes.OfType<ScriptActionNode>());
+                void addChildrenR(TreeNode parent)
+                {
+                    nodes.AddRange(parent.Nodes.OfType<ScriptActionNode>());
+                    foreach (TreeNode child in parent.Nodes) addChildrenR(child);
+                };
+
+                addChildrenR(e.Node);
                               
                 tbScriptOutput.Clear();
                 tbScriptOutput.Text = new SqlServerDialect().FormatScript(nodes.Select(node => node.ScriptAction));
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void btnExecute_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
             }
             catch (Exception exc)
             {

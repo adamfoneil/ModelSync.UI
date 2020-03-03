@@ -187,7 +187,6 @@
             this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbScriptOutput.IsReplaceMode = false;
             this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbScriptOutput.LeftBracket = '(';
@@ -230,6 +229,7 @@
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(68, 22);
             this.btnExecute.Text = "Execute";
+            this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
             // btnSaveAs
             // 

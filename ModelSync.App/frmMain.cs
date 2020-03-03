@@ -117,20 +117,22 @@ namespace ModelSync.App
 
         private Solution LoadSolution(frmMain form, string fileName)
         {
-            // todo: save current solution
+            SaveCurrentSolution();
             
             form.TabControl.TabIndexChanged -= form.tabMain_SelectedIndexChanged;
-            form.SuspendLayout();
-
-            string solutionPath = Path.GetDirectoryName(fileName);
+            form.SuspendLayout();            
                 
             try
             {
+                DeleteAllButLastTab(tabMain);
+
                 Solution result = (File.Exists(fileName)) ? 
                     JsonFile.Load<Solution>(fileName) :
                     Solution.Create();
 
                 SolutionFile = fileName;
+
+                string solutionPath = Path.GetDirectoryName(fileName);                                
 
                 if (result?.Merges.Any() ?? false)
                 {
@@ -169,6 +171,17 @@ namespace ModelSync.App
             }            
         }
 
+        private static void DeleteAllButLastTab(TabControl tabControl)
+        {            
+            List<TabPage> pages = new List<TabPage>();
+            for (int i = 0; i < tabControl.TabPages.Count - 1; i++)
+            {                
+                pages.Add(tabControl.TabPages[i]);
+            }
+
+            foreach (var page in pages) tabControl.TabPages.Remove(page);
+        }
+
         private void CompleteOperation(object sender, EventArgs e)
         {
             tslStatus.Text = "Ready";
@@ -198,15 +211,19 @@ namespace ModelSync.App
             {
                 _settings.Position = FormPosition.FromForm(this);
                 _settings.Save();
-
-                if (!string.IsNullOrEmpty(SolutionFile) && _solution != null)
-                {
-                    JsonFile.Save(SolutionFile, _solution);
-                }
+                SaveCurrentSolution();
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void SaveCurrentSolution()
+        {
+            if (!string.IsNullOrEmpty(SolutionFile) && _solution != null)
+            {
+                JsonFile.Save(SolutionFile, _solution);
             }
         }
 
@@ -292,5 +309,28 @@ namespace ModelSync.App
             return result;
         }
 
+        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                frmOpenSolution dlg = new frmOpenSolution()
+                {
+                    SolutionFiles = _settings.SolutionFiles?.ToArray(),
+                    SolutionFolder = _settings.SolutionFolder
+                };
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    LoadSolution(this, Solution.GetFilename(dlg.SelectedFilename));
+                }
+
+                _settings.SolutionFolder = dlg.SolutionFolder;
+                _settings.SolutionFiles = dlg.SolutionFiles?.ToList();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
     }
 }
