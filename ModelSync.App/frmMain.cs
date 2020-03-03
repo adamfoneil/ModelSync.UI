@@ -117,7 +117,7 @@ namespace ModelSync.App
 
         private Solution LoadSolution(string fileName)
         {
-            SaveCurrentSolution();
+            SaveCurrentSolution();            
             
             tabMain.TabIndexChanged -= tabMain_SelectedIndexChanged;
             SuspendLayout();            
@@ -126,41 +126,46 @@ namespace ModelSync.App
             {
                 Solution result = (File.Exists(fileName)) ? 
                     JsonFile.Load<Solution>(fileName) :
-                    Solution.Create();
-
-                SolutionFile = fileName;
+                    Solution.Create();                
 
                 string solutionPath = Path.GetDirectoryName(fileName);                                
-
-                if (result?.Merges.Any() ?? false)
+                
+                int index = 0;
+                foreach (var merge in result.Merges)
                 {
-                    int index = 0;
-                    foreach (var merge in result.Merges)
-                    {
-                        var tab = new TabPage(merge.Title ?? $"merge {index}") 
-                        { 
-                            ImageKey = GetTabImage(merge.SourceType),
-                            BackColor = merge.BackgroundColor
-                        };
+                    var tab = new MergeDefinitionTab(fileName, merge.Title ?? $"merge {index}") 
+                    { 
+                        ImageKey = GetTabImage(merge.SourceType),
+                        BackColor = merge.BackgroundColor
+                    };
 
-                        var ui = new SyncUI() 
-                        { 
-                            Dock = DockStyle.Fill, 
-                            Document = merge,
-                            SolutionPath = solutionPath,                            
-                        };
-                        ui.OperationStarted += StartOperation;
-                        ui.OperationComplete += CompleteOperation;
-                        ui.GetConnection = (text) => new SqlConnection(text);
+                    var ui = new SyncUI() 
+                    { 
+                        Dock = DockStyle.Fill, 
+                        Document = merge,
+                        SolutionPath = solutionPath,                            
+                    };
+                    ui.OperationStarted += StartOperation;
+                    ui.OperationComplete += CompleteOperation;
+                    ui.GetConnection = (text) => new SqlConnection(text);
 
-                        tab.Controls.Add(ui);
-                        tabMain.TabPages.Insert(index, tab);
-                        index++;
-                    }
-
-                    tabMain.SelectedIndex = 0;
+                    tab.Controls.Add(ui);
+                    tabMain.TabPages.Insert(index, tab);
+                    index++;
                 }
 
+                // remove tab pages from the prior solution
+                List<TabPage> removePages = new List<TabPage>();
+                foreach (var tab in tabMain.TabPages)
+                {
+                    var mergeTab = tab as MergeDefinitionTab;
+                    if (mergeTab != null && !mergeTab.SolutionFile.Equals(fileName)) removePages.Add(mergeTab);
+                }
+                foreach (var tab in removePages) tabMain.TabPages.Remove(tab);
+
+                tabMain.SelectedIndex = 0;
+
+                SolutionFile = fileName;
                 return result;
             }
             finally
@@ -308,11 +313,7 @@ namespace ModelSync.App
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    frmMain main = new frmMain() 
-                    { 
-                        StartupArgs = new string[] { Solution.GetFilename(dlg.SelectedFilename) } 
-                    };
-                    main.Show();
+                    LoadSolution(Solution.GetFilename(dlg.SelectedFilename));
                 }
 
                 _settings.SolutionFolder = dlg.SolutionFolder;

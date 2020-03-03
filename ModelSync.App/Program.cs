@@ -12,8 +12,6 @@ namespace ModelSync.App
         [STAThread]
         static void Main(string[] args)
         {
-            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += AssemblyHelper.LoadReflectionOnlyDependencies;            
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain() { StartupArgs = args });
