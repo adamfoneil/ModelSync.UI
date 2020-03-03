@@ -52,7 +52,7 @@ namespace ModelSync.App
                 bool exit = false;
                 if (GetSolutionFile(StartupArgs, ref solutionFiles, ref solutionFolder, out string fileName))
                 {                    
-                    _solution = LoadSolution(fileName);
+                    LoadSolution(fileName);
                 }
                 else
                 {
@@ -115,7 +115,7 @@ namespace ModelSync.App
             return false;
         }
 
-        private Solution LoadSolution(string fileName)
+        private void LoadSolution(string fileName)
         {
             SaveCurrentSolution();            
             
@@ -166,7 +166,7 @@ namespace ModelSync.App
                 tabMain.SelectedIndex = 0;
 
                 SolutionFile = fileName;
-                return result;
+                _solution = result;
             }
             finally
             {
