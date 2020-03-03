@@ -52,7 +52,7 @@ namespace ModelSync.App
                 bool exit = false;
                 if (GetSolutionFile(StartupArgs, ref solutionFiles, ref solutionFolder, out string fileName))
                 {                    
-                    _solution = LoadSolution(this, fileName);
+                    _solution = LoadSolution(fileName);
                 }
                 else
                 {
@@ -115,17 +115,15 @@ namespace ModelSync.App
             return false;
         }
 
-        private Solution LoadSolution(frmMain form, string fileName)
+        private Solution LoadSolution(string fileName)
         {
             SaveCurrentSolution();
             
-            form.TabControl.TabIndexChanged -= form.tabMain_SelectedIndexChanged;
-            form.SuspendLayout();            
+            tabMain.TabIndexChanged -= tabMain_SelectedIndexChanged;
+            SuspendLayout();            
                 
             try
             {
-                DeleteAllButLastTab(tabMain);
-
                 Solution result = (File.Exists(fileName)) ? 
                     JsonFile.Load<Solution>(fileName) :
                     Solution.Create();
@@ -156,30 +154,20 @@ namespace ModelSync.App
                         ui.GetConnection = (text) => new SqlConnection(text);
 
                         tab.Controls.Add(ui);
-                        form.TabControl.TabPages.Insert(index, tab);
+                        tabMain.TabPages.Insert(index, tab);
                         index++;
                     }
-                    form.TabControl.SelectedIndex = 0;
+
+                    tabMain.SelectedIndex = 0;
                 }
 
                 return result;
             }
             finally
             {
-                form.TabControl.TabIndexChanged += form.tabMain_SelectedIndexChanged;
-                form.ResumeLayout();
-            }            
-        }
-
-        private static void DeleteAllButLastTab(TabControl tabControl)
-        {            
-            List<TabPage> pages = new List<TabPage>();
-            for (int i = 0; i < tabControl.TabPages.Count - 1; i++)
-            {                
-                pages.Add(tabControl.TabPages[i]);
+                tabMain.TabIndexChanged += tabMain_SelectedIndexChanged;
+                ResumeLayout();
             }
-
-            foreach (var page in pages) tabControl.TabPages.Remove(page);
         }
 
         private void CompleteOperation(object sender, EventArgs e)
@@ -321,7 +309,11 @@ namespace ModelSync.App
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    LoadSolution(this, Solution.GetFilename(dlg.SelectedFilename));
+                    frmMain main = new frmMain() 
+                    { 
+                        StartupArgs = new string[] { Solution.GetFilename(dlg.SelectedFilename) } 
+                    };
+                    main.Show();
                 }
 
                 _settings.SolutionFolder = dlg.SolutionFolder;
