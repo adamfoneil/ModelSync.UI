@@ -94,6 +94,7 @@
             this.tbSource.Suggestions = null;
             this.tbSource.TabIndex = 4;
             this.tbSource.Value = "";
+            this.tbSource.BuilderClicked += new WinForms.Library.Controls.BuilderEventHandler(this.tbSource_BuilderClicked);
             // 
             // cmAssemblies
             // 
@@ -106,7 +107,7 @@
             // 
             this.selectAssemblyToolStripMenuItem.Name = "selectAssemblyToolStripMenuItem";
             this.selectAssemblyToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.selectAssemblyToolStripMenuItem.Text = "Select Assembly...";            
+            this.selectAssemblyToolStripMenuItem.Text = "Select Assembly...";
             // 
             // label1
             // 
@@ -206,7 +207,6 @@
             this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbScriptOutput.IsReplaceMode = false;
             this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbScriptOutput.LeftBracket = '(';
@@ -272,7 +272,7 @@
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "SyncUI";
-            this.Size = new System.Drawing.Size(682, 341);            
+            this.Size = new System.Drawing.Size(682, 341);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.cmAssemblies.ResumeLayout(false);

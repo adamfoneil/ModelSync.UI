@@ -292,5 +292,20 @@ namespace ModelSync.App.Controls
                 return findAssemblies(csproj);
             });
         }
+
+        private void tbSource_BuilderClicked(object sender, BuilderEventArgs e)
+        {
+            var sourceType = SourceTypeValues[cbSourceType.SelectedItem as string];
+
+            switch (sourceType)
+            {
+                case SourceType.Assembly:
+                    tbSource.SelectFile("Assemblies|*.dll", e);
+                    break;
+
+                case SourceType.Connection:
+                    break;
+            }
+        }
     }
 }
