@@ -218,20 +218,6 @@ namespace ModelSync.App.Controls
             }
         }
 
-        private bool SelectAssembly(out string fileName)
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Assemblies|*.dll,*.exe|All Files|*.*";
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                fileName = dlg.FileName;
-                return true;
-            }
-
-            fileName = null;
-            return false;
-        }        
-
         private async void cbSourceType_SelectedIndexChanged(object sender, EventArgs e)
         {
             await LoadSourceSuggestionsAsync();
