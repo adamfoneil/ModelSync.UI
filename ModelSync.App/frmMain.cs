@@ -151,7 +151,7 @@ namespace ModelSync.App
                     ui.OperationStarted += StartOperation;
                     ui.OperationComplete += CompleteOperation;
                     ui.GetConnection = (text) => new SqlConnection(text);
-                    await ui.LoadSourceSuggestionsAsync();
+                    await ui.LoadSuggestionsAsync();
 
                     tab.Controls.Add(ui);
                     tabMain.TabPages.Insert(index, tab);

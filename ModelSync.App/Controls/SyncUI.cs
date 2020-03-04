@@ -1,9 +1,12 @@
 ﻿using ModelSync.App.Models;
 using ModelSync.Library.Models;
 using ModelSync.Library.Services;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -163,11 +166,13 @@ namespace ModelSync.App.Controls
             }
         }
 
-        public async Task LoadSourceSuggestionsAsync()
+        public async Task LoadSuggestionsAsync()
         {
             if (string.IsNullOrEmpty(SolutionPath)) return;
 
             var sourceType = SourceTypeValues[cbSourceType.SelectedItem as string];
+
+            var connectionStrings = await GetSolutionConnectionStringsAsync(SolutionPath);
 
             switch (sourceType)
             {
@@ -176,9 +181,11 @@ namespace ModelSync.App.Controls
                     break;
 
                 case SourceType.Connection:
-                    tbSource.Suggestions = null;
+                    tbSource.Suggestions = connectionStrings;
                     break;
             }
+
+            tbDest.Suggestions = connectionStrings;
         }
 
         private void tvObjects_AfterSelect(object sender, TreeViewEventArgs e)
@@ -220,7 +227,7 @@ namespace ModelSync.App.Controls
 
         private async void cbSourceType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            await LoadSourceSuggestionsAsync();
+            await LoadSuggestionsAsync();
         }
 
         public async Task<IEnumerable<ListItem<string>>> LoadAssemblySuggestionsAsync()
@@ -277,6 +284,67 @@ namespace ModelSync.App.Controls
             {
                 return findAssemblies(csproj);
             });
+        }
+
+        private static async Task<IEnumerable<ListItem<string>>> GetSolutionConnectionStringsAsync(string solutionPath)
+        {
+            List<ListItem<string>> results = new List<ListItem<string>>();
+
+            await Task.Run(() =>
+            {
+                FileSystem.EnumFiles(solutionPath, "*.json", fileFound: (fi) =>
+                {
+                    int added = findConnectionStringsInJson(fi.FullName);
+                    return (added == 0) ? EnumFileResult.Continue : EnumFileResult.Stop;
+                });
+
+                FileSystem.EnumFiles(solutionPath, "*.config", fileFound: (fi) =>
+                {
+                    int added = findConnectionStringsInXml(fi.FullName);
+                    return (added == 0) ? EnumFileResult.Continue : EnumFileResult.Stop;
+                });
+            });
+
+            return results;
+            
+            int findConnectionStringsInJson(string fileName)
+            {
+                int result = 0;
+                using (var reader = File.OpenText(fileName))
+                {
+                    string json = reader.ReadToEnd();
+                    JObject @object = JsonConvert.DeserializeObject(json) as JObject;
+                    if (@object != null)
+                    {
+                        foreach (var kp in @object)
+                        {
+                            if (kp.Key.Equals("ConnectionStrings"))
+                            {
+                                foreach (JProperty item in kp.Value)
+                                {
+                                    result++;
+                                    results.Add(new ListItem<string>(item.Value.ToString(), item.Name));
+                                }
+                            }
+
+                            if (kp.Key.StartsWith("ConnectionStrings:"))
+                            {
+                                result++;
+                                results.Add(new ListItem<string>(kp.Value.ToString(), kp.Key));
+                            }
+                        }
+                    }
+                }
+                return result;
+            }
+
+            int findConnectionStringsInXml(string fileName)
+            {
+                var doc = XDocument.Load(fileName);
+                var elements = doc.XPathSelectElements("/configuration/connectionStrings/add");
+                results.AddRange(elements.Select(e => new ListItem<string>(e.Attribute("connectionString").Value, e.Attribute("name").Value)));
+                return elements.Count();
+            }
         }
 
         private void tbSource_BuilderClicked(object sender, BuilderEventArgs e)
