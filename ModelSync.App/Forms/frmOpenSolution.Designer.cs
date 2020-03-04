@@ -70,6 +70,7 @@
             // cbSolution
             // 
             this.cbSolution.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbSolution.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbSolution.FormattingEnabled = true;
             this.cbSolution.Location = new System.Drawing.Point(12, 33);
             this.cbSolution.Name = "cbSolution";

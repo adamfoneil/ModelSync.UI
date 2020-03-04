@@ -1,24 +1,29 @@
 ﻿using ModelSync.App.Models;
 using ModelSync.Library.Models;
+using ModelSync.Library.Services;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using System.Xml.XPath;
 using WinForms.Library;
-using System.Linq;
-using ModelSync.Library.Abstract;
-using ModelSync.Library.Services;
+using WinForms.Library.Controls;
+using WinForms.Library.Extensions.ComboBoxes;
+using WinForms.Library.Models;
 
 namespace ModelSync.App.Controls
-{    
+{
     public partial class SyncUI : UserControl
     {
         public ControlBinder<MergeDefinition> _binder;
 
         public event EventHandler OperationStarted;
-        public event EventHandler OperationComplete;
+        public event EventHandler OperationComplete;        
 
         public Func<string, IDbConnection> GetConnection { get; set; }
 
@@ -29,17 +34,30 @@ namespace ModelSync.App.Controls
 
         public string SolutionPath { get; set; }
 
+        private static Dictionary<SourceType, string> SourceTypes
+        {
+            get 
+            {
+                return new Dictionary<SourceType, string>()
+                {
+                    { SourceType.Assembly, "From Assembly" },
+                    { SourceType.Connection, "From Connection" }
+                };
+            }
+        }
+
+        private static Dictionary<string, SourceType> SourceTypeValues
+        {
+            get { return SourceTypes.ToDictionary(kp => kp.Value, kp => kp.Key); }
+        }
+
         public MergeDefinition Document
         {
             get { return _binder.Document; }
             set
             {
                 _binder = new ControlBinder<MergeDefinition>();                
-                _binder.AddItems(cbSourceType, m => m.SourceType, new Dictionary<SourceType, string>()
-                {
-                    { SourceType.Assembly, "From Assembly" },
-                    { SourceType.Connection, "From Connection" }
-                });
+                _binder.AddItems(cbSourceType, m => m.SourceType, SourceTypes);
                 _binder.Add(tbSource, m => m.Source);
                 _binder.Add(tbDest, m => m.Destination);
                 // todo: color
@@ -145,6 +163,24 @@ namespace ModelSync.App.Controls
             }
         }
 
+        public async Task LoadSourceSuggestionsAsync()
+        {
+            if (string.IsNullOrEmpty(SolutionPath)) return;
+
+            var sourceType = SourceTypeValues[cbSourceType.SelectedItem as string];
+
+            switch (sourceType)
+            {
+                case SourceType.Assembly:
+                    tbSource.Suggestions = await LoadAssemblySuggestionsAsync();
+                    break;
+
+                case SourceType.Connection:
+                    tbSource.Suggestions = null;
+                    break;
+            }
+        }
+
         private void tvObjects_AfterSelect(object sender, TreeViewEventArgs e)
         {
             try
@@ -180,6 +216,81 @@ namespace ModelSync.App.Controls
             {
                 MessageBox.Show(exc.Message);
             }
+        }
+
+        private bool SelectAssembly(out string fileName)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Assemblies|*.dll,*.exe|All Files|*.*";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                fileName = dlg.FileName;
+                return true;
+            }
+
+            fileName = null;
+            return false;
+        }        
+
+        private async void cbSourceType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            await LoadSourceSuggestionsAsync();
+        }
+
+        public async Task<IEnumerable<ListItem<string>>> LoadAssemblySuggestionsAsync()
+        {
+            var assemblies = await GetSolutionAssemblies(SolutionPath);
+            var uniqueFiles = PathUtil.UniquifyFiles(assemblies);
+            return uniqueFiles.Select(kp => new ListItem<string>(kp.Value, kp.Key));
+        }
+
+        private static async Task<IEnumerable<string>> GetSolutionAssemblies(string solutionPath)
+        {
+            List<string> projects = new List<string>();
+
+            await Task.Run(() =>
+            {
+                FileSystem.EnumFiles(solutionPath, "*.csproj", fileFound: (fi) =>
+                {
+                    projects.Add(fi.FullName);
+                    return EnumFileResult.NextFolder;
+                });
+            });
+
+            IEnumerable<string> findAssemblies(string csprojFile)
+            {
+                XDocument doc = XDocument.Load(csprojFile);
+                var assemblyName = doc.XPathSelectElement("/*[local-name()='Project']/*[local-name()='PropertyGroup']/*[local-name()='AssemblyName']");
+                if (assemblyName != null)
+                {
+                    var builds = doc.XPathSelectElements("/*[local-name()='Project']/*[local-name()='PropertyGroup']/*[local-name()='OutputPath']");
+                    foreach (var output in builds)
+                    {
+                        string value = Path.Combine(Path.GetDirectoryName(csprojFile), output.Value, assemblyName.Value + ".dll");
+                        if (File.Exists(value)) yield return value;
+                    }
+
+                    var assemblyElement = doc.XPathSelectElement("/*[local-name()='Project']/*[local-name()='PropertyGroup']/*[local-name()='AssemblyName']");
+                    if (assemblyElement != null)
+                    {
+                        List<string> results = new List<string>();
+                        FileSystem.EnumFiles(Path.GetDirectoryName(csprojFile), "*.dll", fileFound: (fi) =>
+                        {
+                            if (Path.GetFileNameWithoutExtension(fi.FullName).Equals(assemblyElement.Value))
+                            {
+                                results.Add(fi.FullName);                                
+                            }
+                            return EnumFileResult.NextFolder;
+                        });
+                        foreach (var file in results) yield return file;
+                    }
+                }
+            }
+
+            return projects.SelectMany(csproj =>
+            {
+                return findAssemblies(csproj);
+            });
         }
     }
 }

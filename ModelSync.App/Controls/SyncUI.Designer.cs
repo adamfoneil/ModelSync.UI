@@ -33,6 +33,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tbDest = new WinForms.Library.Controls.BuilderTextBox();
             this.tbSource = new WinForms.Library.Controls.BuilderTextBox();
+            this.cmAssemblies = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectAssemblyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.cbSourceType = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -44,7 +46,9 @@
             this.btnGenerateScript = new System.Windows.Forms.ToolStripButton();
             this.btnExecute = new System.Windows.Forms.ToolStripButton();
             this.btnSaveAs = new System.Windows.Forms.ToolStripButton();
+            this.cmConnections = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.panel1.SuspendLayout();
+            this.cmAssemblies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -82,6 +86,7 @@
             // 
             this.tbSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbSource.ContextMenuStrip = this.cmAssemblies;
             this.tbSource.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSource.Location = new System.Drawing.Point(164, 9);
             this.tbSource.Name = "tbSource";
@@ -89,6 +94,19 @@
             this.tbSource.Suggestions = null;
             this.tbSource.TabIndex = 4;
             this.tbSource.Value = "";
+            // 
+            // cmAssemblies
+            // 
+            this.cmAssemblies.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectAssemblyToolStripMenuItem});
+            this.cmAssemblies.Name = "cmAssemblies";
+            this.cmAssemblies.Size = new System.Drawing.Size(169, 26);
+            // 
+            // selectAssemblyToolStripMenuItem
+            // 
+            this.selectAssemblyToolStripMenuItem.Name = "selectAssemblyToolStripMenuItem";
+            this.selectAssemblyToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.selectAssemblyToolStripMenuItem.Text = "Select Assembly...";            
             // 
             // label1
             // 
@@ -107,6 +125,7 @@
             this.cbSourceType.Name = "cbSourceType";
             this.cbSourceType.Size = new System.Drawing.Size(141, 21);
             this.cbSourceType.TabIndex = 0;
+            this.cbSourceType.SelectedIndexChanged += new System.EventHandler(this.cbSourceType_SelectedIndexChanged);
             // 
             // splitContainer1
             // 
@@ -187,6 +206,7 @@
             this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbScriptOutput.IsReplaceMode = false;
             this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbScriptOutput.LeftBracket = '(';
@@ -239,6 +259,11 @@
             this.btnSaveAs.Size = new System.Drawing.Size(74, 22);
             this.btnSaveAs.Text = "Save as...";
             // 
+            // cmConnections
+            // 
+            this.cmConnections.Name = "cmConnections";
+            this.cmConnections.Size = new System.Drawing.Size(61, 4);
+            // 
             // SyncUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -247,9 +272,10 @@
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "SyncUI";
-            this.Size = new System.Drawing.Size(682, 341);
+            this.Size = new System.Drawing.Size(682, 341);            
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.cmAssemblies.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -279,5 +305,8 @@
         private System.Windows.Forms.ToolStripButton btnExecute;
         private System.Windows.Forms.ToolStripButton btnSaveAs;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ContextMenuStrip cmAssemblies;
+        private System.Windows.Forms.ToolStripMenuItem selectAssemblyToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cmConnections;
     }
 }

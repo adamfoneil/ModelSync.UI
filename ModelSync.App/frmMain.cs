@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinForms.Library.Models;
 
@@ -39,7 +40,7 @@ namespace ModelSync.App
             }
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
+        private async void frmMain_Load(object sender, EventArgs e)
         {
             try
             {
@@ -52,7 +53,7 @@ namespace ModelSync.App
                 bool exit = false;
                 if (GetSolutionFile(StartupArgs, ref solutionFiles, ref solutionFolder, out string fileName))
                 {                    
-                    LoadSolution(fileName);
+                    await LoadSolutionAsync(fileName);
                 }
                 else
                 {
@@ -77,9 +78,9 @@ namespace ModelSync.App
 
         private static bool GetSolutionFile(string[] startupArgs, ref string[] cachedSolutionFiles, ref string solutionFolder, out string fileName)
         {
-            if (startupArgs?.Length > 0)
+            if (startupArgs?.Length > 0 && File.Exists(startupArgs[0]))
             {
-                fileName = Solution.GetFilename(startupArgs[0]);
+                fileName = startupArgs[0];
                 return true;
             }
             else
@@ -94,7 +95,7 @@ namespace ModelSync.App
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        fileName = Solution.GetFilename(dlg.SelectedFilename);
+                        fileName = dlg.SelectedFilename;
                         solutionFolder = dlg.SolutionFolder;
                         cachedSolutionFiles = dlg.SolutionFiles;
                         return true;
@@ -115,10 +116,12 @@ namespace ModelSync.App
             return false;
         }
 
-        private void LoadSolution(string fileName)
+        private async Task LoadSolutionAsync(string visualStudioSolution)
         {
-            SaveCurrentSolution();            
-            
+            SaveCurrentSolution();
+
+            string fileName = Solution.GetFilename(visualStudioSolution);
+
             tabMain.TabIndexChanged -= tabMain_SelectedIndexChanged;
             SuspendLayout();            
                 
@@ -128,7 +131,7 @@ namespace ModelSync.App
                     JsonFile.Load<Solution>(fileName) :
                     Solution.Create();                
 
-                string solutionPath = Path.GetDirectoryName(fileName);                                
+                string solutionPath = Path.GetDirectoryName(visualStudioSolution);                                
                 
                 int index = 0;
                 foreach (var merge in result.Merges)
@@ -148,6 +151,7 @@ namespace ModelSync.App
                     ui.OperationStarted += StartOperation;
                     ui.OperationComplete += CompleteOperation;
                     ui.GetConnection = (text) => new SqlConnection(text);
+                    await ui.LoadSourceSuggestionsAsync();
 
                     tab.Controls.Add(ui);
                     tabMain.TabPages.Insert(index, tab);
@@ -301,7 +305,7 @@ namespace ModelSync.App
             return result;
         }
 
-        private void llOpenSolution_Click(object sender, EventArgs e)
+        private async void llOpenSolution_Click(object sender, EventArgs e)
         {
             try
             {
@@ -313,7 +317,7 @@ namespace ModelSync.App
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    LoadSolution(Solution.GetFilename(dlg.SelectedFilename));
+                    await LoadSolutionAsync(dlg.SelectedFilename);
                 }
 
                 _settings.SolutionFolder = dlg.SolutionFolder;
