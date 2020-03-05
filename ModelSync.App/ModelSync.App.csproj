@@ -119,9 +119,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AO.ModelSync.Library">
-      <Version>2.0.7</Version>
-    </PackageReference>
     <PackageReference Include="FCTB">
       <Version>2.16.24</Version>
     </PackageReference>
@@ -131,6 +128,12 @@
     <PackageReference Include="WinForms.Library">
       <Version>1.0.47</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ModelSync\ModelSync.Library\ModelSync.Library.csproj">
+      <Project>{c95d733e-a6f7-47ca-b890-581cdfad7976}</Project>
+      <Name>ModelSync.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

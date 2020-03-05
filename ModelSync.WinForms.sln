@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelSync.App", "ModelSync.App\ModelSync.App.csproj", "{D88B6E1B-2241-444E-AEFE-36DDA4AE13F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleModel", "SampleModel\SampleModel.csproj", "{14B0F96C-A5F4-4F77-90E8-F968491176DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleModel", "SampleModel\SampleModel.csproj", "{14B0F96C-A5F4-4F77-90E8-F968491176DF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelSync.Library", "..\ModelSync\ModelSync.Library\ModelSync.Library.csproj", "{C95D733E-A6F7-47CA-B890-581CDFAD7976}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{14B0F96C-A5F4-4F77-90E8-F968491176DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14B0F96C-A5F4-4F77-90E8-F968491176DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14B0F96C-A5F4-4F77-90E8-F968491176DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C95D733E-A6F7-47CA-B890-581CDFAD7976}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C95D733E-A6F7-47CA-B890-581CDFAD7976}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C95D733E-A6F7-47CA-B890-581CDFAD7976}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C95D733E-A6F7-47CA-B890-581CDFAD7976}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

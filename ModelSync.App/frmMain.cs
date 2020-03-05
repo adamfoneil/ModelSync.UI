@@ -168,6 +168,8 @@ namespace ModelSync.App
                 foreach (var tab in removePages) tabMain.TabPages.Remove(tab);
 
                 tabMain.SelectedIndex = 0;
+                var firstMerge = tabMain.TabPages[0].Controls[0] as SyncUI;
+                await firstMerge.GenerateScriptAsync();
 
                 SolutionFile = fileName;
                 _solution = result;

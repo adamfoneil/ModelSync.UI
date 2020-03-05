@@ -146,7 +146,7 @@
             // 
             this.llOpenSolution.IsLink = true;
             this.llOpenSolution.Name = "llOpenSolution";
-            this.llOpenSolution.Size = new System.Drawing.Size(655, 17);
+            this.llOpenSolution.Size = new System.Drawing.Size(522, 17);
             this.llOpenSolution.Spring = true;
             this.llOpenSolution.Text = "Open Solution...";
             this.llOpenSolution.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

@@ -4,8 +4,7 @@ namespace Hs5.Models
 {
 	public enum SexValue
 	{
-				Female = 1,
-		Male = 2,
-		
+		Female = 1,
+		Male = 2		
 	}
 }

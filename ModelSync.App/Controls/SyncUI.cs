@@ -67,56 +67,62 @@ namespace ModelSync.App.Controls
                 _binder.Document = value;
             }
         }
-        
-        private async void btnGenerateScript_Click(object sender, EventArgs e)
+
+        public async Task GenerateScriptAsync()
         {
-            try
-            {
-                DataModel sourceModel =
-                    (_binder.Document.SourceType == SourceType.Assembly) ? await GetAssemblyModelAsync(tbSource.Text) :
-                    (_binder.Document.SourceType == SourceType.Connection) ? await GetConnectionModelAsync(tbSource.Text) :
-                    throw new Exception($"Unknown source type {_binder.Document.Source}");
+            DataModel sourceModel =
+                (_binder.Document.SourceType == SourceType.Assembly) ? await GetAssemblyModelAsync(tbSource.Text) :
+                (_binder.Document.SourceType == SourceType.Connection) ? await GetConnectionModelAsync(tbSource.Text) :
+                throw new Exception($"Unknown source type {_binder.Document.Source}");
 
-                DataModel destModel = await GetConnectionModelAsync(tbDest.Text);
-                var diff = DataModel.Compare(sourceModel, destModel);
+            DataModel destModel = await GetConnectionModelAsync(tbDest.Text);
+            var diff = DataModel.Compare(sourceModel, destModel);
 
-                tvObjects.Nodes.Clear();
+            tvObjects.Nodes.Clear();
 
-                var rootNode = new TreeNode("SQL Script") { ImageKey = "script", SelectedImageKey = "script" };
-                tvObjects.Nodes.Add(rootNode);
+            var rootNode = new TreeNode("SQL Script") { ImageKey = "script", SelectedImageKey = "script" };
+            tvObjects.Nodes.Add(rootNode);
 
-                var show = diff.Where(scr => !_binder.Document.IgnoreObjects?.Contains(scr.Object.Name) ?? true);
+            var show = diff.Where(scr => !_binder.Document.IgnoreObjects?.Contains(scr.Object.Name) ?? true);
 
-                Dictionary<ActionType, string> actionTypeIcons = new Dictionary<ActionType, string>()
+            Dictionary<ActionType, string> actionTypeIcons = new Dictionary<ActionType, string>()
                 {
                     { ActionType.Create, "create" },
                     { ActionType.Alter, "update" },
                     { ActionType.Drop, "delete" }
                 };
 
-                foreach (var actionGrp in show.GroupBy(scr => scr.Type).Select(grp => new { grp.Key, Icon = actionTypeIcons[grp.Key], Items = grp }))
+            foreach (var actionGrp in show.GroupBy(scr => scr.Type).Select(grp => new { grp.Key, Icon = actionTypeIcons[grp.Key], Items = grp }))
+            {
+                var actionNode = new TreeNode(actionGrp.Key.ToString())
                 {
-                    var actionNode = new TreeNode(actionGrp.Key.ToString()) 
-                    { 
-                        ImageKey = actionGrp.Icon, 
-                        SelectedImageKey = actionGrp.Icon 
-                    };
-                    rootNode.Nodes.Add(actionNode);
+                    ImageKey = actionGrp.Icon,
+                    SelectedImageKey = actionGrp.Icon
+                };
+                rootNode.Nodes.Add(actionNode);
 
-                    foreach (var typeGrp in actionGrp.Items.GroupBy(scr => scr.Object.ObjectType))
+                foreach (var typeGrp in actionGrp.Items.GroupBy(scr => scr.Object.ObjectType))
+                {
+                    var objTypeNode = new ObjectTypeNode(typeGrp.Key, typeGrp.Count());
+                    actionNode.Nodes.Add(objTypeNode);
+
+                    foreach (var scriptAction in typeGrp.OrderBy(scr => scr.Object.Name))
                     {
-                        var objTypeNode = new ObjectTypeNode(typeGrp.Key, typeGrp.Count());
-                        actionNode.Nodes.Add(objTypeNode);
-
-                        foreach (var scriptAction in typeGrp.OrderBy(scr => scr.Object.Name))
-                        {
-                            var objNode = new ScriptActionNode(scriptAction);
-                            objTypeNode.Nodes.Add(objNode);                            
-                        }
+                        var objNode = new ScriptActionNode(scriptAction);
+                        objTypeNode.Nodes.Add(objNode);
                     }
                 }
+            }
 
-                tvObjects.ExpandAll();
+            tvObjects.ExpandAll();
+
+        }
+
+        private async void btnGenerateScript_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                await GenerateScriptAsync();
             }
             catch (Exception exc)
             {
