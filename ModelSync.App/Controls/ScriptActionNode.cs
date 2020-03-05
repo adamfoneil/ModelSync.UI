@@ -7,7 +7,7 @@ namespace ModelSync.App.Controls
     {
         public ScriptActionNode(ScriptAction scriptAction)
         {
-            Text = scriptAction.Object.Name;
+            Text = scriptAction.Object.ToString();
             ScriptAction = scriptAction;
             ImageKey = ObjectTypeNode.ObjectTypeIcons[scriptAction.Object.ObjectType];
             SelectedImageKey = ImageKey;
