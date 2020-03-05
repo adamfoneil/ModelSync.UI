@@ -1,4 +1,6 @@
-﻿using System;
+﻿using JsonSettings.Library;
+using ModelSync.App.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +14,8 @@ namespace ModelSync.App.Forms
 {
     public partial class frmOpenSolution : Form
     {
+        private SolutionOpenHistory _history;
+
         public frmOpenSolution()
         {
             InitializeComponent();
@@ -20,15 +24,15 @@ namespace ModelSync.App.Forms
         public string SolutionFolder { get; set; }
         public string[] SolutionFiles { get; set; }
 
-        public string SelectedFilename 
-        {
-            get { return cbSolution.GetValue<string>(); }
-        }
+        public string SelectedFilename { get; private set; }
 
         private async void frmOpenSolution_Load(object sender, EventArgs e)
         {
             try
             {
+                _history = SettingsBase.Load<SolutionOpenHistory>();
+                LoadRecentItems();
+
                 llSolutionFolder.Text = SolutionFolder;
                 lblSolutionCount.Visible = false;
 
@@ -41,6 +45,31 @@ namespace ModelSync.App.Forms
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void LoadRecentItems()
+        {
+            var recent = _history.History.OrderByDescending(kp => kp.Value).Select(kp => new
+            {
+                Name = Path.GetFileName(kp.Key),
+                FullPath = kp.Key
+            }).Take(5);
+
+            if (!recent.Any())
+            {
+                ddbRecent.Enabled = false;
+                return;
+            }
+
+            foreach (var item in recent)
+            {
+                ToolStripButton btn = new ToolStripButton(item.Name);
+                btn.Click += delegate (object sender, EventArgs e)
+                {
+                    SelectSolutionInner(item.FullPath);
+                };
+                ddbRecent.DropDownItems.Add(btn);
             }
         }
 
@@ -91,22 +120,30 @@ namespace ModelSync.App.Forms
         {
             if (cbSolution.SelectedItem != null)
             {
-                string fileName = cbSolution.GetValue<string>();
-                if (File.Exists(fileName))
-                {
-                    DialogResult = DialogResult.OK;
-                }
-                else
-                {
-                    var fileList = SolutionFiles.ToList();
-                    fileList.Remove(fileName);
-                    SolutionFiles = fileList.ToArray();
-                    MessageBox.Show($"The solution file {fileName} no longer exists, and will be removed.");
-                }
+                string fileName = cbSolution.GetValue<string>();                
+                SelectSolutionInner(fileName);
             }
             else
             {
                 MessageBox.Show("Please select a solution.");
+            }
+        }
+
+        private void SelectSolutionInner(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                SelectedFilename = fileName;
+                _history.History[fileName] = DateTime.Now;
+                _history.Save();
+                DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                var fileList = SolutionFiles.ToList();
+                fileList.Remove(fileName);
+                SolutionFiles = fileList.ToArray();
+                MessageBox.Show($"The solution file {fileName} no longer exists, and will be removed.");
             }
         }
     }

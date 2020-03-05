@@ -15,6 +15,6 @@ namespace ModelSync.App
         /// </summary>
         public List<string> SolutionFiles { get; set; }
 
-        public override string Filename => BuildPath(SpecialFolder.LocalApplicationData, "ModelSync", "Settings.json");
+        public override string Filename => BuildPath(SpecialFolder.LocalApplicationData, "ModelSync", "_Settings.json");
     }
 }
