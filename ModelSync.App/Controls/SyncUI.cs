@@ -6,7 +6,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +15,6 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using WinForms.Library;
 using WinForms.Library.Controls;
-using WinForms.Library.Extensions.ComboBoxes;
 using WinForms.Library.Models;
 
 namespace ModelSync.App.Controls
