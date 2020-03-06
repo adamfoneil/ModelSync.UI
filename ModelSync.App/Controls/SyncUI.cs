@@ -1,5 +1,6 @@
 ﻿using ModelSync.App.Models;
 using ModelSync.Library.Abstract;
+using ModelSync.Library.Interfaces;
 using ModelSync.Library.Models;
 using ModelSync.Library.Services;
 using Newtonsoft.Json;
@@ -112,23 +113,23 @@ namespace ModelSync.App.Controls
             var scriptRoot = new TreeNode("SQL Script") { ImageKey = "script", SelectedImageKey = "script" };
             tvObjects.Nodes.Add(scriptRoot);
 
-            if (_binder.Document.ExcludeActions == null) _binder.Document.ExcludeActions = new List<ScriptAction>();
+            if (_binder.Document.ExcludeActions == null) _binder.Document.ExcludeActions = new List<ExcludeAction>();
 
-            var include = diff.Except(_binder.Document.ExcludeActions);
-            LoadScriptActions(scriptRoot, include);
+            var include = diff.Where(scr => !_binder.Document.ExcludeActions.Contains(scr.GetExcludeAction()));
+            LoadScriptActions(scriptRoot, include, (action) => new ScriptActionNode(action));
             
             if (_binder.Document.ExcludeActions.Any())
             {
                 var excludeRoot = new TreeNode("Exclude") { ImageKey = "exclude", SelectedImageKey = "exclude" };
                 tvObjects.Nodes.Add(excludeRoot);
-                LoadScriptActions(excludeRoot, _binder.Document.ExcludeActions);
+                LoadScriptActions(excludeRoot, _binder.Document.ExcludeActions, (action) => new ExcludeActionNode(action));
             }
- 
-            tvObjects.ExpandAll();
+
+            scriptRoot.ExpandAll();
             tvObjects.SelectedNode = tvObjects.Nodes[0];
         }
 
-        private static void LoadScriptActions(TreeNode rootNode, IEnumerable<ScriptAction> show)
+        private static void LoadScriptActions<T>(TreeNode rootNode, IEnumerable<T> actions, Func<T, TreeNode> nodeCreator) where T : IActionable
         {
             Dictionary<ActionType, string> actionTypeIcons = new Dictionary<ActionType, string>()
             {
@@ -137,7 +138,7 @@ namespace ModelSync.App.Controls
                 { ActionType.Drop, "delete" }
             };
 
-            foreach (var actionGrp in show.GroupBy(scr => scr.Type).Select(grp => new { grp.Key, Icon = actionTypeIcons[grp.Key], Items = grp }))
+            foreach (var actionGrp in actions.GroupBy(scr => scr.Type).Select(grp => new { grp.Key, Icon = actionTypeIcons[grp.Key], Items = grp }))
             {
                 var actionNode = new TreeNode(actionGrp.Key.ToString())
                 {
@@ -146,14 +147,14 @@ namespace ModelSync.App.Controls
                 };
                 rootNode.Nodes.Add(actionNode);
 
-                foreach (var typeGrp in actionGrp.Items.GroupBy(scr => scr.Object.ObjectType))
+                foreach (var typeGrp in actionGrp.Items.GroupBy(scr => scr.ObjectType))
                 {
                     var objTypeNode = new ObjectTypeNode(typeGrp.Key, typeGrp.Count());
                     actionNode.Nodes.Add(objTypeNode);
 
-                    foreach (var scriptAction in typeGrp.OrderBy(scr => scr.Object.Name))
+                    foreach (var action in typeGrp.OrderBy(scr => scr.ObjectName))
                     {
-                        var objNode = new ScriptActionNode(scriptAction);
+                        var objNode = nodeCreator.Invoke(action);
                         objTypeNode.Nodes.Add(objNode);
                     }
                 }
@@ -443,7 +444,7 @@ namespace ModelSync.App.Controls
         {
             if (node is ScriptActionNode)
             {
-                var action = (node as ScriptActionNode).ScriptAction;
+                var action = (node as ScriptActionNode).ScriptAction.GetExcludeAction();
                 _binder.Document.ExcludeActions.Add(action);
             }
             else
@@ -454,9 +455,9 @@ namespace ModelSync.App.Controls
 
         private void IncludeChildObjects(TreeNode node)
         {
-            if (node is ScriptActionNode)
+            if (node is ExcludeActionNode)
             {
-                var action = (node as ScriptActionNode).ScriptAction;
+                var action = (node as ExcludeActionNode).ExcludeAction;
                 _binder.Document.ExcludeActions.Remove(action);                
             }
             else
