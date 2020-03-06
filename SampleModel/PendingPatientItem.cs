@@ -26,7 +26,7 @@ namespace Hs5.Models
 		[Column(TypeName = "money")]
 		public decimal SalesTax { get; set; }
 
-		//[Calculated("[UnitPrice]*[Quantity]+[SalesTax]", true)]
+		[Calculated("[UnitPrice]*[Quantity]+[SalesTax]", true)]
 		public decimal ExtPrice { get; set; }
 	}
 }
