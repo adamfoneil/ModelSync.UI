@@ -199,7 +199,7 @@
         '\'',
         '\''};
             this.tbScriptOutput.AutoIndentCharsPatterns = "";
-            this.tbScriptOutput.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.tbScriptOutput.AutoScrollMinSize = new System.Drawing.Size(0, 14);
             this.tbScriptOutput.BackBrush = null;
             this.tbScriptOutput.CharHeight = 14;
             this.tbScriptOutput.CharWidth = 8;
@@ -207,6 +207,7 @@
             this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbScriptOutput.IsReplaceMode = false;
             this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbScriptOutput.LeftBracket = '(';
@@ -218,6 +219,7 @@
             this.tbScriptOutput.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("tbScriptOutput.ServiceColors")));
             this.tbScriptOutput.Size = new System.Drawing.Size(450, 243);
             this.tbScriptOutput.TabIndex = 0;
+            this.tbScriptOutput.WordWrap = true;
             this.tbScriptOutput.Zoom = 100;
             // 
             // toolStrip1
