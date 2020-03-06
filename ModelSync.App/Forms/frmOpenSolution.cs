@@ -50,11 +50,13 @@ namespace ModelSync.App.Forms
 
         private void LoadRecentItems()
         {
-            var recent = _history.History.OrderByDescending(kp => kp.Value).Select(kp => new
-            {
-                Name = Path.GetFileName(kp.Key),
-                FullPath = kp.Key
-            }).Take(5);
+            var recent = _history.History.OrderByDescending(kp => kp.Value)
+                .Where(kp => File.Exists(Solution.GetFilename(kp.Key)))
+                .Select(kp => new
+                {
+                    Name = Path.GetFileName(kp.Key),
+                    FullPath = kp.Key
+                }).Take(5);
 
             if (!recent.Any())
             {

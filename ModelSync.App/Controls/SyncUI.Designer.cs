@@ -47,6 +47,9 @@
             this.btnExecute = new System.Windows.Forms.ToolStripButton();
             this.btnSaveAs = new System.Windows.Forms.ToolStripButton();
             this.cmConnections = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmDiff = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.includeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.excludeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.cmAssemblies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -55,6 +58,7 @@
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbScriptOutput)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            this.cmDiff.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -151,6 +155,7 @@
             // 
             // tvObjects
             // 
+            this.tvObjects.ContextMenuStrip = this.cmDiff;
             this.tvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvObjects.ImageIndex = 0;
             this.tvObjects.ImageList = this.imageList1;
@@ -160,6 +165,7 @@
             this.tvObjects.Size = new System.Drawing.Size(227, 243);
             this.tvObjects.TabIndex = 0;
             this.tvObjects.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvObjects_AfterSelect);
+            this.tvObjects.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvObjects_NodeMouseClick);
             // 
             // imageList1
             // 
@@ -175,6 +181,7 @@
             this.imageList1.Images.SetKeyName(7, "shortcut");
             this.imageList1.Images.SetKeyName(8, "column");
             this.imageList1.Images.SetKeyName(9, "key");
+            this.imageList1.Images.SetKeyName(10, "exclude");
             // 
             // toolStrip2
             // 
@@ -207,7 +214,6 @@
             this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbScriptOutput.IsReplaceMode = false;
             this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbScriptOutput.LeftBracket = '(';
@@ -266,6 +272,29 @@
             this.cmConnections.Name = "cmConnections";
             this.cmConnections.Size = new System.Drawing.Size(61, 4);
             // 
+            // cmDiff
+            // 
+            this.cmDiff.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.includeToolStripMenuItem,
+            this.excludeToolStripMenuItem});
+            this.cmDiff.Name = "cmDiff";
+            this.cmDiff.Size = new System.Drawing.Size(181, 70);
+            this.cmDiff.Opening += new System.ComponentModel.CancelEventHandler(this.cmDiff_Opening);
+            // 
+            // includeToolStripMenuItem
+            // 
+            this.includeToolStripMenuItem.Name = "includeToolStripMenuItem";
+            this.includeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.includeToolStripMenuItem.Text = "Include";
+            this.includeToolStripMenuItem.Click += new System.EventHandler(this.includeToolStripMenuItem_Click);
+            // 
+            // excludeToolStripMenuItem
+            // 
+            this.excludeToolStripMenuItem.Name = "excludeToolStripMenuItem";
+            this.excludeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.excludeToolStripMenuItem.Text = "Exclude";
+            this.excludeToolStripMenuItem.Click += new System.EventHandler(this.excludeToolStripMenuItem_Click);
+            // 
             // SyncUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -287,6 +316,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbScriptOutput)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.cmDiff.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -310,5 +340,8 @@
         private System.Windows.Forms.ContextMenuStrip cmAssemblies;
         private System.Windows.Forms.ToolStripMenuItem selectAssemblyToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip cmConnections;
+        private System.Windows.Forms.ContextMenuStrip cmDiff;
+        private System.Windows.Forms.ToolStripMenuItem includeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem excludeToolStripMenuItem;
     }
 }

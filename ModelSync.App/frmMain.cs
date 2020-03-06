@@ -4,6 +4,7 @@ using ModelSync.App.Controls;
 using ModelSync.App.Forms;
 using ModelSync.App.Models;
 using ModelSync.Library.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -236,7 +237,10 @@ namespace ModelSync.App
         {
             if (!string.IsNullOrEmpty(SolutionFile) && _solution != null)
             {
-                JsonFile.Save(SolutionFile, _solution);
+                JsonFile.Save(SolutionFile, _solution, (settings) =>
+                {
+                    settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+                });
             }
         }
 

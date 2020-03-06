@@ -42,7 +42,7 @@
             this.tslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.pbMain = new System.Windows.Forms.ToolStripProgressBar();
             this.llOpenSolution = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.llAbout = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabMain.SuspendLayout();
             this.cmTabControls.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -122,7 +122,7 @@
             this.tslStatus,
             this.pbMain,
             this.llOpenSolution,
-            this.toolStripStatusLabel1});
+            this.llAbout});
             this.statusStrip1.Location = new System.Drawing.Point(0, 397);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(767, 22);
@@ -146,19 +146,19 @@
             // 
             this.llOpenSolution.IsLink = true;
             this.llOpenSolution.Name = "llOpenSolution";
-            this.llOpenSolution.Size = new System.Drawing.Size(522, 17);
+            this.llOpenSolution.Size = new System.Drawing.Size(531, 17);
             this.llOpenSolution.Spring = true;
             this.llOpenSolution.Text = "Open Solution...";
             this.llOpenSolution.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.llOpenSolution.Click += new System.EventHandler(this.llOpenSolution_Click);
             // 
-            // toolStripStatusLabel1
+            // llAbout
             // 
-            this.toolStripStatusLabel1.IsLink = true;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(58, 17);
-            this.toolStripStatusLabel1.Text = "Options...";
-            this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.llAbout.IsLink = true;
+            this.llAbout.Name = "llAbout";
+            this.llAbout.Size = new System.Drawing.Size(49, 17);
+            this.llAbout.Text = "About...";
+            this.llAbout.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // frmMain
             // 
@@ -189,7 +189,7 @@
         private System.Windows.Forms.TabControl tabMain;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel llAbout;
         private System.Windows.Forms.ContextMenuStrip cmTabControls;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;

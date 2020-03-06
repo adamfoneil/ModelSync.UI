@@ -22,6 +22,10 @@ namespace ModelSync.App.Controls
 {
     public partial class SyncUI : UserControl
     {
+        private TreeNode _selectedNode;
+        private bool _allowExclude;
+        private bool _allowInclude;
+
         public ControlBinder<MergeDefinition> _binder;
 
         public event EventHandler OperationStarted;
@@ -29,7 +33,7 @@ namespace ModelSync.App.Controls
         public event EventHandler ScriptExecuted;
 
         public Func<string, IDbConnection> GetConnection { get; set; }
-        public SqlDialect SqlDialect { get; set; }
+        public SqlDialect SqlDialect { get; set; }        
         
         internal IEnumerable<ScriptActionNode> ScriptActions
         {
@@ -92,6 +96,9 @@ namespace ModelSync.App.Controls
 
         public async Task GenerateScriptAsync()
         {
+            if (string.IsNullOrEmpty(tbSource.Text)) return;
+            if (string.IsNullOrEmpty(tbDest.Text)) return;
+
             DataModel sourceModel =
                 (_binder.Document.SourceType == SourceType.Assembly) ? await GetAssemblyModelAsync(tbSource.Text) :
                 (_binder.Document.SourceType == SourceType.Connection) ? await GetConnectionModelAsync(tbSource.Text) :
@@ -102,18 +109,34 @@ namespace ModelSync.App.Controls
 
             tvObjects.Nodes.Clear();
 
-            var rootNode = new TreeNode("SQL Script") { ImageKey = "script", SelectedImageKey = "script" };
-            tvObjects.Nodes.Add(rootNode);
+            var scriptRoot = new TreeNode("SQL Script") { ImageKey = "script", SelectedImageKey = "script" };
+            tvObjects.Nodes.Add(scriptRoot);
 
-            var show = diff.Where(scr => !_binder.Document.IgnoreObjects?.Contains(scr.Object.Name) ?? true);
+            if (_binder.Document.ExcludeActions == null) _binder.Document.ExcludeActions = new List<ScriptAction>();
 
+            var include = diff.Except(_binder.Document.ExcludeActions);
+            LoadScriptActions(scriptRoot, include);
+            
+            if (_binder.Document.ExcludeActions.Any())
+            {
+                var excludeRoot = new TreeNode("Exclude") { ImageKey = "exclude", SelectedImageKey = "exclude" };
+                tvObjects.Nodes.Add(excludeRoot);
+                LoadScriptActions(excludeRoot, _binder.Document.ExcludeActions);
+            }
+ 
+            tvObjects.ExpandAll();
+            tvObjects.SelectedNode = tvObjects.Nodes[0];
+        }
+
+        private static void LoadScriptActions(TreeNode rootNode, IEnumerable<ScriptAction> show)
+        {
             Dictionary<ActionType, string> actionTypeIcons = new Dictionary<ActionType, string>()
             {
                 { ActionType.Create, "create" },
                 { ActionType.Alter, "update" },
                 { ActionType.Drop, "delete" }
             };
-            
+
             foreach (var actionGrp in show.GroupBy(scr => scr.Type).Select(grp => new { grp.Key, Icon = actionTypeIcons[grp.Key], Items = grp }))
             {
                 var actionNode = new TreeNode(actionGrp.Key.ToString())
@@ -131,13 +154,10 @@ namespace ModelSync.App.Controls
                     foreach (var scriptAction in typeGrp.OrderBy(scr => scr.Object.Name))
                     {
                         var objNode = new ScriptActionNode(scriptAction);
-                        objTypeNode.Nodes.Add(objNode);                        
+                        objTypeNode.Nodes.Add(objNode);
                     }
                 }
             }
-
-            tvObjects.ExpandAll();
-            tvObjects.SelectedNode = tvObjects.Nodes[0];
         }
 
         private async void btnGenerateScript_Click(object sender, EventArgs e)
@@ -397,6 +417,64 @@ namespace ModelSync.App.Controls
                 case SourceType.Connection:
                     break;
             }
+        }
+
+        private void tvObjects_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            _selectedNode = e.Node;
+            _allowExclude = InheritsFrom("script", e.Node);
+            _allowInclude = InheritsFrom("exclude", e.Node);
+        }
+
+        private bool InheritsFrom(string imageKey, TreeNode node)
+        {
+            if (node.ImageKey.Equals(imageKey)) return true;
+            if (node.Parent == null) return false;
+            return InheritsFrom(imageKey, node.Parent);
+        }
+
+        private void cmDiff_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            includeToolStripMenuItem.Enabled = _allowInclude;
+            excludeToolStripMenuItem.Enabled = _allowExclude;
+        }
+
+        private void ExcludeChildObjects(TreeNode node)
+        {
+            if (node is ScriptActionNode)
+            {
+                var action = (node as ScriptActionNode).ScriptAction;
+                _binder.Document.ExcludeActions.Add(action);
+            }
+            else
+            {
+                foreach (TreeNode child in node.Nodes) ExcludeChildObjects(child);
+            }
+        }
+
+        private void IncludeChildObjects(TreeNode node)
+        {
+            if (node is ScriptActionNode)
+            {
+                var action = (node as ScriptActionNode).ScriptAction;
+                _binder.Document.ExcludeActions.Remove(action);                
+            }
+            else
+            {
+                foreach (TreeNode child in node.Nodes) IncludeChildObjects(child);
+            }
+        }
+
+        private async void excludeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExcludeChildObjects(_selectedNode);
+            await GenerateScriptAsync();
+        }
+
+        private async void includeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IncludeChildObjects(_selectedNode);
+            await GenerateScriptAsync();
         }
     }
 }
