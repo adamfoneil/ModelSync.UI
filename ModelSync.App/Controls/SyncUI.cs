@@ -136,7 +136,8 @@ namespace ModelSync.App.Controls
                 }
             }
 
-            tvObjects.ExpandAll();            
+            tvObjects.ExpandAll();
+            tvObjects.SelectedNode = tvObjects.Nodes[0];
         }
 
         private async void btnGenerateScript_Click(object sender, EventArgs e)
