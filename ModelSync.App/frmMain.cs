@@ -3,6 +3,7 @@ using JsonSettings.Library;
 using ModelSync.App.Controls;
 using ModelSync.App.Forms;
 using ModelSync.App.Models;
+using ModelSync.Library.Services;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -147,10 +148,12 @@ namespace ModelSync.App
                         Dock = DockStyle.Fill, 
                         Document = merge,
                         SolutionPath = solutionPath,                            
+                        SqlDialect = new SqlServerDialect()
                     };
                     ui.OperationStarted += StartOperation;
                     ui.OperationComplete += CompleteOperation;
-                    ui.GetConnection = (text) => new SqlConnection(text);
+                    ui.ScriptExecuted += ScriptExecuted;
+                    ui.GetConnection = (text) => new SqlConnection(text);                    
                     await ui.LoadSuggestionsAsync();
 
                     tab.Controls.Add(ui);
@@ -178,6 +181,17 @@ namespace ModelSync.App
             {
                 tabMain.TabIndexChanged += tabMain_SelectedIndexChanged;
                 ResumeLayout();
+            }
+        }
+
+        private void ScriptExecuted(object sender, EventArgs e)
+        {
+            if (!((SyncUI)sender).ScriptActions.Any())
+            {
+                if (MessageBox.Show("All changes applied. Click OK to exit.", "Script Executed", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    Application.Exit();
+                }
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using ModelSync.App.Models;
+using ModelSync.Library.Abstract;
 using ModelSync.Library.Models;
 using ModelSync.Library.Services;
 using Newtonsoft.Json;
@@ -24,9 +25,30 @@ namespace ModelSync.App.Controls
         public ControlBinder<MergeDefinition> _binder;
 
         public event EventHandler OperationStarted;
-        public event EventHandler OperationComplete;        
+        public event EventHandler OperationComplete;
+        public event EventHandler ScriptExecuted;
 
         public Func<string, IDbConnection> GetConnection { get; set; }
+        public SqlDialect SqlDialect { get; set; }
+        
+        internal IEnumerable<ScriptActionNode> ScriptActions
+        {
+            get
+            {                
+                List<ScriptActionNode> results = new List<ScriptActionNode>();
+
+                void addChildren(TreeNode parent)
+                {
+                    var nodes = parent.Nodes.OfType<ScriptActionNode>();
+                    results.AddRange(nodes);
+                    foreach (TreeNode child in parent.Nodes) addChildren(child);
+                };
+
+                addChildren(tvObjects.Nodes[0]);
+
+                return results;
+            }
+        }
 
         public SyncUI()
         {
@@ -86,12 +108,12 @@ namespace ModelSync.App.Controls
             var show = diff.Where(scr => !_binder.Document.IgnoreObjects?.Contains(scr.Object.Name) ?? true);
 
             Dictionary<ActionType, string> actionTypeIcons = new Dictionary<ActionType, string>()
-                {
-                    { ActionType.Create, "create" },
-                    { ActionType.Alter, "update" },
-                    { ActionType.Drop, "delete" }
-                };
-
+            {
+                { ActionType.Create, "create" },
+                { ActionType.Alter, "update" },
+                { ActionType.Drop, "delete" }
+            };
+            
             foreach (var actionGrp in show.GroupBy(scr => scr.Type).Select(grp => new { grp.Key, Icon = actionTypeIcons[grp.Key], Items = grp }))
             {
                 var actionNode = new TreeNode(actionGrp.Key.ToString())
@@ -109,13 +131,12 @@ namespace ModelSync.App.Controls
                     foreach (var scriptAction in typeGrp.OrderBy(scr => scr.Object.Name))
                     {
                         var objNode = new ScriptActionNode(scriptAction);
-                        objTypeNode.Nodes.Add(objNode);
+                        objTypeNode.Nodes.Add(objNode);                        
                     }
                 }
             }
 
-            tvObjects.ExpandAll();
-
+            tvObjects.ExpandAll();            
         }
 
         private async void btnGenerateScript_Click(object sender, EventArgs e)
@@ -209,7 +230,7 @@ namespace ModelSync.App.Controls
                 addChildrenR(e.Node);
                               
                 tbScriptOutput.Clear();
-                tbScriptOutput.Text = new SqlServerDialect().FormatScript(nodes.Select(node => node.ScriptAction));
+                tbScriptOutput.Text = SqlDialect.FormatScript(nodes.Select(node => node.ScriptAction));
             }
             catch (Exception exc)
             {
@@ -217,15 +238,26 @@ namespace ModelSync.App.Controls
             }
         }
 
-        private void btnExecute_Click(object sender, EventArgs e)
+        private async void btnExecute_Click(object sender, EventArgs e)
         {
             try
             {
+                OperationStarted?.Invoke("Executing script...", e);
 
+                using (var cn = GetConnection.Invoke(tbDest.Text))
+                {
+                    await SqlDialect.ExecuteAsync(cn, tbScriptOutput.Text);
+                    await GenerateScriptAsync();
+                    ScriptExecuted?.Invoke(this, new EventArgs());
+                }
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
+            }
+            finally
+            {
+                OperationComplete?.Invoke(this, new EventArgs());
             }
         }
 

@@ -65,7 +65,7 @@ namespace ModelSync.App.Forms
             btnRecent.Enabled = true;
             foreach (var item in recent)
             {
-                ToolStripButton btn = new ToolStripButton(item.Name);
+                ToolStripMenuItem btn = new ToolStripMenuItem(item.Name);
                 btn.Click += delegate (object sender, EventArgs e)
                 {
                     SelectSolutionInner(item.FullPath);
