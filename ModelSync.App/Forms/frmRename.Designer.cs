@@ -40,7 +40,7 @@
             this.btnCancel.Location = new System.Drawing.Point(413, 41);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 0;
+            this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -50,7 +50,7 @@
             this.btnOK.Location = new System.Drawing.Point(413, 12);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 1;
+            this.btnOK.TabIndex = 2;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
@@ -59,7 +59,7 @@
             this.tbText.Location = new System.Drawing.Point(12, 25);
             this.tbText.Name = "tbText";
             this.tbText.Size = new System.Drawing.Size(381, 21);
-            this.tbText.TabIndex = 2;
+            this.tbText.TabIndex = 1;
             this.tbText.TextChanged += new System.EventHandler(this.tbText_TextChanged);
             // 
             // label1
@@ -68,7 +68,7 @@
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 13);
-            this.label1.TabIndex = 3;
+            this.label1.TabIndex = 0;
             this.label1.Text = "New Name:";
             // 
             // frmRename
