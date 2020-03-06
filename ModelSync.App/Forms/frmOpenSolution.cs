@@ -58,10 +58,11 @@ namespace ModelSync.App.Forms
 
             if (!recent.Any())
             {
-                ddbRecent.Enabled = false;
+                btnRecent.Enabled = false;
                 return;
             }
 
+            btnRecent.Enabled = true;
             foreach (var item in recent)
             {
                 ToolStripButton btn = new ToolStripButton(item.Name);
@@ -69,7 +70,7 @@ namespace ModelSync.App.Forms
                 {
                     SelectSolutionInner(item.FullPath);
                 };
-                ddbRecent.DropDownItems.Add(btn);
+                cmRecent.Items.Add(btn);
             }
         }
 

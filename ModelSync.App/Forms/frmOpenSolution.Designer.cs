@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOpenSolution));
+            this.components = new System.ComponentModel.Container();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,26 +37,27 @@
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.lblSolutionCount = new System.Windows.Forms.Label();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.ddbRecent = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStrip1.SuspendLayout();
+            this.btnRecent = new WinForms.Library.Controls.DropDownButton();
+            this.cmRecent = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.SuspendLayout();
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(397, 158);
+            this.btnCancel.Location = new System.Drawing.Point(377, 148);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(94, 23);
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(316, 158);
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.Location = new System.Drawing.Point(277, 148);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.Size = new System.Drawing.Size(94, 23);
             this.btnOK.TabIndex = 4;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -84,7 +85,7 @@
             // llSolutionFolder
             // 
             this.llSolutionFolder.AutoSize = true;
-            this.llSolutionFolder.Location = new System.Drawing.Point(13, 163);
+            this.llSolutionFolder.Location = new System.Drawing.Point(12, 111);
             this.llSolutionFolder.Name = "llSolutionFolder";
             this.llSolutionFolder.Size = new System.Drawing.Size(97, 13);
             this.llSolutionFolder.TabIndex = 3;
@@ -95,7 +96,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 145);
+            this.label2.Location = new System.Drawing.Point(12, 90);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(97, 13);
             this.label2.TabIndex = 2;
@@ -119,26 +120,21 @@
             this.lblSolutionCount.Text = "0 solutions found";
             this.lblSolutionCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // toolStrip1
+            // btnRecent
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ddbRecent});
-            this.toolStrip1.Location = new System.Drawing.Point(15, 90);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(90, 25);
-            this.toolStrip1.TabIndex = 8;
-            this.toolStrip1.Text = "toolStrip1";
+            this.btnRecent.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnRecent.ContextMenuStrip = this.cmRecent;
+            this.btnRecent.Location = new System.Drawing.Point(177, 148);
+            this.btnRecent.Name = "btnRecent";
+            this.btnRecent.Size = new System.Drawing.Size(94, 23);
+            this.btnRecent.TabIndex = 10;
+            this.btnRecent.Text = "Recent   ";
+            this.btnRecent.UseVisualStyleBackColor = true;
             // 
-            // ddbRecent
+            // cmRecent
             // 
-            this.ddbRecent.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.ddbRecent.Image = ((System.Drawing.Image)(resources.GetObject("ddbRecent.Image")));
-            this.ddbRecent.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ddbRecent.Name = "ddbRecent";
-            this.ddbRecent.Size = new System.Drawing.Size(56, 22);
-            this.ddbRecent.Text = "Recent";
+            this.cmRecent.Name = "cmRecent";
+            this.cmRecent.Size = new System.Drawing.Size(61, 4);
             // 
             // frmOpenSolution
             // 
@@ -146,9 +142,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(483, 193);
+            this.ClientSize = new System.Drawing.Size(483, 183);
             this.ControlBox = false;
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.btnRecent);
             this.Controls.Add(this.lblSolutionCount);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label2);
@@ -165,8 +161,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Open Solution";
             this.Load += new System.EventHandler(this.frmOpenSolution_Load);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -182,7 +176,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label lblSolutionCount;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripDropDownButton ddbRecent;
+        private WinForms.Library.Controls.DropDownButton btnRecent;
+        private System.Windows.Forms.ContextMenuStrip cmRecent;
     }
 }
