@@ -518,7 +518,7 @@ namespace ModelSync.App.Controls
                         {
                             SourceModel = _sourceModel,
                             DestModel = _destModel,
-                            DiffActions = _diff,
+                            SqlCommands = _diff.SelectMany(scr => scr.Commands).ToList(),
                             IsCorrect = dlg.IsCorrect,
                             Comments = dlg.Comments
                         };
