@@ -117,17 +117,18 @@ namespace ModelSync.App.Controls
 
             tvObjects.Nodes.Clear();
 
-            var scriptRoot = new TreeNode("SQL Script") { ImageKey = "script", SelectedImageKey = "script" };
-            tvObjects.Nodes.Add(scriptRoot);
-
             if (_binder.Document.ExcludeActions == null) _binder.Document.ExcludeActions = new List<ExcludeAction>();
 
             var include = _diff.Where(scr => !_binder.Document.ExcludeActions.Contains(scr.GetExcludeAction()));
+            
+            var scriptRoot = new TreeNode($"SQL Script ({include.Count()})") { ImageKey = "script", SelectedImageKey = "script" };
+            tvObjects.Nodes.Add(scriptRoot);
+
             LoadScriptActions(scriptRoot, include, (action) => new ScriptActionNode(action));
             
             if (_binder.Document.ExcludeActions.Any())
             {
-                var excludeRoot = new TreeNode("Exclude") { ImageKey = "exclude", SelectedImageKey = "exclude" };
+                var excludeRoot = new TreeNode($"Exclude ({_binder.Document.ExcludeActions.Count})") { ImageKey = "exclude", SelectedImageKey = "exclude" };
                 tvObjects.Nodes.Add(excludeRoot);
                 LoadScriptActions(excludeRoot, _binder.Document.ExcludeActions, (action) => new ExcludeActionNode(action));
             }
@@ -503,43 +504,50 @@ namespace ModelSync.App.Controls
 
         private void testCaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dlg = new frmSaveTestCase();
-            if (dlg.ShowDialog() == DialogResult.OK)
+            try
             {
-                var saveDlg = new SaveFileDialog();
-                saveDlg.Filter = "Zip files|*.zip|All Files|*.*";
-                saveDlg.DefaultExt = "zip";
-                if (saveDlg.ShowDialog() == DialogResult.OK)
+                var dlg = new frmSaveTestCase();
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    var testCase = new TestCase()
+                    var saveDlg = new SaveFileDialog();
+                    saveDlg.Filter = "Zip files|*.zip|All Files|*.*";
+                    saveDlg.DefaultExt = "zip";
+                    if (saveDlg.ShowDialog() == DialogResult.OK)
                     {
-                        SourceModel = _sourceModel,
-                        DestModel = _destModel,
-                        DiffActions = _diff,
-                        IsCorrect = dlg.IsCorrect,
-                        Comments = dlg.Comments
-                    };
-
-                    string json = JsonConvert.SerializeObject(testCase, new JsonSerializerSettings()
-                    {
-                        Formatting = Formatting.Indented,
-                        PreserveReferencesHandling = PreserveReferencesHandling.Objects
-                    });
-
-                    var bytes = Encoding.UTF8.GetBytes(json);
-
-                    using (var file = File.Create(saveDlg.FileName))
-                    {
-                        using (var zip = new ZipArchive(file, ZipArchiveMode.Create))
+                        var testCase = new TestCase()
                         {
-                            var entry = zip.CreateEntry("TestCase.json");
-                            using (var entryStream = entry.Open())
+                            SourceModel = _sourceModel,
+                            DestModel = _destModel,
+                            DiffActions = _diff,
+                            IsCorrect = dlg.IsCorrect,
+                            Comments = dlg.Comments
+                        };
+
+                        string json = JsonConvert.SerializeObject(testCase, new JsonSerializerSettings()
+                        {
+                            Formatting = Formatting.Indented,
+                            PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                        });
+
+                        var bytes = Encoding.UTF8.GetBytes(json);
+
+                        using (var file = File.Create(saveDlg.FileName))
+                        {
+                            using (var zip = new ZipArchive(file, ZipArchiveMode.Create))
                             {
-                                entryStream.Write(bytes, 0, bytes.Length);
+                                var entry = zip.CreateEntry("TestCase.json");
+                                using (var entryStream = entry.Open())
+                                {
+                                    entryStream.Write(bytes, 0, bytes.Length);
+                                }
                             }
                         }
                     }
                 }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
         }
     }
