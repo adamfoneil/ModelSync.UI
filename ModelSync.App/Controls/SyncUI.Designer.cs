@@ -39,26 +39,28 @@
             this.cbSourceType = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tvObjects = new System.Windows.Forms.TreeView();
+            this.cmDiff = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.includeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.excludeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.tbScriptOutput = new FastColoredTextBoxNS.FastColoredTextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnGenerateScript = new System.Windows.Forms.ToolStripButton();
             this.btnExecute = new System.Windows.Forms.ToolStripButton();
-            this.btnSaveAs = new System.Windows.Forms.ToolStripButton();
             this.cmConnections = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cmDiff = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.includeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.excludeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCopy = new System.Windows.Forms.ToolStripButton();
+            this.ddbSave = new System.Windows.Forms.ToolStripSplitButton();
+            this.testCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.cmAssemblies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.cmDiff.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbScriptOutput)).BeginInit();
             this.toolStrip1.SuspendLayout();
-            this.cmDiff.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -167,6 +169,29 @@
             this.tvObjects.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvObjects_AfterSelect);
             this.tvObjects.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvObjects_NodeMouseClick);
             // 
+            // cmDiff
+            // 
+            this.cmDiff.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.includeToolStripMenuItem,
+            this.excludeToolStripMenuItem});
+            this.cmDiff.Name = "cmDiff";
+            this.cmDiff.Size = new System.Drawing.Size(116, 48);
+            this.cmDiff.Opening += new System.ComponentModel.CancelEventHandler(this.cmDiff_Opening);
+            // 
+            // includeToolStripMenuItem
+            // 
+            this.includeToolStripMenuItem.Name = "includeToolStripMenuItem";
+            this.includeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.includeToolStripMenuItem.Text = "Include";
+            this.includeToolStripMenuItem.Click += new System.EventHandler(this.includeToolStripMenuItem_Click);
+            // 
+            // excludeToolStripMenuItem
+            // 
+            this.excludeToolStripMenuItem.Name = "excludeToolStripMenuItem";
+            this.excludeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.excludeToolStripMenuItem.Text = "Exclude";
+            this.excludeToolStripMenuItem.Click += new System.EventHandler(this.excludeToolStripMenuItem_Click);
+            // 
             // imageList1
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
@@ -214,6 +239,7 @@
             this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbScriptOutput.IsReplaceMode = false;
             this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbScriptOutput.LeftBracket = '(';
@@ -234,7 +260,8 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnGenerateScript,
             this.btnExecute,
-            this.btnSaveAs});
+            this.ddbSave,
+            this.btnCopy});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(450, 25);
@@ -259,41 +286,39 @@
             this.btnExecute.Text = "Execute";
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
-            // btnSaveAs
-            // 
-            this.btnSaveAs.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveAs.Image")));
-            this.btnSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSaveAs.Name = "btnSaveAs";
-            this.btnSaveAs.Size = new System.Drawing.Size(74, 22);
-            this.btnSaveAs.Text = "Save as...";
-            // 
             // cmConnections
             // 
             this.cmConnections.Name = "cmConnections";
             this.cmConnections.Size = new System.Drawing.Size(61, 4);
             // 
-            // cmDiff
+            // btnCopy
             // 
-            this.cmDiff.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.includeToolStripMenuItem,
-            this.excludeToolStripMenuItem});
-            this.cmDiff.Name = "cmDiff";
-            this.cmDiff.Size = new System.Drawing.Size(181, 70);
-            this.cmDiff.Opening += new System.ComponentModel.CancelEventHandler(this.cmDiff_Opening);
+            this.btnCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnCopy.Image")));
+            this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(23, 22);
+            this.btnCopy.Text = "toolStripButton1";
+            this.btnCopy.ToolTipText = "Copy SQL";
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
-            // includeToolStripMenuItem
+            // ddbSave
             // 
-            this.includeToolStripMenuItem.Name = "includeToolStripMenuItem";
-            this.includeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.includeToolStripMenuItem.Text = "Include";
-            this.includeToolStripMenuItem.Click += new System.EventHandler(this.includeToolStripMenuItem_Click);
+            this.ddbSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ddbSave.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.testCaseToolStripMenuItem});
+            this.ddbSave.Image = ((System.Drawing.Image)(resources.GetObject("ddbSave.Image")));
+            this.ddbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ddbSave.Name = "ddbSave";
+            this.ddbSave.Size = new System.Drawing.Size(32, 22);
+            this.ddbSave.Text = "toolStripSplitButton1";
+            this.ddbSave.ButtonClick += new System.EventHandler(this.ddbSave_ButtonClick);
             // 
-            // excludeToolStripMenuItem
+            // testCaseToolStripMenuItem
             // 
-            this.excludeToolStripMenuItem.Name = "excludeToolStripMenuItem";
-            this.excludeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.excludeToolStripMenuItem.Text = "Exclude";
-            this.excludeToolStripMenuItem.Click += new System.EventHandler(this.excludeToolStripMenuItem_Click);
+            this.testCaseToolStripMenuItem.Name = "testCaseToolStripMenuItem";
+            this.testCaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testCaseToolStripMenuItem.Text = "Save Test Case...";
             // 
             // SyncUI
             // 
@@ -313,10 +338,10 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.cmDiff.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tbScriptOutput)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.cmDiff.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -335,7 +360,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnGenerateScript;
         private System.Windows.Forms.ToolStripButton btnExecute;
-        private System.Windows.Forms.ToolStripButton btnSaveAs;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ContextMenuStrip cmAssemblies;
         private System.Windows.Forms.ToolStripMenuItem selectAssemblyToolStripMenuItem;
@@ -343,5 +367,8 @@
         private System.Windows.Forms.ContextMenuStrip cmDiff;
         private System.Windows.Forms.ToolStripMenuItem includeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem excludeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton btnCopy;
+        private System.Windows.Forms.ToolStripSplitButton ddbSave;
+        private System.Windows.Forms.ToolStripMenuItem testCaseToolStripMenuItem;
     }
 }

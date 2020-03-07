@@ -477,5 +477,21 @@ namespace ModelSync.App.Controls
             IncludeChildObjects(_selectedNode);
             await GenerateScriptAsync();
         }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(tbScriptOutput.Text);
+        }
+
+        private void ddbSave_ButtonClick(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "SQL Files|*.sql|All Files|*.*";
+            dlg.DefaultExt = "sql";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllText(dlg.FileName, tbScriptOutput.Text);
+            }
+        }
     }
 }
