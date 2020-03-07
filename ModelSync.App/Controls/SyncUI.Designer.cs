@@ -319,6 +319,7 @@
             this.testCaseToolStripMenuItem.Name = "testCaseToolStripMenuItem";
             this.testCaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.testCaseToolStripMenuItem.Text = "Save Test Case...";
+            this.testCaseToolStripMenuItem.Click += new System.EventHandler(this.testCaseToolStripMenuItem_Click);
             // 
             // SyncUI
             // 

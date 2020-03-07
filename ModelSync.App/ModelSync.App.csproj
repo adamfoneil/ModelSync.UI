@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,6 +71,12 @@
     <Compile Include="Forms\frmRename.Designer.cs">
       <DependentUpon>frmRename.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmSaveTestCase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmSaveTestCase.Designer.cs">
+      <DependentUpon>frmSaveTestCase.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +87,7 @@
     <Compile Include="Models\MergeDefinition.cs" />
     <Compile Include="Models\Solution.cs" />
     <Compile Include="Models\SolutionOpenHistory.cs" />
+    <Compile Include="Models\TestCase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
@@ -92,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmRename.resx">
       <DependentUpon>frmRename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmSaveTestCase.resx">
+      <DependentUpon>frmSaveTestCase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>

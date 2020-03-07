@@ -1,4 +1,5 @@
-﻿using ModelSync.App.Models;
+﻿using ModelSync.App.Forms;
+using ModelSync.App.Models;
 using ModelSync.Library.Abstract;
 using ModelSync.Library.Interfaces;
 using ModelSync.Library.Models;
@@ -9,8 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -26,6 +29,10 @@ namespace ModelSync.App.Controls
         private TreeNode _selectedNode;
         private bool _allowExclude;
         private bool _allowInclude;
+
+        private DataModel _sourceModel;
+        private DataModel _destModel;
+        private List<ScriptAction> _diff;
 
         public ControlBinder<MergeDefinition> _binder;
 
@@ -100,13 +107,13 @@ namespace ModelSync.App.Controls
             if (string.IsNullOrEmpty(tbSource.Text)) return;
             if (string.IsNullOrEmpty(tbDest.Text)) return;
 
-            DataModel sourceModel =
+            _sourceModel =
                 (_binder.Document.SourceType == SourceType.Assembly) ? await GetAssemblyModelAsync(tbSource.Text) :
                 (_binder.Document.SourceType == SourceType.Connection) ? await GetConnectionModelAsync(tbSource.Text) :
                 throw new Exception($"Unknown source type {_binder.Document.Source}");
 
-            DataModel destModel = await GetConnectionModelAsync(tbDest.Text);
-            var diff = DataModel.Compare(sourceModel, destModel);
+            _destModel = await GetConnectionModelAsync(tbDest.Text);
+            _diff = DataModel.Compare(_sourceModel, _destModel).ToList();
 
             tvObjects.Nodes.Clear();
 
@@ -115,7 +122,7 @@ namespace ModelSync.App.Controls
 
             if (_binder.Document.ExcludeActions == null) _binder.Document.ExcludeActions = new List<ExcludeAction>();
 
-            var include = diff.Where(scr => !_binder.Document.ExcludeActions.Contains(scr.GetExcludeAction()));
+            var include = _diff.Where(scr => !_binder.Document.ExcludeActions.Contains(scr.GetExcludeAction()));
             LoadScriptActions(scriptRoot, include, (action) => new ScriptActionNode(action));
             
             if (_binder.Document.ExcludeActions.Any())
@@ -491,6 +498,48 @@ namespace ModelSync.App.Controls
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 File.WriteAllText(dlg.FileName, tbScriptOutput.Text);
+            }
+        }
+
+        private void testCaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dlg = new frmSaveTestCase();
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                var saveDlg = new SaveFileDialog();
+                saveDlg.Filter = "Zip files|*.zip|All Files|*.*";
+                saveDlg.DefaultExt = "zip";
+                if (saveDlg.ShowDialog() == DialogResult.OK)
+                {
+                    var testCase = new TestCase()
+                    {
+                        SourceModel = _sourceModel,
+                        DestModel = _destModel,
+                        DiffActions = _diff,
+                        IsCorrect = dlg.IsCorrect,
+                        Comments = dlg.Comments
+                    };
+
+                    string json = JsonConvert.SerializeObject(testCase, new JsonSerializerSettings()
+                    {
+                        Formatting = Formatting.Indented,
+                        PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                    });
+
+                    var bytes = Encoding.UTF8.GetBytes(json);
+
+                    using (var file = File.Create(saveDlg.FileName))
+                    {
+                        using (var zip = new ZipArchive(file, ZipArchiveMode.Create))
+                        {
+                            var entry = zip.CreateEntry("TestCase.json");
+                            using (var entryStream = entry.Open())
+                            {
+                                entryStream.Write(bytes, 0, bytes.Length);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
