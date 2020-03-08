@@ -516,30 +516,18 @@ namespace ModelSync.App.Controls
                     {
                         var testCase = new TestCase()
                         {
-                            SourceModel = _sourceModel,
-                            DestModel = _destModel,
                             SqlCommands = _diff.SelectMany(scr => scr.Commands).ToList(),
                             IsCorrect = dlg.IsCorrect,
                             Comments = dlg.Comments
                         };
 
-                        string json = JsonConvert.SerializeObject(testCase, new JsonSerializerSettings()
-                        {
-                            Formatting = Formatting.Indented,
-                            PreserveReferencesHandling = PreserveReferencesHandling.Objects
-                        });
-
-                        var bytes = Encoding.UTF8.GetBytes(json);
-
                         using (var file = File.Create(saveDlg.FileName))
                         {
                             using (var zip = new ZipArchive(file, ZipArchiveMode.Create))
                             {
-                                var entry = zip.CreateEntry("TestCase.json");
-                                using (var entryStream = entry.Open())
-                                {
-                                    entryStream.Write(bytes, 0, bytes.Length);
-                                }
+                                AddEntry(zip, "SourceModel.json", _sourceModel.ToJson());
+                                AddEntry(zip, "DestModel.json", _destModel.ToJson());
+                                AddEntry(zip, "TestCase.json", JsonConvert.SerializeObject(testCase, Formatting.Indented));                                
                             }
                         }
                     }
@@ -548,6 +536,16 @@ namespace ModelSync.App.Controls
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void AddEntry(ZipArchive zip, string entryName, string content)
+        {
+            var bytes = Encoding.UTF8.GetBytes(content);
+            var entry = zip.CreateEntry(entryName);
+            using (var entryStream = entry.Open())
+            {
+                entryStream.Write(bytes, 0, bytes.Length);
             }
         }
     }
