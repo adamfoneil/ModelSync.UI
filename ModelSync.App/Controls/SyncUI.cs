@@ -95,9 +95,6 @@ namespace ModelSync.App.Controls
                 _binder.AddItems(cbSourceType, m => m.SourceType, SourceTypes);
                 _binder.Add(tbSource, m => m.Source);
                 _binder.Add(tbDest, m => m.Destination);
-                // todo: color
-                // todo: ignored objects
-
                 _binder.Document = value;
             }
         }
