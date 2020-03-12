@@ -159,6 +159,7 @@
             this.llAbout.Size = new System.Drawing.Size(49, 17);
             this.llAbout.Text = "About...";
             this.llAbout.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.llAbout.Click += new System.EventHandler(this.llAbout_Click);
             // 
             // frmMain
             // 

@@ -365,5 +365,11 @@ namespace ModelSync.App
                 llOpenSolution_Click(sender, e);
             }
         }
+
+        private void llAbout_Click(object sender, EventArgs e)
+        {
+            var frm = new frmAbout();
+            frm.ShowDialog();
+        }
     }
 }
