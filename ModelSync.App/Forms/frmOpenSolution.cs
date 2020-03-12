@@ -113,6 +113,7 @@ namespace ModelSync.App.Forms
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
+                llSolutionFolder.Text = dlg.SelectedPath;
                 SolutionFolder = dlg.SelectedPath;
                 var solutions = await FindSolutionsAsync();
                 cbSolution.Fill(solutions);
@@ -148,6 +149,12 @@ namespace ModelSync.App.Forms
                 SolutionFiles = fileList.ToArray();
                 MessageBox.Show($"The solution file {fileName} no longer exists, and will be removed.");
             }
+        }
+
+        private async void btnReloadSolutions_Click(object sender, EventArgs e)
+        {
+            var solutions = await FindSolutionsAsync();
+            cbSolution.Fill(solutions);
         }
     }
 }

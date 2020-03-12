@@ -6,6 +6,7 @@ namespace Hs5.Models
 {
 	//[TrackChanges(IgnoreProperties = "DateModified,ModifiedBy")]
 	//[TrackDeletions]
+	[UniqueConstraint(nameof(Number))]
 	public class Microchip : BaseTable
 	{
 		[Key]
@@ -15,8 +16,7 @@ namespace Hs5.Models
 		[References(typeof(MicrochipProvider))]
 		public int ProviderId { get; set; }
 
-		[MaxLength(50)]
-		//[UniqueKey]
+		[MaxLength(50)]				
 		public string Number { get; set; }
 
 		public int? SourcePatientItemId { get; set; }
