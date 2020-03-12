@@ -32,6 +32,10 @@
             this.webUrlLinkLabel1 = new WinForms.Library.Controls.WebUrlLinkLabel();
             this.label2 = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblNewVersion = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -73,12 +77,44 @@
             this.lblVersion.TabIndex = 3;
             this.lblVersion.Text = "label3";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(304, 8);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(162, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Download and Install";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Info;
+            this.panel1.Controls.Add(this.lblNewVersion);
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 194);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(478, 41);
+            this.panel1.TabIndex = 5;
+            this.panel1.Visible = false;
+            // 
+            // lblNewVersion
+            // 
+            this.lblNewVersion.AutoSize = true;
+            this.lblNewVersion.Location = new System.Drawing.Point(12, 13);
+            this.lblNewVersion.Name = "lblNewVersion";
+            this.lblNewVersion.Size = new System.Drawing.Size(169, 13);
+            this.lblNewVersion.TabIndex = 5;
+            this.lblNewVersion.Text = "Version {version} available:";
+            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(478, 235);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.webUrlLinkLabel1);
@@ -91,6 +127,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About ModelSync";
             this.Load += new System.EventHandler(this.frmAbout_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -102,5 +140,8 @@
         private WinForms.Library.Controls.WebUrlLinkLabel webUrlLinkLabel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblNewVersion;
     }
 }
