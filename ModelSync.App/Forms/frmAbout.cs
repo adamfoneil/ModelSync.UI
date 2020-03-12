@@ -7,6 +7,7 @@ namespace ModelSync.App.Forms
     public partial class frmAbout : Form
     {
         AppInstallHelper _installer = new AppInstallHelper();
+
         public frmAbout()
         {
             InitializeComponent();

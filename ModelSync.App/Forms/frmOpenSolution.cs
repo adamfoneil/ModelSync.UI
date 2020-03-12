@@ -36,11 +36,11 @@ namespace ModelSync.App.Forms
                 llSolutionFolder.Text = SolutionFolder;
                 lblSolutionCount.Visible = false;
 
-                var solutions = (SolutionFiles?.Any() ?? false) ? 
+                var solutions = (SolutionFiles?.Any() ?? false) ?
                     SolutionFiles.Select(fileName => new ListItem<string>(fileName, fileName.Substring(SolutionFolder.Length + 1))) :
                     await FindSolutionsAsync();
 
-                cbSolution.Fill(solutions);                
+                cbSolution.Fill(solutions);
             }
             catch (Exception exc)
             {
@@ -94,7 +94,7 @@ namespace ModelSync.App.Forms
                     return EnumFileResult.NextFolder;
                 });
             });
-            
+
             progressBar1.Visible = false;
             lblSolutionCount.Visible = false;
 
@@ -124,7 +124,7 @@ namespace ModelSync.App.Forms
         {
             if (cbSolution.SelectedItem != null)
             {
-                string fileName = cbSolution.GetValue<string>();                
+                string fileName = cbSolution.GetValue<string>();
                 SelectSolutionInner(fileName);
             }
             else

@@ -1,5 +1,4 @@
 ﻿using JsonSettings;
-using ModelSync.Library.Interfaces;
 using ModelSync.Library.Models;
 using System.Collections.Generic;
 using System.Drawing;
@@ -26,7 +25,7 @@ namespace ModelSync.App.Models
         public string Destination { get; set; }
 
         public Color BackgroundColor { get; set; } = Color.Transparent;
-        
+
         public List<ExcludeAction> ExcludeActions { get; set; }
     }
 }

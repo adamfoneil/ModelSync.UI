@@ -18,7 +18,7 @@ namespace ModelSync.App.Services
         protected override bool PromptDownloadAndExit()
         {
             return (MessageBox.Show(
-                "A new version is available. Click OK to download and exit the application now.", 
+                "A new version is available. Click OK to download and exit the application now.",
                 "New Version Available", MessageBoxButtons.OKCancel) == DialogResult.OK);
         }
     }

@@ -21,7 +21,7 @@ namespace ModelSync.App.Helpers
                 catch (Exception exc)
                 {
                     throw new Exception($"Couldn't find dependency info for {args.Name}", exc);
-                }                
+                }
             }
         }
 
@@ -34,7 +34,7 @@ namespace ModelSync.App.Helpers
                 fileName = GetNugetPackageDllPath(name);
                 return true;
             }
-            catch 
+            catch
             {
                 fileName = null;
                 return false;
@@ -75,5 +75,5 @@ namespace ModelSync.App.Helpers
         }
     }
 
-    
+
 }

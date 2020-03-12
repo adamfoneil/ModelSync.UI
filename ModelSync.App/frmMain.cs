@@ -23,7 +23,7 @@ namespace ModelSync.App
         private string _solutionFile;
         private MouseEventArgs _tabRightClick;
 
-        public string[] StartupArgs { get; set; }       
+        public string[] StartupArgs { get; set; }
 
         public frmMain()
         {
@@ -31,12 +31,12 @@ namespace ModelSync.App
         }
 
         public TabControl TabControl { get { return tabMain; } }
-        
+
         public string SolutionFile
         {
             get { return _solutionFile; }
-            set 
-            { 
+            set
+            {
                 _solutionFile = value;
                 Text = $"ModelSync - {Path.GetFileName(_solutionFile)}";
             }
@@ -54,7 +54,7 @@ namespace ModelSync.App
 
                 bool exit = false;
                 if (GetSolutionFile(StartupArgs, ref solutionFiles, ref solutionFolder, out string fileName))
-                {                    
+                {
                     await LoadSolutionAsync(fileName);
                 }
                 else
@@ -111,7 +111,7 @@ namespace ModelSync.App
                             break;
                         }
                     }
-                }                
+                }
             }
 
             fileName = null;
@@ -125,36 +125,36 @@ namespace ModelSync.App
             string fileName = Solution.GetFilename(visualStudioSolution);
 
             tabMain.TabIndexChanged -= tabMain_SelectedIndexChanged;
-            SuspendLayout();            
-                
+            SuspendLayout();
+
             try
             {
-                Solution result = (File.Exists(fileName)) ? 
+                Solution result = (File.Exists(fileName)) ?
                     JsonFile.Load<Solution>(fileName) :
-                    Solution.Create();                
+                    Solution.Create();
 
-                string solutionPath = Path.GetDirectoryName(visualStudioSolution);                                
-                
+                string solutionPath = Path.GetDirectoryName(visualStudioSolution);
+
                 int index = 0;
                 foreach (var merge in result.Merges)
                 {
-                    var tab = new MergeDefinitionTab(fileName, merge.Title ?? $"merge {index}") 
-                    { 
+                    var tab = new MergeDefinitionTab(fileName, merge.Title ?? $"merge {index}")
+                    {
                         ImageKey = GetTabImage(merge.SourceType),
                         BackColor = merge.BackgroundColor
                     };
 
-                    var ui = new SyncUI() 
-                    { 
-                        Dock = DockStyle.Fill, 
+                    var ui = new SyncUI()
+                    {
+                        Dock = DockStyle.Fill,
                         Document = merge,
-                        SolutionPath = solutionPath,                            
+                        SolutionPath = solutionPath,
                         SqlDialect = new SqlServerDialect()
                     };
                     ui.OperationStarted += StartOperation;
                     ui.OperationComplete += CompleteOperation;
                     ui.ScriptExecuted += ScriptExecuted;
-                    ui.GetConnection = (text) => new SqlConnection(text);                    
+                    ui.GetConnection = (text) => new SqlConnection(text);
                     await ui.LoadSuggestionsAsync();
 
                     tab.Controls.Add(ui);
@@ -270,7 +270,7 @@ namespace ModelSync.App
             };
 
             if (dlg.ShowDialog() == DialogResult.OK)
-            {                
+            {
                 tab.Text = dlg.RenameText;
                 (tab.Controls[0] as SyncUI).Document.Title = dlg.RenameText;
             }
@@ -288,7 +288,7 @@ namespace ModelSync.App
         }
 
         private void setColorToolStripMenuItem_Click(object sender, EventArgs e)
-        {            
+        {
             var dlg = new ColorDialog();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -321,7 +321,7 @@ namespace ModelSync.App
                     break;
                 }
             }
-            
+
             return result;
         }
 

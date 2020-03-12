@@ -41,12 +41,12 @@ namespace ModelSync.App.Controls
         public event EventHandler ScriptExecuted;
 
         public Func<string, IDbConnection> GetConnection { get; set; }
-        public SqlDialect SqlDialect { get; set; }        
-        
+        public SqlDialect SqlDialect { get; set; }
+
         internal IEnumerable<ScriptActionNode> ScriptActions
         {
             get
-            {                
+            {
                 List<ScriptActionNode> results = new List<ScriptActionNode>();
 
                 void addChildren(TreeNode parent)
@@ -71,7 +71,7 @@ namespace ModelSync.App.Controls
 
         private static Dictionary<SourceType, string> SourceTypes
         {
-            get 
+            get
             {
                 return new Dictionary<SourceType, string>()
                 {
@@ -91,7 +91,7 @@ namespace ModelSync.App.Controls
             get { return _binder.Document; }
             set
             {
-                _binder = new ControlBinder<MergeDefinition>();                
+                _binder = new ControlBinder<MergeDefinition>();
                 _binder.AddItems(cbSourceType, m => m.SourceType, SourceTypes);
                 _binder.Add(tbSource, m => m.Source);
                 _binder.Add(tbDest, m => m.Destination);
@@ -117,12 +117,12 @@ namespace ModelSync.App.Controls
             if (_binder.Document.ExcludeActions == null) _binder.Document.ExcludeActions = new List<ExcludeAction>();
 
             var include = _diff.Where(scr => !_binder.Document.ExcludeActions.Contains(scr.GetExcludeAction()));
-            
+
             var scriptRoot = new TreeNode($"SQL Script ({include.Count()})") { ImageKey = "script", SelectedImageKey = "script" };
             tvObjects.Nodes.Add(scriptRoot);
 
             LoadScriptActions(scriptRoot, include, (action) => new ScriptActionNode(action));
-            
+
             if (_binder.Document.ExcludeActions.Any())
             {
                 var excludeRoot = new TreeNode($"Exclude ({_binder.Document.ExcludeActions.Count})") { ImageKey = "exclude", SelectedImageKey = "exclude" };
@@ -203,7 +203,7 @@ namespace ModelSync.App.Controls
             try
             {
                 // help from https://docs.microsoft.com/en-us/dotnet/framework/deployment/best-practices-for-assembly-loading
-                OperationStarted?.Invoke("Analyzing assembly...", new EventArgs());                                                    
+                OperationStarted?.Invoke("Analyzing assembly...", new EventArgs());
                 var assembly = Assembly.LoadFrom(text);
                 var result = new AssemblyModelBuilder().GetDataModel(assembly);
                 return await Task.FromResult(result);
@@ -255,7 +255,7 @@ namespace ModelSync.App.Controls
                 };
 
                 addChildrenR(e.Node);
-                              
+
                 tbScriptOutput.Clear();
                 tbScriptOutput.Text = SqlDialect.FormatScript(nodes.Select(node => node.ScriptAction));
             }
@@ -334,7 +334,7 @@ namespace ModelSync.App.Controls
                         {
                             if (Path.GetFileNameWithoutExtension(fi.FullName).Equals(assemblyElement.Value))
                             {
-                                results.Add(fi.FullName);                                
+                                results.Add(fi.FullName);
                             }
                             return EnumFileResult.NextFolder;
                         });
@@ -369,7 +369,7 @@ namespace ModelSync.App.Controls
             });
 
             return results;
-            
+
             int findConnectionStringsInJson(string fileName)
             {
                 int result = 0;
@@ -463,7 +463,7 @@ namespace ModelSync.App.Controls
             if (node is ExcludeActionNode)
             {
                 var action = (node as ExcludeActionNode).ExcludeAction;
-                _binder.Document.ExcludeActions.Remove(action);                
+                _binder.Document.ExcludeActions.Remove(action);
             }
             else
             {
@@ -524,7 +524,7 @@ namespace ModelSync.App.Controls
                             {
                                 AddEntry(zip, "SourceModel.json", _sourceModel.ToJson());
                                 AddEntry(zip, "DestModel.json", _destModel.ToJson());
-                                AddEntry(zip, "TestCase.json", JsonConvert.SerializeObject(testCase, Formatting.Indented));                                
+                                AddEntry(zip, "TestCase.json", JsonConvert.SerializeObject(testCase, Formatting.Indented));
                             }
                         }
                     }
