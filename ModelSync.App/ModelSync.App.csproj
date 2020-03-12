@@ -157,4 +157,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"C:\Users\Adam\Source\Repos\AzDeploy\AzDeploy.Build\bin\Release\netcoreapp3.1\AzDeploy.Build.exe" "C:\Users\Adam\Source\Repos\ModelSync.WinForms\AzDeploy.json"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
