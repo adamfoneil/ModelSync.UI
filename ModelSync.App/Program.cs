@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelSync.App.Services;
+using System;
 using System.Windows.Forms;
 
 namespace ModelSync.App
@@ -13,7 +14,15 @@ namespace ModelSync.App
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            if (!StartLicensing()) return;
+
             Application.Run(new frmMain() { StartupArgs = args });
+        }
+
+        private static bool StartLicensing()
+        {
+            return new AppGatekeeper().StartLicensing();
         }
     }
 }
