@@ -48,10 +48,10 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnGenerateScript = new System.Windows.Forms.ToolStripButton();
             this.btnExecute = new System.Windows.Forms.ToolStripButton();
-            this.cmConnections = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnCopy = new System.Windows.Forms.ToolStripButton();
             this.ddbSave = new System.Windows.Forms.ToolStripSplitButton();
             this.testCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCopy = new System.Windows.Forms.ToolStripButton();
+            this.cmConnections = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.panel1.SuspendLayout();
             this.cmAssemblies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -132,7 +132,6 @@
             this.cbSourceType.Name = "cbSourceType";
             this.cbSourceType.Size = new System.Drawing.Size(141, 21);
             this.cbSourceType.TabIndex = 0;
-            this.cbSourceType.SelectedIndexChanged += new System.EventHandler(this.cbSourceType_SelectedIndexChanged);
             // 
             // splitContainer1
             // 
@@ -239,7 +238,6 @@
             this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbScriptOutput.IsReplaceMode = false;
             this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbScriptOutput.LeftBracket = '(';
@@ -286,22 +284,6 @@
             this.btnExecute.Text = "Execute";
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
-            // cmConnections
-            // 
-            this.cmConnections.Name = "cmConnections";
-            this.cmConnections.Size = new System.Drawing.Size(61, 4);
-            // 
-            // btnCopy
-            // 
-            this.btnCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnCopy.Image")));
-            this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(23, 22);
-            this.btnCopy.Text = "toolStripButton1";
-            this.btnCopy.ToolTipText = "Copy SQL";
-            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
-            // 
             // ddbSave
             // 
             this.ddbSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -317,9 +299,25 @@
             // testCaseToolStripMenuItem
             // 
             this.testCaseToolStripMenuItem.Name = "testCaseToolStripMenuItem";
-            this.testCaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testCaseToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.testCaseToolStripMenuItem.Text = "Save Test Case...";
             this.testCaseToolStripMenuItem.Click += new System.EventHandler(this.testCaseToolStripMenuItem_Click);
+            // 
+            // btnCopy
+            // 
+            this.btnCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnCopy.Image")));
+            this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(23, 22);
+            this.btnCopy.Text = "toolStripButton1";
+            this.btnCopy.ToolTipText = "Copy SQL";
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            // 
+            // cmConnections
+            // 
+            this.cmConnections.Name = "cmConnections";
+            this.cmConnections.Size = new System.Drawing.Size(61, 4);
             // 
             // SyncUI
             // 

@@ -92,6 +92,13 @@ namespace ModelSync.App.Controls
             set
             {
                 _binder = new ControlBinder<MergeDefinition>();
+                _binder.PropertyUpdated += async delegate (object sender, MergeDefinition document, string propertyName)
+                {
+                    if (propertyName.Equals(nameof(MergeDefinition.SourceType)))
+                    {
+                        await LoadSuggestionsAsync();
+                    }                    
+                };
                 _binder.AddItems(cbSourceType, m => m.SourceType, SourceTypes);
                 _binder.Add(tbSource, m => m.Source);
                 _binder.Add(tbDest, m => m.Destination);
@@ -220,13 +227,11 @@ namespace ModelSync.App.Controls
 
         public async Task LoadSuggestionsAsync()
         {
-            if (string.IsNullOrEmpty(SolutionPath)) return;
-
-            var sourceType = SourceTypeValues[cbSourceType.SelectedItem as string];
+            if (string.IsNullOrEmpty(SolutionPath)) return;            
 
             var connectionStrings = await GetSolutionConnectionStringsAsync(SolutionPath);
 
-            switch (sourceType)
+            switch (_binder.Document.SourceType)
             {
                 case SourceType.Assembly:
                     tbSource.Suggestions = await LoadAssemblySuggestionsAsync();
@@ -286,11 +291,6 @@ namespace ModelSync.App.Controls
             {
                 OperationComplete?.Invoke(this, new EventArgs());
             }
-        }
-
-        private async void cbSourceType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            await LoadSuggestionsAsync();
         }
 
         public async Task<IEnumerable<ListItem<string>>> LoadAssemblySuggestionsAsync()

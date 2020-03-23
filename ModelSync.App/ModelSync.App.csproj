@@ -167,7 +167,7 @@
       <Version>1.0.19</Version>
     </PackageReference>
     <PackageReference Include="WinForms.Library">
-      <Version>1.0.48</Version>
+      <Version>1.0.50</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
