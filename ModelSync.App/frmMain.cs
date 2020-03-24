@@ -169,14 +169,14 @@ namespace ModelSync.App
                     var mergeTab = tab as MergeDefinitionTab;
                     if (mergeTab != null && !mergeTab.SolutionFile.Equals(fileName)) removePages.Add(mergeTab);
                 }
-                foreach (var tab in removePages) tabMain.TabPages.Remove(tab);
+                foreach (var tab in removePages) tabMain.TabPages.Remove(tab);                
+
+                SolutionFile = fileName;
+                _solution = result;
 
                 tabMain.SelectedIndex = 0;
                 var firstMerge = tabMain.TabPages[0].Controls[0] as SyncUI;
                 await firstMerge.GenerateScriptAsync();
-
-                SolutionFile = fileName;
-                _solution = result;
             }
             finally
             {
