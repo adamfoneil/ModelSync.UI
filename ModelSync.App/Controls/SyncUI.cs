@@ -255,25 +255,30 @@ namespace ModelSync.App.Controls
         {
             try
             {
-                List<ScriptActionNode> nodes = new List<ScriptActionNode>();
-                var thisAction = e.Node as ScriptActionNode;
-                if (thisAction != null) nodes.Add(thisAction);
-
-                void addChildrenR(TreeNode parent)
-                {
-                    nodes.AddRange(parent.Nodes.OfType<ScriptActionNode>());
-                    foreach (TreeNode child in parent.Nodes) addChildrenR(child);
-                };
-
-                addChildrenR(e.Node);
-
-                tbScriptOutput.Clear();
-                tbScriptOutput.Text = SqlDialect.FormatScript(nodes.Select(node => node.ScriptAction));
+                UpdateSqlScript(e.Node);
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
             }
+        }
+
+        private void UpdateSqlScript(TreeNode node)
+        {
+            List<ScriptActionNode> nodes = new List<ScriptActionNode>();
+            var thisAction = node as ScriptActionNode;
+            if (thisAction != null) nodes.Add(thisAction);
+
+            void addChildrenR(TreeNode parent)
+            {
+                nodes.AddRange(parent.Nodes.OfType<ScriptActionNode>());
+                foreach (TreeNode child in parent.Nodes) addChildrenR(child);
+            };
+
+            addChildrenR(node);
+
+            tbScriptOutput.Clear();
+            tbScriptOutput.Text = SqlDialect.FormatScript(nodes.Select(nodeInner => nodeInner.ScriptAction));
         }
 
         private async void btnExecute_Click(object sender, EventArgs e)
@@ -550,6 +555,28 @@ namespace ModelSync.App.Controls
             using (var entryStream = entry.Open())
             {
                 entryStream.Write(bytes, 0, bytes.Length);
+            }
+        }
+
+        private void setDefaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var actionNode = _selectedNode as ScriptActionNode;
+            var currentValue = (actionNode?.ScriptAction?.Object as Column)?.DefaultValue;
+
+            var dlg = new frmPromptText()
+            {
+                Text = "Set Column Default",
+                NewText = currentValue
+            };
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {                
+                if (actionNode != null)
+                {
+                    var column = actionNode.ScriptAction.Object as Column;
+                    if (column != null) column.DefaultValue = dlg.NewText;
+                    UpdateSqlScript(actionNode);
+                }                
             }
         }
     }

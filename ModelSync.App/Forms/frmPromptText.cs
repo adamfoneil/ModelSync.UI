@@ -3,14 +3,14 @@ using System.Windows.Forms;
 
 namespace ModelSync.App.Forms
 {
-    public partial class frmRename : Form
+    public partial class frmPromptText : Form
     {
-        public frmRename()
+        public frmPromptText()
         {
             InitializeComponent();
-        }
+        }        
 
-        public string RenameText
+        public string NewText
         {
             get { return tbText.Text; }
             set { tbText.Text = value; }

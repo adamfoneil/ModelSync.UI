@@ -80,11 +80,11 @@
     <Compile Include="Forms\frmOpenSolution.Designer.cs">
       <DependentUpon>frmOpenSolution.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmRename.cs">
+    <Compile Include="Forms\frmPromptText.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmRename.Designer.cs">
-      <DependentUpon>frmRename.cs</DependentUpon>
+    <Compile Include="Forms\frmPromptText.Designer.cs">
+      <DependentUpon>frmPromptText.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmSaveTestCase.cs">
       <SubType>Form</SubType>
@@ -121,8 +121,8 @@
     <EmbeddedResource Include="Forms\frmOpenSolution.resx">
       <DependentUpon>frmOpenSolution.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmRename.resx">
-      <DependentUpon>frmRename.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\frmPromptText.resx">
+      <DependentUpon>frmPromptText.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmSaveTestCase.resx">
       <DependentUpon>frmSaveTestCase.cs</DependentUpon>

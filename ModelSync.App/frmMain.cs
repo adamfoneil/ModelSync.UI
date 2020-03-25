@@ -264,15 +264,16 @@ namespace ModelSync.App
         {
             var tab = GetSelectedTab(tabMain);
 
-            var dlg = new frmRename()
+            var dlg = new frmPromptText()
             {
-                RenameText = tab.Text
+                Text = "Rename Merge",
+                NewText = tab.Text
             };
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                tab.Text = dlg.RenameText;
-                (tab.Controls[0] as SyncUI).Document.Title = dlg.RenameText;
+                tab.Text = dlg.NewText;
+                (tab.Controls[0] as SyncUI).Document.Title = dlg.NewText;
             }
         }
 

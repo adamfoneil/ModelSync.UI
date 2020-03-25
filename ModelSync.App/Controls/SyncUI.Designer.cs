@@ -329,6 +329,7 @@
             this.setDefaultToolStripMenuItem.Name = "setDefaultToolStripMenuItem";
             this.setDefaultToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.setDefaultToolStripMenuItem.Text = "Set Default...";
+            this.setDefaultToolStripMenuItem.Click += new System.EventHandler(this.setDefaultToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 

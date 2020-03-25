@@ -1,6 +1,6 @@
 ﻿namespace ModelSync.App.Forms
 {
-    partial class frmRename
+    partial class frmPromptText
     {
         /// <summary>
         /// Required designer variable.
