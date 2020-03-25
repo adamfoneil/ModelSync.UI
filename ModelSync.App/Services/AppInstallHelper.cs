@@ -6,7 +6,7 @@ namespace ModelSync.App.Services
 {
     internal class AppInstallHelper : InstallHelper
     {
-        public AppInstallHelper() : base(Version.Parse(Application.ProductVersion), "aosoftware", "installer", "ModelSyncSetup.exe")
+        public AppInstallHelper() : base(Version.Parse(Application.ProductVersion), "aosoftware", "install", "ModelSyncSetup.exe")
         {
         }
 
