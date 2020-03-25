@@ -52,6 +52,8 @@
             this.testCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCopy = new System.Windows.Forms.ToolStripButton();
             this.cmConnections = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.setDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.panel1.SuspendLayout();
             this.cmAssemblies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -172,22 +174,24 @@
             // 
             this.cmDiff.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.includeToolStripMenuItem,
-            this.excludeToolStripMenuItem});
+            this.excludeToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.setDefaultToolStripMenuItem});
             this.cmDiff.Name = "cmDiff";
-            this.cmDiff.Size = new System.Drawing.Size(116, 48);
+            this.cmDiff.Size = new System.Drawing.Size(181, 98);
             this.cmDiff.Opening += new System.ComponentModel.CancelEventHandler(this.cmDiff_Opening);
             // 
             // includeToolStripMenuItem
             // 
             this.includeToolStripMenuItem.Name = "includeToolStripMenuItem";
-            this.includeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.includeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.includeToolStripMenuItem.Text = "Include";
             this.includeToolStripMenuItem.Click += new System.EventHandler(this.includeToolStripMenuItem_Click);
             // 
             // excludeToolStripMenuItem
             // 
             this.excludeToolStripMenuItem.Name = "excludeToolStripMenuItem";
-            this.excludeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.excludeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.excludeToolStripMenuItem.Text = "Exclude";
             this.excludeToolStripMenuItem.Click += new System.EventHandler(this.excludeToolStripMenuItem_Click);
             // 
@@ -238,6 +242,7 @@
             this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbScriptOutput.IsReplaceMode = false;
             this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbScriptOutput.LeftBracket = '(';
@@ -319,6 +324,17 @@
             this.cmConnections.Name = "cmConnections";
             this.cmConnections.Size = new System.Drawing.Size(61, 4);
             // 
+            // setDefaultToolStripMenuItem
+            // 
+            this.setDefaultToolStripMenuItem.Name = "setDefaultToolStripMenuItem";
+            this.setDefaultToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setDefaultToolStripMenuItem.Text = "Set Default...";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
             // SyncUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -369,5 +385,7 @@
         private System.Windows.Forms.ToolStripButton btnCopy;
         private System.Windows.Forms.ToolStripSplitButton ddbSave;
         private System.Windows.Forms.ToolStripMenuItem testCaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem setDefaultToolStripMenuItem;
     }
 }

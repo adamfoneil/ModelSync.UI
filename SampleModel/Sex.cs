@@ -19,6 +19,8 @@ namespace Hs5.Models
 		[Required]
 		[MaxLength(20)]
 		public string SterilizedIndicatorLong { get; set; }
+
+		public bool IsActive { get; set; }
 	}
 
 	/*

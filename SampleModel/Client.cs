@@ -19,15 +19,13 @@ namespace Hs5.Models
 		[MaxLength(100)]
 		[Required]
 		public string Name { get; set; }
-
-		/*
+		
 		[MaxLength(50)]
 		public string FirstName { get; set; }
 
 		[MaxLength(50)]
 		public string LastName { get; set; }
-		*/
-
+		
 		[MaxLength(50)]
 		public string Address1 { get; set; }
 

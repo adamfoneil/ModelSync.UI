@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -128,7 +129,12 @@ namespace ModelSync.App.Controls
             var scriptRoot = new TreeNode($"SQL Script ({include.Count()})") { ImageKey = "script", SelectedImageKey = "script" };
             tvObjects.Nodes.Add(scriptRoot);
 
-            LoadScriptActions(scriptRoot, include, (action) => new ScriptActionNode(action));
+            LoadScriptActions(scriptRoot, include, (action) =>
+            {
+                var result = new ScriptActionNode(action);
+                if (result.ActionRequired) result.NodeFont = new Font(tvObjects.Font, FontStyle.Bold);
+                return result;
+            });
 
             if (_binder.Document.ExcludeActions.Any())
             {
@@ -443,6 +449,7 @@ namespace ModelSync.App.Controls
         {
             includeToolStripMenuItem.Enabled = _allowInclude;
             excludeToolStripMenuItem.Enabled = _allowExclude;
+            setDefaultToolStripMenuItem.Enabled = ((_selectedNode as ScriptActionNode)?.ScriptAction?.Object as Column)?.DefaultValueRequired ?? false;
         }
 
         private void ExcludeChildObjects(TreeNode node)

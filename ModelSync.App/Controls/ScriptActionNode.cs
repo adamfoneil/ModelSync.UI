@@ -11,8 +11,10 @@ namespace ModelSync.App.Controls
             ScriptAction = scriptAction;
             ImageKey = ObjectTypeNode.ObjectTypeIcons[scriptAction.Object.ObjectType];
             SelectedImageKey = ImageKey;
+            ActionRequired = ((scriptAction.Object as Column)?.DefaultValueRequired ?? false);
         }
 
         public ScriptAction ScriptAction { get; }
+        public bool ActionRequired { get; set; }
     }
 }
