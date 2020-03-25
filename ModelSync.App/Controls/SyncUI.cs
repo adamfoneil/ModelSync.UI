@@ -576,6 +576,7 @@ namespace ModelSync.App.Controls
                     var column = actionNode.ScriptAction.Object as Column;
                     if (column != null) column.DefaultValue = dlg.NewText;
                     UpdateSqlScript(actionNode);
+                    actionNode.NodeFont = new Font(tvObjects.Font, FontStyle.Regular);
                 }                
             }
         }
