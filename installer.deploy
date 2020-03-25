@@ -6,7 +6,7 @@ ModelSync
 http://www.aosoftware.net/modelSync.html
 1.0.0.0
 TRUE
-43903
+43915
 
 Copyright © 2020 Adam O'Neil
 
@@ -119,6 +119,13 @@ TRUE
 TRUE
 FALSE
 FALSE
+C:\Users\Adam\Source\Repos\ModelSync.WinForms\ModelSync.App\bin\Release\AzDeploy.Client.dll
+3
+1
+TRUE
+TRUE
+FALSE
+FALSE
 C:\Users\Adam\Source\Repos\ModelSync.WinForms\ModelSync.App\bin\Release\CloudLicensing.Desktop.dll
 3
 1
@@ -141,6 +148,27 @@ TRUE
 FALSE
 FALSE
 C:\Users\Adam\Source\Repos\ModelSync.WinForms\ModelSync.App\bin\Release\JsonSettings.Library.dll
+3
+1
+TRUE
+TRUE
+FALSE
+FALSE
+C:\Users\Adam\Source\Repos\ModelSync.WinForms\ModelSync.App\bin\Release\Microsoft.Azure.KeyVault.Core.dll
+3
+1
+TRUE
+TRUE
+FALSE
+FALSE
+C:\Users\Adam\Source\Repos\ModelSync.WinForms\ModelSync.App\bin\Release\Microsoft.Azure.Storage.Blob.dll
+3
+1
+TRUE
+TRUE
+FALSE
+FALSE
+C:\Users\Adam\Source\Repos\ModelSync.WinForms\ModelSync.App\bin\Release\Microsoft.Azure.Storage.Common.dll
 3
 1
 TRUE
