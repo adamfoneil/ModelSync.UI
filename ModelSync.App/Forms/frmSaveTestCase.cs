@@ -18,5 +18,10 @@ namespace ModelSync.App.Forms
         {
             get { return tbIncorrectNotes.Text; }
         }
+
+        private void rbCorrect_CheckedChanged(object sender, System.EventArgs e)
+        {
+            tbIncorrectNotes.Enabled = !rbCorrect.Checked;
+        }
     }
 }

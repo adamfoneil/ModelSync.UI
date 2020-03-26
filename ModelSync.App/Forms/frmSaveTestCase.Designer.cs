@@ -68,6 +68,7 @@
             this.rbCorrect.TabStop = true;
             this.rbCorrect.Text = "Correct";
             this.rbCorrect.UseVisualStyleBackColor = true;
+            this.rbCorrect.CheckedChanged += new System.EventHandler(this.rbCorrect_CheckedChanged);
             // 
             // rbIncorrect
             // 
