@@ -146,7 +146,7 @@
             // 
             this.llOpenSolution.IsLink = true;
             this.llOpenSolution.Name = "llOpenSolution";
-            this.llOpenSolution.Size = new System.Drawing.Size(531, 17);
+            this.llOpenSolution.Size = new System.Drawing.Size(664, 17);
             this.llOpenSolution.Spring = true;
             this.llOpenSolution.Text = "Open Solution...";
             this.llOpenSolution.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -169,6 +169,7 @@
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
