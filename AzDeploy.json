@@ -5,7 +5,9 @@
     "key": "0u9R8a3vtu0nYQTLPAIAoQj79+9+gkbD8w24N6YpJfeYjpJL/F+ubk1ZLe+EHL1aWldK4b3u2e7tksIzSssgBg==",
     "container": "install"
   },
-  "installerCommand": "C:\\Program Files\\Just Great Software\\DeployMaster\\DeployMasterCmd.exe",
-  "installerArgs": "\"C:\\Users\\Adam\\Source\\Repos\\ModelSync.WinForms\\installer.deploy\" /ver %version% /b",
+  "installer" : {
+	  "command": "C:\\Program Files\\Just Great Software\\DeployMaster\\DeployMasterCmd.exe",
+	  "arguments": "\"C:\\Users\\Adam\\Source\\Repos\\ModelSync.WinForms\\installer.deploy\" /ver %version% /b"
+  },
   "installerExe": "C:\\Users\\Adam\\Source\\Repos\\ModelSync.WinForms\\ModelSyncSetup.exe"
 }
