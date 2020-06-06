@@ -1,13 +1,12 @@
-﻿using AO.DbSchema.Attributes;
+﻿using AO.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
 
 namespace Hs5.Models
 {
-	//[TrackChanges(IgnoreProperties = "DateModified,ModifiedBy")]
-	public class Appointment : BaseTable
+    //[TrackChanges(IgnoreProperties = "DateModified,ModifiedBy")]
+    public class Appointment : BaseTable
 	{
 		[References(typeof(Calendar))]
 		public int CalendarId { get; set; }

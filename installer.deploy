@@ -6,7 +6,7 @@ ModelSync
 http://www.aosoftware.net/modelSync.html
 1.0.0.0
 TRUE
-43936
+43988
 C:\Users\Adam\Source\Repos\ModelSync.WinForms\ModelSync.App\app.ico
 Copyright © 2020 Adam O'Neil
 
@@ -112,7 +112,7 @@ Description of this component to help the user to determine if it should be inst
 1
 FALSE
 +
-C:\Users\Adam\Source\Repos\ModelSync.WinForms\ModelSync.App\bin\Release\AO.DbSchema.Attributes.dll
+C:\Users\Adam\Source\Repos\ModelSync.WinForms\ModelSync.App\bin\Release\AO.Models.dll
 3
 1
 TRUE

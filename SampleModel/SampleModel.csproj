@@ -5,13 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AO.DbSchema.Attributes" Version="1.0.11" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.ComponentModel.DataAnnotations">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.ComponentModel.DataAnnotations.dll</HintPath>
-    </Reference>
+    <PackageReference Include="AO.Models" Version="1.1.3" />
   </ItemGroup>
 
 </Project>

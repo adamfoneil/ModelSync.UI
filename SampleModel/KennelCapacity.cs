@@ -1,4 +1,4 @@
-﻿using AO.DbSchema.Attributes;
+﻿using AO.Models;
 using System.Data;
 
 namespace Hs5.Models

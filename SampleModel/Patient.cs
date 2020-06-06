@@ -1,13 +1,12 @@
-﻿using AO.DbSchema.Attributes;
-using AO.DbSchema.Enums;
+﻿using AO.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hs5.Models
 {
-	//[TrackChanges(IgnoreProperties = "DateModified,ModifiedBy")]
-	public class Patient : BaseTable
+    //[TrackChanges(IgnoreProperties = "DateModified,ModifiedBy")]
+    public class Patient : BaseTable
 	{
 		[References(typeof(Clinic))]
 		[Key]
