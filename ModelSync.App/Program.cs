@@ -1,5 +1,7 @@
-﻿using ModelSync.App.Services;
+﻿using ModelSync.App.Helpers;
+using ModelSync.App.Services;
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace ModelSync.App
@@ -16,6 +18,16 @@ namespace ModelSync.App
             Application.SetCompatibleTextRenderingDefault(false);
 
             if (!StartLicensing()) return;
+
+            AppDomain.CurrentDomain.AssemblyResolve += delegate (object sender, ResolveEventArgs resolveArgs)
+            {
+                if (AssemblyHelper.FindNugetPackageFromAssemblyName(resolveArgs.Name, out string fileName))
+                {
+                    return Assembly.LoadFile(fileName);                    
+                }
+
+                return null;
+            };
 
             Application.Run(new frmMain() { StartupArgs = args });
         }

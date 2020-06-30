@@ -25,7 +25,7 @@ namespace ModelSync.App.Helpers
             }
         }
 
-        private static bool FindNugetPackageFromAssemblyName(string assemblyName, out string fileName)
+        public static bool FindNugetPackageFromAssemblyName(string assemblyName, out string fileName)
         {
             var name = new AssemblyName(assemblyName);
 
