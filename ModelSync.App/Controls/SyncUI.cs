@@ -129,6 +129,13 @@ namespace ModelSync.App.Controls
             var scriptRoot = new TreeNode($"SQL Script ({include.Count()})") { ImageKey = "script", SelectedImageKey = "script" };
             tvObjects.Nodes.Add(scriptRoot);
 
+            if (_sourceModel.Errors.Any())
+            {
+                var errorNode = new TreeNode($"Errors ({_sourceModel.Errors.Count})") { ImageKey = "warning", SelectedImageKey = "warning" };
+                foreach (var err in _sourceModel.Errors) errorNode.Nodes.Add(new TreeNode($"{err.Key.Name}: {err.Value}") { ImageKey = "warning", SelectedImageKey = "warning" });
+                tvObjects.Nodes.Add(errorNode);
+            }
+
             LoadScriptActions(scriptRoot, include, (action) =>
             {
                 var result = new ScriptActionNode(action);
@@ -218,7 +225,7 @@ namespace ModelSync.App.Controls
                 // help from https://docs.microsoft.com/en-us/dotnet/framework/deployment/best-practices-for-assembly-loading
                 OperationStarted?.Invoke("Analyzing assembly...", new EventArgs());
                 var assembly = Assembly.LoadFrom(text);
-                var result = new AssemblyModelBuilder().GetDataModel(assembly);
+                var result = new AssemblyModelBuilder().GetDataModel(assembly);                
                 return await Task.FromResult(result);
             }
             catch (Exception exc)
