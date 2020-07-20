@@ -35,6 +35,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblNewVersion = new System.Windows.Forms.Label();
+            this.webUrlLinkLabel2 = new WinForms.Library.Controls.WebUrlLinkLabel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -108,12 +109,24 @@
             this.lblNewVersion.TabIndex = 5;
             this.lblNewVersion.Text = "Version {version} available:";
             // 
+            // webUrlLinkLabel2
+            // 
+            this.webUrlLinkLabel2.AutoSize = true;
+            this.webUrlLinkLabel2.Location = new System.Drawing.Point(14, 101);
+            this.webUrlLinkLabel2.Name = "webUrlLinkLabel2";
+            this.webUrlLinkLabel2.Size = new System.Drawing.Size(143, 13);
+            this.webUrlLinkLabel2.TabIndex = 6;
+            this.webUrlLinkLabel2.TabStop = true;
+            this.webUrlLinkLabel2.Text = "ModelSync GitHub Repo";
+            this.webUrlLinkLabel2.Url = "https://github.com/adamfoneil/ModelSync";
+            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(478, 235);
+            this.Controls.Add(this.webUrlLinkLabel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.label2);
@@ -143,5 +156,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblNewVersion;
+        private WinForms.Library.Controls.WebUrlLinkLabel webUrlLinkLabel2;
     }
 }
