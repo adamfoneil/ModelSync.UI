@@ -20,7 +20,9 @@ namespace ModelSync.App.Models
         public static string GetFilename(string visualStudioSolution)
         {
             string baseFile = Path.GetFileNameWithoutExtension(visualStudioSolution);
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ModelSync", baseFile + ".json");
+            return Path.Combine(LocalSaveFolder, baseFile + ".json");
         }
+
+        public static string LocalSaveFolder => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ModelSync");
     }
 }

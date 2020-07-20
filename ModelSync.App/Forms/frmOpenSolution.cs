@@ -156,5 +156,10 @@ namespace ModelSync.App.Forms
             var solutions = await FindSolutionsAsync();
             cbSolution.Fill(solutions);
         }
+
+        private void llAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new frmAbout().ShowDialog();
+        }
     }
 }

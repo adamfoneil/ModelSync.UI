@@ -41,6 +41,7 @@
             this.btnRecent = new WinForms.Library.Controls.DropDownButton();
             this.cmRecent = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnReloadSolutions = new System.Windows.Forms.Button();
+            this.llAbout = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -148,6 +149,17 @@
             this.btnReloadSolutions.UseVisualStyleBackColor = true;
             this.btnReloadSolutions.Click += new System.EventHandler(this.btnReloadSolutions_Click);
             // 
+            // llAbout
+            // 
+            this.llAbout.AutoSize = true;
+            this.llAbout.Location = new System.Drawing.Point(12, 153);
+            this.llAbout.Name = "llAbout";
+            this.llAbout.Size = new System.Drawing.Size(52, 13);
+            this.llAbout.TabIndex = 12;
+            this.llAbout.TabStop = true;
+            this.llAbout.Text = "About...";
+            this.llAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llAbout_LinkClicked);
+            // 
             // frmOpenSolution
             // 
             this.AcceptButton = this.btnOK;
@@ -156,6 +168,7 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(483, 183);
             this.ControlBox = false;
+            this.Controls.Add(this.llAbout);
             this.Controls.Add(this.btnReloadSolutions);
             this.Controls.Add(this.btnRecent);
             this.Controls.Add(this.lblSolutionCount);
@@ -192,5 +205,6 @@
         private WinForms.Library.Controls.DropDownButton btnRecent;
         private System.Windows.Forms.ContextMenuStrip cmRecent;
         private System.Windows.Forms.Button btnReloadSolutions;
+        private System.Windows.Forms.LinkLabel llAbout;
     }
 }

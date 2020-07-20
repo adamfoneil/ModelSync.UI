@@ -36,6 +36,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblNewVersion = new System.Windows.Forms.Label();
             this.webUrlLinkLabel2 = new WinForms.Library.Controls.WebUrlLinkLabel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.llSaveFolder = new WinForms.Library.Controls.WebUrlLinkLabel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +55,7 @@
             // webUrlLinkLabel1
             // 
             this.webUrlLinkLabel1.AutoSize = true;
-            this.webUrlLinkLabel1.Location = new System.Drawing.Point(14, 44);
+            this.webUrlLinkLabel1.Location = new System.Drawing.Point(143, 19);
             this.webUrlLinkLabel1.Name = "webUrlLinkLabel1";
             this.webUrlLinkLabel1.Size = new System.Drawing.Size(95, 13);
             this.webUrlLinkLabel1.TabIndex = 1;
@@ -63,7 +66,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 70);
+            this.label2.Location = new System.Drawing.Point(14, 45);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 2;
@@ -72,7 +75,7 @@
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(74, 70);
+            this.lblVersion.Location = new System.Drawing.Point(74, 45);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(41, 13);
             this.lblVersion.TabIndex = 3;
@@ -112,13 +115,42 @@
             // webUrlLinkLabel2
             // 
             this.webUrlLinkLabel2.AutoSize = true;
-            this.webUrlLinkLabel2.Location = new System.Drawing.Point(14, 101);
+            this.webUrlLinkLabel2.Location = new System.Drawing.Point(25, 99);
             this.webUrlLinkLabel2.Name = "webUrlLinkLabel2";
-            this.webUrlLinkLabel2.Size = new System.Drawing.Size(143, 13);
+            this.webUrlLinkLabel2.Size = new System.Drawing.Size(247, 13);
             this.webUrlLinkLabel2.TabIndex = 6;
             this.webUrlLinkLabel2.TabStop = true;
-            this.webUrlLinkLabel2.Text = "ModelSync GitHub Repo";
+            this.webUrlLinkLabel2.Text = "https://github.com/adamfoneil/ModelSync";
             this.webUrlLinkLabel2.Url = "https://github.com/adamfoneil/ModelSync";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 80);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(258, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Diff capabilities provided by this C# library:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 131);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(109, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Local save folder:";
+            // 
+            // llSaveFolder
+            // 
+            this.llSaveFolder.AutoSize = true;
+            this.llSaveFolder.Location = new System.Drawing.Point(25, 150);
+            this.llSaveFolder.Name = "llSaveFolder";
+            this.llSaveFolder.Size = new System.Drawing.Size(106, 13);
+            this.llSaveFolder.TabIndex = 9;
+            this.llSaveFolder.TabStop = true;
+            this.llSaveFolder.Text = "webUrlLinkLabel3";
+            this.llSaveFolder.Url = null;
             // 
             // frmAbout
             // 
@@ -126,6 +158,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(478, 235);
+            this.Controls.Add(this.llSaveFolder);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.webUrlLinkLabel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblVersion);
@@ -157,5 +192,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblNewVersion;
         private WinForms.Library.Controls.WebUrlLinkLabel webUrlLinkLabel2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private WinForms.Library.Controls.WebUrlLinkLabel llSaveFolder;
     }
 }

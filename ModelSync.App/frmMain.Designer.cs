@@ -106,7 +106,7 @@
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(759, 356);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "new sync";
+            this.tabPage2.Text = "new merge";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // imageList1
