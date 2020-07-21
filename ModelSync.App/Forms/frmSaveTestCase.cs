@@ -49,7 +49,7 @@ namespace ModelSync.App.Forms
             {
                 var testCase = new TestCase()
                 {
-                    SqlCommands = diff.SelectMany(scr => scr.Commands).ToList(),
+                    SqlCommands = diff.SelectMany(scr => scr.CommandsWithoutComments()).ToList(),
                     IsCorrect = isCorrect,
                     Comments = comments
                 };
