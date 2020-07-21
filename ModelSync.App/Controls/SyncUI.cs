@@ -303,7 +303,10 @@ namespace ModelSync.App.Controls
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                if (MessageBox.Show(exc.Message + "\r\n\r\nClick OK to create test case.", "Script Error", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    frmSaveTestCase.PromptSaveZipFile(false, exc.Message, _sourceModel, _destModel, _diff);
+                }
             }
             finally
             {
@@ -525,43 +528,12 @@ namespace ModelSync.App.Controls
                 var dlg = new frmSaveTestCase();
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    var saveDlg = new SaveFileDialog();
-                    saveDlg.Filter = "Zip files|*.zip|All Files|*.*";
-                    saveDlg.DefaultExt = "zip";
-                    if (saveDlg.ShowDialog() == DialogResult.OK)
-                    {
-                        var testCase = new TestCase()
-                        {
-                            SqlCommands = _diff.SelectMany(scr => scr.Commands).ToList(),
-                            IsCorrect = dlg.IsCorrect,
-                            Comments = dlg.Comments
-                        };
-
-                        using (var file = File.Create(saveDlg.FileName))
-                        {
-                            using (var zip = new ZipArchive(file, ZipArchiveMode.Create))
-                            {
-                                AddEntry(zip, "SourceModel.json", _sourceModel.ToJson());
-                                AddEntry(zip, "DestModel.json", _destModel.ToJson());
-                                AddEntry(zip, "TestCase.json", JsonConvert.SerializeObject(testCase, Formatting.Indented));
-                            }
-                        }
-                    }
-                }
+                    dlg.PromptSaveZipFile(_sourceModel, _destModel, _diff);
+                }                
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
-            }
-        }
-
-        private void AddEntry(ZipArchive zip, string entryName, string content)
-        {
-            var bytes = Encoding.UTF8.GetBytes(content);
-            var entry = zip.CreateEntry(entryName);
-            using (var entryStream = entry.Open())
-            {
-                entryStream.Write(bytes, 0, bytes.Length);
             }
         }
 

@@ -121,7 +121,7 @@
             this.btnOK.Size = new System.Drawing.Size(107, 23);
             this.btnOK.TabIndex = 7;
             this.btnOK.Text = "Save as...";
-            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.UseVisualStyleBackColor = true;            
             // 
             // label4
             // 
