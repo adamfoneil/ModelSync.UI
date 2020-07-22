@@ -290,13 +290,26 @@ namespace ModelSync.App.Controls
 
         private async void btnExecute_Click(object sender, EventArgs e)
         {
+            await ExecuteInner(e, "Executing script...", true);
+        }
+
+        private async void btnTest_Click(object sender, EventArgs e)
+        {
+            await ExecuteInner(e, "Testing script...", false, "Script tested successfully; changes rolled back.");
+        }
+
+        private async Task ExecuteInner(EventArgs e, string statusBarMessage, bool commit, string successMessage = null)
+        {
             try
             {
-                OperationStarted?.Invoke("Executing script...", e);
+                OperationStarted?.Invoke(statusBarMessage, e);
 
                 using (var cn = GetConnection.Invoke(tbDest.Text))
                 {
-                    await SqlDialect.ExecuteAsync(cn, tbScriptOutput.Text);
+                    await SqlDialect.ExecuteAsync(cn, tbScriptOutput.Text, commit);
+
+                    if (!string.IsNullOrEmpty(successMessage)) MessageBox.Show(successMessage);
+
                     await GenerateScriptAsync();
                     ScriptExecuted?.Invoke(this, new EventArgs());
                 }

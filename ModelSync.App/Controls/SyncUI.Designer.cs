@@ -54,6 +54,7 @@
             this.testCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCopy = new System.Windows.Forms.ToolStripButton();
             this.cmConnections = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnTest = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             this.cmAssemblies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -255,6 +256,7 @@
             this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbScriptOutput.IsReplaceMode = false;
             this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbScriptOutput.LeftBracket = '(';
@@ -276,7 +278,8 @@
             this.btnGenerateScript,
             this.btnExecute,
             this.ddbSave,
-            this.btnCopy});
+            this.btnCopy,
+            this.btnTest});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(450, 25);
@@ -336,6 +339,18 @@
             this.cmConnections.Name = "cmConnections";
             this.cmConnections.Size = new System.Drawing.Size(61, 4);
             // 
+            // btnTest
+            // 
+            this.btnTest.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnTest.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnTest.Image = ((System.Drawing.Image)(resources.GetObject("btnTest.Image")));
+            this.btnTest.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(31, 22);
+            this.btnTest.Text = "Test";
+            this.btnTest.ToolTipText = "Execute SQL without committing changes";
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
             // SyncUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -388,5 +403,6 @@
         private System.Windows.Forms.ToolStripMenuItem testCaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem setDefaultToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton btnTest;
     }
 }
