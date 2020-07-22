@@ -269,6 +269,7 @@
             this.tbScriptOutput.TabIndex = 0;
             this.tbScriptOutput.WordWrap = true;
             this.tbScriptOutput.Zoom = 100;
+            this.tbScriptOutput.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.tbScriptOutput_TextChanged);
             // 
             // toolStrip1
             // 

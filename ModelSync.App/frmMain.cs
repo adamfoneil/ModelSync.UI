@@ -1,4 +1,5 @@
-﻿using JsonSettings;
+﻿using FastColoredTextBoxNS;
+using JsonSettings;
 using JsonSettings.Library;
 using ModelSync.App.Controls;
 using ModelSync.App.Forms;
@@ -154,6 +155,7 @@ namespace ModelSync.App
                     ui.OperationStarted += StartOperation;
                     ui.OperationComplete += CompleteOperation;
                     ui.ScriptExecuted += ScriptExecuted;
+                    ui.ScriptModified += delegate (object sender, EventArgs e) { tslStatus.Text = "SQL is manually edited"; };
                     ui.GetConnection = (text) => new SqlConnection(text);
                     await ui.LoadSuggestionsAsync();
 

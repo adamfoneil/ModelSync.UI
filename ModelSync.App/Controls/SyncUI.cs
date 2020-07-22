@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -30,6 +28,7 @@ namespace ModelSync.App.Controls
         private TreeNode _selectedNode;
         private bool _allowExclude;
         private bool _allowInclude;
+        private bool _manualEdits;
 
         private DataModel _sourceModel;
         private DataModel _destModel;
@@ -40,6 +39,7 @@ namespace ModelSync.App.Controls
         public event EventHandler OperationStarted;
         public event EventHandler OperationComplete;
         public event EventHandler ScriptExecuted;
+        public event EventHandler ScriptModified;
 
         public Func<string, IDbConnection> GetConnection { get; set; }
         public SqlDialect SqlDialect { get; set; }
@@ -191,6 +191,7 @@ namespace ModelSync.App.Controls
             try
             {
                 await GenerateScriptAsync();
+                _manualEdits = false;
             }
             catch (Exception exc)
             {
@@ -270,6 +271,18 @@ namespace ModelSync.App.Controls
             }
         }
 
+        /// <summary>
+        /// updates the script output without triggering manual edit event
+        /// </summary>
+        private void SetGeneratedSql(string sql)
+        {
+            _manualEdits = false;
+            tbScriptOutput.TextChanged -= tbScriptOutput_TextChanged;
+            tbScriptOutput.Clear();
+            tbScriptOutput.Text = sql;
+            tbScriptOutput.TextChanged += tbScriptOutput_TextChanged;
+        }
+
         private void UpdateSqlScript(TreeNode node)
         {
             List<ScriptActionNode> nodes = new List<ScriptActionNode>();
@@ -283,9 +296,8 @@ namespace ModelSync.App.Controls
             };
 
             addChildrenR(node);
-
-            tbScriptOutput.Clear();
-            tbScriptOutput.Text = SqlDialect.FormatScript(nodes.Select(nodeInner => nodeInner.ScriptAction));
+            
+            SetGeneratedSql(SqlDialect.FormatScript(nodes.Select(nodeInner => nodeInner.ScriptAction)));
         }
 
         private async void btnExecute_Click(object sender, EventArgs e)
@@ -308,10 +320,15 @@ namespace ModelSync.App.Controls
                 {
                     await SqlDialect.ExecuteAsync(cn, tbScriptOutput.Text, commit);
 
-                    if (!string.IsNullOrEmpty(successMessage)) MessageBox.Show(successMessage);
+                    if (commit)
+                    {
+                        ScriptExecuted?.Invoke(this, new EventArgs());
+                        if (_manualEdits) MessageBox.Show("Changes applied successfully.", "Script Executed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
 
-                    await GenerateScriptAsync();
-                    ScriptExecuted?.Invoke(this, new EventArgs());
+                    if (!string.IsNullOrEmpty(successMessage)) MessageBox.Show(successMessage, "SQL Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (!_manualEdits) await GenerateScriptAsync();
                 }
             }
             catch (Exception exc)
@@ -571,6 +588,12 @@ namespace ModelSync.App.Controls
                     actionNode.NodeFont = new Font(tvObjects.Font, FontStyle.Regular);
                 }                
             }
+        }
+
+        private void tbScriptOutput_TextChanged(object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
+        {
+            _manualEdits = true;
+            ScriptModified?.Invoke(sender, e);
         }
     }
 }
