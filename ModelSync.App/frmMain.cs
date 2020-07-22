@@ -153,8 +153,8 @@ namespace ModelSync.App
                         SqlDialect = new SqlServerDialect()
                     };
                     ui.OperationStarted += StartOperation;
-                    ui.OperationComplete += CompleteOperation;
-                    ui.ScriptExecuted += ScriptExecuted;
+                    ui.OperationComplete += CompleteOperation;                    
+                    ui.ScriptGenerated += ScriptGenerated;
                     ui.ScriptModified += delegate (object sender, EventArgs e) { tslStatus.Text = "SQL is manually edited"; };
                     ui.GetConnection = (text) => new SqlConnection(text);
                     await ui.LoadSuggestionsAsync();
@@ -187,7 +187,7 @@ namespace ModelSync.App
             }
         }
 
-        private void ScriptExecuted(object sender, EventArgs e)
+        private void ScriptGenerated(object sender, EventArgs e)
         {
             if (!((SyncUI)sender).ScriptActions.Any())
             {

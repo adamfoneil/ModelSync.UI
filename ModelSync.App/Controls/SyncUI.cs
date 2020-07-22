@@ -40,6 +40,7 @@ namespace ModelSync.App.Controls
         public event EventHandler OperationComplete;
         public event EventHandler ScriptExecuted;
         public event EventHandler ScriptModified;
+        public event EventHandler ScriptGenerated;
 
         public Func<string, IDbConnection> GetConnection { get; set; }
         public SqlDialect SqlDialect { get; set; }
@@ -50,16 +51,16 @@ namespace ModelSync.App.Controls
             {
                 List<ScriptActionNode> results = new List<ScriptActionNode>();
 
+                addChildren(tvObjects.Nodes[0]);
+
+                return results;
+
                 void addChildren(TreeNode parent)
                 {
                     var nodes = parent.Nodes.OfType<ScriptActionNode>();
                     results.AddRange(nodes);
                     foreach (TreeNode child in parent.Nodes) addChildren(child);
                 };
-
-                addChildren(tvObjects.Nodes[0]);
-
-                return results;
             }
         }
 
@@ -152,6 +153,8 @@ namespace ModelSync.App.Controls
 
             scriptRoot.ExpandAll();
             tvObjects.SelectedNode = tvObjects.Nodes[0];
+
+            ScriptGenerated?.Invoke(this, new EventArgs());
         }
 
         private static void LoadScriptActions<T>(TreeNode rootNode, IEnumerable<T> actions, Func<T, TreeNode> nodeCreator) where T : IActionable
@@ -328,7 +331,7 @@ namespace ModelSync.App.Controls
 
                     if (!string.IsNullOrEmpty(successMessage)) MessageBox.Show(successMessage, "SQL Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    if (!_manualEdits) await GenerateScriptAsync();
+                    if (!_manualEdits && commit) await GenerateScriptAsync();
                 }
             }
             catch (Exception exc)
