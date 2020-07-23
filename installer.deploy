@@ -6,7 +6,7 @@ ModelSync
 http://www.aosoftware.net/modelSync.html
 1.0.0.0
 TRUE
-43988
+44035
 C:\Users\Adamo\Source\Repos\ModelSync.WinForms\ModelSync.App\app.ico
 Copyright © 2020 Adam O'Neil
 
@@ -446,5 +446,5 @@ ModelSyncSetup.exe
 
 FALSE
 
-
+C:\Users\adamo\OneDrive\AoSoftware\aosoftware.pfx
 TRUE
