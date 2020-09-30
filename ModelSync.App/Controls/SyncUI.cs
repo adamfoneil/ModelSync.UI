@@ -1,9 +1,9 @@
-﻿using ModelSync.App.Forms;
+﻿using ModelSync.Abstract;
+using ModelSync.App.Forms;
 using ModelSync.App.Models;
-using ModelSync.Library.Abstract;
-using ModelSync.Library.Interfaces;
-using ModelSync.Library.Models;
-using ModelSync.Library.Services;
+using ModelSync.Interfaces;
+using ModelSync.Models;
+using ModelSync.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;

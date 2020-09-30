@@ -1,10 +1,9 @@
-﻿using FastColoredTextBoxNS;
-using JsonSettings;
+﻿using JsonSettings;
 using JsonSettings.Library;
 using ModelSync.App.Controls;
 using ModelSync.App.Forms;
 using ModelSync.App.Models;
-using ModelSync.Library.Services;
+using ModelSync.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

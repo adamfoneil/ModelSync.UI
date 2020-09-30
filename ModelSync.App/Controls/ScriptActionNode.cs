@@ -1,4 +1,4 @@
-﻿using ModelSync.Library.Models;
+﻿using ModelSync.Models;
 using System.Windows.Forms;
 
 namespace ModelSync.App.Controls

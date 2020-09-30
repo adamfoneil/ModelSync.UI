@@ -1,4 +1,4 @@
-﻿using ModelSync.Library.Abstract;
+﻿using ModelSync.Abstract;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
