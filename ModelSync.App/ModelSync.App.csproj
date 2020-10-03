@@ -165,7 +165,7 @@
       <Version>1.0.7</Version>
     </PackageReference>
     <PackageReference Include="AO.Models">
-      <Version>1.1.15</Version>
+      <Version>1.1.16</Version>
     </PackageReference>
     <PackageReference Include="FCTB">
       <Version>2.16.24</Version>
