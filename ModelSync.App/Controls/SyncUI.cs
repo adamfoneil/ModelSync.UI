@@ -430,26 +430,33 @@ namespace ModelSync.App.Controls
                 using (var reader = File.OpenText(fileName))
                 {
                     string json = reader.ReadToEnd();
-                    JObject @object = JsonConvert.DeserializeObject(json) as JObject;
-                    if (@object != null)
+                    try
                     {
-                        foreach (var kp in @object)
+                        JObject @object = JsonConvert.DeserializeObject(json) as JObject;
+                        if (@object != null)
                         {
-                            if (kp.Key.Equals("ConnectionStrings"))
+                            foreach (var kp in @object)
                             {
-                                foreach (JProperty item in kp.Value)
+                                if (kp.Key.Equals("ConnectionStrings"))
+                                {
+                                    foreach (JProperty item in kp.Value)
+                                    {
+                                        result++;
+                                        results.Add(new ListItem<string>(item.Value.ToString(), item.Name));
+                                    }
+                                }
+
+                                if (kp.Key.StartsWith("ConnectionStrings:"))
                                 {
                                     result++;
-                                    results.Add(new ListItem<string>(item.Value.ToString(), item.Name));
+                                    results.Add(new ListItem<string>(kp.Value.ToString(), kp.Key));
                                 }
                             }
-
-                            if (kp.Key.StartsWith("ConnectionStrings:"))
-                            {
-                                result++;
-                                results.Add(new ListItem<string>(kp.Value.ToString(), kp.Key));
-                            }
                         }
+                    }
+                    catch 
+                    {
+                        // some kind of json error, have to ignore
                     }
                 }
                 return result;
