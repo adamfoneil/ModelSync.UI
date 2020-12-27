@@ -130,7 +130,7 @@ namespace ModelSync.App.Controls
             var scriptRoot = new TreeNode($"SQL Script ({include.Count()})") { ImageKey = "script", SelectedImageKey = "script" };
             tvObjects.Nodes.Add(scriptRoot);
 
-            if (_sourceModel.Errors.Any())
+            if (_sourceModel.Errors?.Any() ?? false)
             {
                 var errorNode = new TreeNode($"Errors ({_sourceModel.Errors.Count})") { ImageKey = "warning", SelectedImageKey = "warning" };
                 foreach (var err in _sourceModel.Errors) errorNode.Nodes.Add(new TreeNode($"{err.Key.Name}: {err.Value}") { ImageKey = "warning", SelectedImageKey = "warning" });
