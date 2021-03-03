@@ -57,11 +57,11 @@
             this.webUrlLinkLabel1.AutoSize = true;
             this.webUrlLinkLabel1.Location = new System.Drawing.Point(143, 19);
             this.webUrlLinkLabel1.Name = "webUrlLinkLabel1";
-            this.webUrlLinkLabel1.Size = new System.Drawing.Size(95, 13);
+            this.webUrlLinkLabel1.Size = new System.Drawing.Size(147, 13);
             this.webUrlLinkLabel1.TabIndex = 1;
             this.webUrlLinkLabel1.TabStop = true;
-            this.webUrlLinkLabel1.Text = "by Adam O\'Neil";
-            this.webUrlLinkLabel1.Url = "http://www.aosoftware.net";
+            this.webUrlLinkLabel1.Text = "by Adam O\'Neil (GitHub)";
+            this.webUrlLinkLabel1.Url = "https://github.com/adamfoneil";
             // 
             // label2
             // 
