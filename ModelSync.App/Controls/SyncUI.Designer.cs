@@ -42,6 +42,7 @@
             this.cmDiff = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.includeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.excludeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.excludeSharedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.setDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -176,35 +177,43 @@
             this.cmDiff.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.includeToolStripMenuItem,
             this.excludeToolStripMenuItem,
+            this.excludeSharedToolStripMenuItem,
             this.toolStripSeparator1,
             this.setDefaultToolStripMenuItem});
             this.cmDiff.Name = "cmDiff";
-            this.cmDiff.Size = new System.Drawing.Size(141, 76);
+            this.cmDiff.Size = new System.Drawing.Size(155, 98);
             this.cmDiff.Opening += new System.ComponentModel.CancelEventHandler(this.cmDiff_Opening);
             // 
             // includeToolStripMenuItem
             // 
             this.includeToolStripMenuItem.Name = "includeToolStripMenuItem";
-            this.includeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.includeToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.includeToolStripMenuItem.Text = "Include";
             this.includeToolStripMenuItem.Click += new System.EventHandler(this.includeToolStripMenuItem_Click);
             // 
             // excludeToolStripMenuItem
             // 
             this.excludeToolStripMenuItem.Name = "excludeToolStripMenuItem";
-            this.excludeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.excludeToolStripMenuItem.Text = "Exclude";
+            this.excludeToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.excludeToolStripMenuItem.Text = "Exclude Local";
             this.excludeToolStripMenuItem.Click += new System.EventHandler(this.excludeToolStripMenuItem_Click);
+            // 
+            // excludeSharedToolStripMenuItem
+            // 
+            this.excludeSharedToolStripMenuItem.Name = "excludeSharedToolStripMenuItem";
+            this.excludeSharedToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.excludeSharedToolStripMenuItem.Text = "Exclude Shared";
+            this.excludeSharedToolStripMenuItem.Click += new System.EventHandler(this.excludeSharedToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(137, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(151, 6);
             // 
             // setDefaultToolStripMenuItem
             // 
             this.setDefaultToolStripMenuItem.Name = "setDefaultToolStripMenuItem";
-            this.setDefaultToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.setDefaultToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.setDefaultToolStripMenuItem.Text = "Set Default...";
             this.setDefaultToolStripMenuItem.Click += new System.EventHandler(this.setDefaultToolStripMenuItem_Click);
             // 
@@ -224,6 +233,7 @@
             this.imageList1.Images.SetKeyName(9, "key");
             this.imageList1.Images.SetKeyName(10, "exclude");
             this.imageList1.Images.SetKeyName(11, "warning");
+            this.imageList1.Images.SetKeyName(12, "repo");
             // 
             // toolStrip2
             // 
@@ -403,5 +413,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem setDefaultToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton btnTest;
+        private System.Windows.Forms.ToolStripMenuItem excludeSharedToolStripMenuItem;
     }
 }

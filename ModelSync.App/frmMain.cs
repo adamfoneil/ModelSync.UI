@@ -3,6 +3,7 @@ using JsonSettings.Library;
 using ModelSync.App.Controls;
 using ModelSync.App.Forms;
 using ModelSync.App.Models;
+using ModelSync.Models;
 using ModelSync.Services;
 using Newtonsoft.Json;
 using System;
@@ -20,7 +21,7 @@ namespace ModelSync.App
     {
         private Settings _settings;
         private Solution _solution;
-        private SharedExcludeActions _sharedExclude;
+        private SharedExcludeActions _sharedExclusions;
         private string _sharedExcludeFilename;
         private string _solutionFile;
         private MouseEventArgs _tabRightClick;
@@ -158,6 +159,19 @@ namespace ModelSync.App
                     ui.ScriptGenerated += ScriptGenerated;
                     ui.ScriptModified += delegate (object sender, EventArgs e) { tslStatus.Text = "SQL is manually edited"; };
                     ui.GetConnection = (text) => new SqlConnection(text);
+                    ui.GetSharedExclusions += (name) => (_sharedExclusions.Actions?.ContainsKey(name) ?? false) ? _sharedExclusions.Actions[name] : Enumerable.Empty<ExcludeAction>();
+                    ui.AddSharedExclusion += (name, action) =>
+                    {
+                        if (_sharedExclusions.Actions == null) _sharedExclusions.Actions = new Dictionary<string, HashSet<ExcludeAction>>();
+                        if (!_sharedExclusions.Actions.ContainsKey(name)) _sharedExclusions.Actions.Add(name, new HashSet<ExcludeAction>());
+                        _sharedExclusions.Actions[name].Add(action);
+                    };
+                    ui.RemoveSharedExclusion += (name, action) =>
+                    {
+                        if (_sharedExclusions.Actions == null) _sharedExclusions.Actions = new Dictionary<string, HashSet<ExcludeAction>>();
+                        if (!_sharedExclusions.Actions.ContainsKey(name)) _sharedExclusions.Actions.Add(name, new HashSet<ExcludeAction>());
+                        _sharedExclusions.Actions[name].Remove(action);
+                    };
                     await ui.LoadSuggestionsAsync();
 
                     tab.Controls.Add(ui);
@@ -176,7 +190,7 @@ namespace ModelSync.App
 
                 SolutionFile = fileName;
                 _solution = result;
-                _sharedExclude = LoadSharedExcludeActions(visualStudioSolution);
+                _sharedExclusions = LoadSharedExcludeActions(visualStudioSolution);
 
                 tabMain.SelectedIndex = 0;
                 var firstMerge = tabMain.TabPages[0].Controls[0] as SyncUI;
@@ -252,7 +266,7 @@ namespace ModelSync.App
                     settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
                 });
 
-                JsonFile.Save(_sharedExcludeFilename, _sharedExclude);
+                JsonFile.Save(_sharedExcludeFilename, _sharedExclusions);
             }
         }
 

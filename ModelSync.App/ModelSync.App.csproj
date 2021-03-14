@@ -58,6 +58,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\ObjectTypeNode.cs" />
+    <Compile Include="Controls\RepoNode.cs" />
     <Compile Include="Controls\ScriptActionNode.cs" />
     <Compile Include="Controls\SyncUI.cs">
       <SubType>UserControl</SubType>
@@ -102,6 +103,7 @@
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AssemblyHelper.cs" />
+    <Compile Include="Helpers\TreeViewHelpers.cs" />
     <Compile Include="Models\MergeDefinition.cs" />
     <Compile Include="Models\SharedExcludeActions.cs" />
     <Compile Include="Models\Solution.cs" />

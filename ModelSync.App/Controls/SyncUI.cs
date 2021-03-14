@@ -23,6 +23,10 @@ using WinForms.Library.Models;
 
 namespace ModelSync.App.Controls
 {
+    public delegate IEnumerable<ExcludeAction> GetExcludeActionsHandler(string mergeName);
+    public delegate void AddSharedExcludeActionHandler(string mergeName, ExcludeAction action);
+    public delegate void RemoveSharedExcludeActionHandler(string mergeName, ExcludeAction action);
+
     public partial class SyncUI : UserControl
     {
         private TreeNode _selectedNode;
@@ -41,6 +45,9 @@ namespace ModelSync.App.Controls
         public event EventHandler ScriptExecuted;
         public event EventHandler ScriptModified;
         public event EventHandler ScriptGenerated;
+        public event GetExcludeActionsHandler GetSharedExclusions;
+        public event AddSharedExcludeActionHandler AddSharedExclusion;
+        public event RemoveSharedExcludeActionHandler RemoveSharedExclusion;
 
         public Func<string, IDbConnection> GetConnection { get; set; }
         public SqlDialect SqlDialect { get; set; }
@@ -125,7 +132,9 @@ namespace ModelSync.App.Controls
 
             if (_binder.Document.ExcludeActions == null) _binder.Document.ExcludeActions = new List<ExcludeAction>();
 
-            var include = _diff.Where(scr => !_binder.Document.ExcludeActions.Contains(scr.GetExcludeAction()));
+            var sharedExclusions = GetSharedExclusions?.Invoke(_binder.Document.Title) ?? Enumerable.Empty<ExcludeAction>();
+
+            var include = _diff.Where(scr => !_binder.Document.ExcludeActions.Contains(scr.GetExcludeAction()) && !sharedExclusions.Contains(scr.GetExcludeAction()));
 
             var scriptRoot = new TreeNode($"SQL Script ({include.Count()})") { ImageKey = "script", SelectedImageKey = "script" };
             tvObjects.Nodes.Add(scriptRoot);
@@ -144,11 +153,20 @@ namespace ModelSync.App.Controls
                 return result;
             });
 
+            int excludeCount = _binder.Document.ExcludeActions.Count + sharedExclusions.Count();
+            var excludeRoot = new TreeNode($"Exclude ({excludeCount})") { ImageKey = "exclude", SelectedImageKey = "exclude" };
+            tvObjects.Nodes.Add(excludeRoot);
+
             if (_binder.Document.ExcludeActions.Any())
-            {
-                var excludeRoot = new TreeNode($"Exclude ({_binder.Document.ExcludeActions.Count})") { ImageKey = "exclude", SelectedImageKey = "exclude" };
-                tvObjects.Nodes.Add(excludeRoot);
+            {                
                 LoadScriptActions(excludeRoot, _binder.Document.ExcludeActions, (action) => new ExcludeActionNode(action));
+            }            
+
+            if (sharedExclusions.Any())
+            {
+                var sharedExcludeNode = new RepoNode($"Shared ({sharedExclusions.Count()})");
+                excludeRoot.Nodes.Add(sharedExcludeNode);
+                LoadScriptActions(sharedExcludeNode, sharedExclusions, (action) => new ExcludeActionNode(action));
             }
 
             scriptRoot.ExpandAll();
@@ -504,28 +522,45 @@ namespace ModelSync.App.Controls
         {
             includeToolStripMenuItem.Enabled = _allowInclude;
             excludeToolStripMenuItem.Enabled = _allowExclude;
+            excludeSharedToolStripMenuItem.Enabled = _allowExclude;
             setDefaultToolStripMenuItem.Enabled = ((_selectedNode as ScriptActionNode)?.ScriptAction?.Object as Column)?.DefaultValueRequired ?? false;
         }
 
-        private void ExcludeChildObjects(TreeNode node)
+        private void ExcludeChildObjects(TreeNode node, bool shared)
         {
+            Dictionary<bool, Action<ExcludeAction>> storageActions = new Dictionary<bool, Action<ExcludeAction>>()
+            {
+                [true] = (action) => AddSharedExclusion?.Invoke(_binder.Document.Title, action),
+                [false] = (action) => _binder.Document.ExcludeActions.Add(action)
+            };
+
             if (node is ScriptActionNode)
             {
                 var action = (node as ScriptActionNode).ScriptAction.GetExcludeAction();
-                _binder.Document.ExcludeActions.Add(action);
+                storageActions[shared].Invoke(action);
             }
             else
             {
-                foreach (TreeNode child in node.Nodes) ExcludeChildObjects(child);
+                foreach (TreeNode child in node.Nodes) ExcludeChildObjects(child, shared);
             }
         }
 
         private void IncludeChildObjects(TreeNode node)
-        {
-            if (node is ExcludeActionNode)
+        {            
+            if (node is ExcludeActionNode excludeNode)
             {
                 var action = (node as ExcludeActionNode).ExcludeAction;
-                _binder.Document.ExcludeActions.Remove(action);
+
+                switch (excludeNode.Scope)
+                {
+                    case ExcludeActionScope.Local:
+                        _binder.Document.ExcludeActions.Remove(action);
+                        break;
+
+                    case ExcludeActionScope.Shared:
+                        RemoveSharedExclusion.Invoke(_binder.Document.Title, action);
+                        break;
+                }                               
             }
             else
             {
@@ -535,7 +570,7 @@ namespace ModelSync.App.Controls
 
         private async void excludeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ExcludeChildObjects(_selectedNode);
+            ExcludeChildObjects(_selectedNode, false);
             await GenerateScriptAsync();
         }
 
@@ -604,6 +639,12 @@ namespace ModelSync.App.Controls
         {
             _manualEdits = true;
             ScriptModified?.Invoke(sender, e);
+        }
+
+        private async void excludeSharedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExcludeChildObjects(_selectedNode, true);
+            await GenerateScriptAsync();
         }
     }
 }

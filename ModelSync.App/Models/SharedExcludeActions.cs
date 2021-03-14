@@ -8,6 +8,6 @@ namespace ModelSync.App.Models
     /// </summary>
     public class SharedExcludeActions
     {
-        public Dictionary<string, List<ExcludeAction>> Actions { get; set; }
+        public Dictionary<string, HashSet<ExcludeAction>> Actions { get; set; }
     }
 }
