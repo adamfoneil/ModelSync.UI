@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Helpers\AssemblyHelper.cs" />
     <Compile Include="Models\MergeDefinition.cs" />
+    <Compile Include="Models\SharedExcludeActions.cs" />
     <Compile Include="Models\Solution.cs" />
     <Compile Include="Models\SolutionOpenHistory.cs" />
     <Compile Include="Models\TestCase.cs" />

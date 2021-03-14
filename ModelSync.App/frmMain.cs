@@ -20,6 +20,8 @@ namespace ModelSync.App
     {
         private Settings _settings;
         private Solution _solution;
+        private SharedExcludeActions _sharedExclude;
+        private string _sharedExcludeFilename;
         private string _solutionFile;
         private MouseEventArgs _tabRightClick;
 
@@ -174,6 +176,7 @@ namespace ModelSync.App
 
                 SolutionFile = fileName;
                 _solution = result;
+                _sharedExclude = LoadSharedExcludeActions(visualStudioSolution);
 
                 tabMain.SelectedIndex = 0;
                 var firstMerge = tabMain.TabPages[0].Controls[0] as SyncUI;
@@ -185,6 +188,12 @@ namespace ModelSync.App
                 ResumeLayout();
             }
         }
+
+        private SharedExcludeActions LoadSharedExcludeActions(string fileName)
+        {
+            _sharedExcludeFilename = SharedExcludeFilename(fileName);
+            return JsonFile.Load(_sharedExcludeFilename, () => new SharedExcludeActions());
+        }            
 
         private void ScriptGenerated(object sender, EventArgs e)
         {
@@ -242,6 +251,8 @@ namespace ModelSync.App
                 {
                     settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
                 });
+
+                JsonFile.Save(_sharedExcludeFilename, _sharedExclude);
             }
         }
 
@@ -373,5 +384,7 @@ namespace ModelSync.App
             var frm = new frmAbout();
             frm.ShowDialog();
         }
+
+        public static string SharedExcludeFilename(string solutionFile) => Path.Combine(Path.GetDirectoryName(solutionFile), "ModelSync.exclude.json");        
     }
 }
