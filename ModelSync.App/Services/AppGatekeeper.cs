@@ -1,10 +1,5 @@
 ﻿using CloudLicensing.Desktop;
-using CloudLicensing.Server.Models;
 using ModelSync.App.Forms;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,23 +17,9 @@ namespace ModelSync.App.Services
 
         protected override string ValidKeyResponse => "valid";
 
-        public override string PurchaseUrl => "http://www.aosoftware.net/modelSync.html";
+        public override string PurchaseUrl => "https://aosoftware.net/modelsync/";
 
-        public override async Task<decimal> GetPriceAsync()
-        {
-            var response = await HttpClient.GetAsync("http://www.aosoftware.net/products.json");
-            
-            string json = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var products = JsonConvert.DeserializeObject<List<Product>>(json);
-                var productDictionary = products.ToDictionary(item => item.ItemNumber);
-                return productDictionary[ProductId].Price;
-            }
-
-            throw new Exception($"Couldn't get price: {json}");
-        }
+        public override async Task<decimal> GetPriceAsync() => await Task.FromResult(50m);        
 
         protected override bool ShowActivationDialog(LicenseInfo licenseInfo)
         {

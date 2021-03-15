@@ -340,3 +340,4 @@ ASALocalRun/
 healthchecksdb
 /ModelSyncSetup.exe
 /ModelSync.exclude.json
+/AzDeploy.json
