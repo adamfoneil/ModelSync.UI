@@ -2,6 +2,10 @@ This is a diff/merge app for C# model classes to SQL Server. You can also merge 
 
 [![download](https://img.shields.io/badge/Download-Installer-blue.svg)](https://aosoftware.blob.core.windows.net/install/ModelSyncSetup.exe)
 
+Icon looks like this:
+
+![img](https://adamosoftware.blob.core.windows.net/images/R6CAG0JHJQ.png)
+
 The app has a 30-day fully functional free trial. After that, a perpetual license is $50 USD.
 
 [![paypal](https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg)](https://paypal.me/adamosoftware?locale.x=en_US)
