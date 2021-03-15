@@ -9,5 +9,5 @@ The app has a 30-day fully functional free trial. After that, a perpetual licens
 You're welcome to clone and examine this repo of course. If you use Model Sync for real, I do ask you to please buy a license.
 
 ## About the Repo
-- The WinForms UI is the [App](https://github.com/adamfoneil/ModelSync.WinForms/tree/master/ModelSync.App) project, this repo.
+- The WinForms UI is the [App](https://github.com/adamfoneil/ModelSync.WinForms/tree/master/ModelSync.App) project, this repo. Note there is a [post build event](https://github.com/adamfoneil/ModelSync.WinForms/blob/master/ModelSync.App/ModelSync.App.csproj#L194) that won't work on your machine that you will need to remove.
 - You will also need to clone the [ModelSync library](https://github.com/adamfoneil/ModelSync) project because the App references the `ModelSync` library as a project within the solution. This allowed me to get the best debug experience.
