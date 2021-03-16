@@ -39,6 +39,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.llSaveFolder = new WinForms.Library.Controls.WebUrlLinkLabel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.webUrlLinkLabel3 = new WinForms.Library.Controls.WebUrlLinkLabel();
+            this.webUrlLinkLabel4 = new WinForms.Library.Controls.WebUrlLinkLabel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,7 +69,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 45);
+            this.label2.Location = new System.Drawing.Point(301, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 2;
@@ -75,7 +78,7 @@
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(74, 45);
+            this.lblVersion.Location = new System.Drawing.Point(361, 19);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(41, 13);
             this.lblVersion.TabIndex = 3;
@@ -115,7 +118,7 @@
             // webUrlLinkLabel2
             // 
             this.webUrlLinkLabel2.AutoSize = true;
-            this.webUrlLinkLabel2.Location = new System.Drawing.Point(25, 99);
+            this.webUrlLinkLabel2.Location = new System.Drawing.Point(25, 122);
             this.webUrlLinkLabel2.Name = "webUrlLinkLabel2";
             this.webUrlLinkLabel2.Size = new System.Drawing.Size(247, 13);
             this.webUrlLinkLabel2.TabIndex = 6;
@@ -126,7 +129,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 80);
+            this.label3.Location = new System.Drawing.Point(14, 103);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(258, 13);
             this.label3.TabIndex = 7;
@@ -135,7 +138,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 131);
+            this.label4.Location = new System.Drawing.Point(14, 151);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(109, 13);
             this.label4.TabIndex = 8;
@@ -144,7 +147,7 @@
             // llSaveFolder
             // 
             this.llSaveFolder.AutoSize = true;
-            this.llSaveFolder.Location = new System.Drawing.Point(25, 150);
+            this.llSaveFolder.Location = new System.Drawing.Point(25, 170);
             this.llSaveFolder.Name = "llSaveFolder";
             this.llSaveFolder.Size = new System.Drawing.Size(106, 13);
             this.llSaveFolder.TabIndex = 9;
@@ -152,12 +155,46 @@
             this.llSaveFolder.Text = "webUrlLinkLabel3";
             this.llSaveFolder.Url = null;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(14, 53);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(117, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "WinForm app links:";
+            // 
+            // webUrlLinkLabel3
+            // 
+            this.webUrlLinkLabel3.AutoSize = true;
+            this.webUrlLinkLabel3.Location = new System.Drawing.Point(25, 70);
+            this.webUrlLinkLabel3.Name = "webUrlLinkLabel3";
+            this.webUrlLinkLabel3.Size = new System.Drawing.Size(82, 13);
+            this.webUrlLinkLabel3.TabIndex = 11;
+            this.webUrlLinkLabel3.TabStop = true;
+            this.webUrlLinkLabel3.Text = "Product Page";
+            this.webUrlLinkLabel3.Url = "https://aosoftware.net/modelsync/";
+            // 
+            // webUrlLinkLabel4
+            // 
+            this.webUrlLinkLabel4.AutoSize = true;
+            this.webUrlLinkLabel4.Location = new System.Drawing.Point(113, 70);
+            this.webUrlLinkLabel4.Name = "webUrlLinkLabel4";
+            this.webUrlLinkLabel4.Size = new System.Drawing.Size(78, 13);
+            this.webUrlLinkLabel4.TabIndex = 12;
+            this.webUrlLinkLabel4.TabStop = true;
+            this.webUrlLinkLabel4.Text = "GitHub Repo";
+            this.webUrlLinkLabel4.Url = "https://github.com/adamfoneil/ModelSync.WinForms";
+            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(478, 235);
+            this.Controls.Add(this.webUrlLinkLabel4);
+            this.Controls.Add(this.webUrlLinkLabel3);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.llSaveFolder);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -195,5 +232,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private WinForms.Library.Controls.WebUrlLinkLabel llSaveFolder;
+        private System.Windows.Forms.Label label5;
+        private WinForms.Library.Controls.WebUrlLinkLabel webUrlLinkLabel3;
+        private WinForms.Library.Controls.WebUrlLinkLabel webUrlLinkLabel4;
     }
 }

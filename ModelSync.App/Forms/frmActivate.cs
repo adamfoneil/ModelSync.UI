@@ -1,4 +1,4 @@
-﻿using CloudLicensing.Desktop;
+﻿using AOLicensing.Desktop.Models;
 using ModelSync.App.Services;
 using System;
 using System.Diagnostics;
@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace ModelSync.App.Forms
 {
-	public partial class frmActivate : Form
+    public partial class frmActivate : Form
 	{	
 		public LicenseInfo LicenseInfo { get; set; }
 		public AppGatekeeper Gatekeeper { get; set; }
@@ -41,7 +41,7 @@ namespace ModelSync.App.Forms
 				progressBar1.Visible = true;
 
 				var result = await task;
-				if (result.IsSuccessful)
+				if (result.Success)
 				{
 					MessageBox.Show("Successfully registered. Thank you.");
 					DialogResult = DialogResult.OK;
