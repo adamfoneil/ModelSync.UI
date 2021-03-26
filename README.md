@@ -10,7 +10,7 @@ The app has a 30-day fully functional free trial. After that, a perpetual licens
 
 [![paypal](https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg)](https://paypal.me/adamosoftware?locale.x=en_US)
 
-You're welcome to clone and examine this repo of course. If you use Model Sync for real, I do ask you to please buy a license.
+You're welcome to clone and examine this repo of course. If you use Model Sync for real, I do ask you to please buy a license. You may not repackage and redistribute ModelSync outside your organization, however.
 
 If you buy a license, the PayPal notification will make me [create a key for you](https://github.com/adamfoneil/AOLicensing/blob/master/AOLicensing.KeyManager/Program.cs#L22), and you'll [receive](https://github.com/adamfoneil/AOLicensing/blob/master/AOLicensing.Functions/CreateKey.cs#L65) it by email.
 
