@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>ModelSync.App</RootNamespace>
+    <AssemblyName>ModelSync.App</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AO.AzDeploy.Client" Version="1.0.0" />
+    <PackageReference Include="AO.Licensing.Desktop" Version="1.1.1" />
+    <PackageReference Include="AO.Models" Version="1.1.29" />
+    <PackageReference Include="FCTB" Version="2.16.24" />
+  </ItemGroup>
+
+</Project>
