@@ -198,7 +198,7 @@ namespace ModelSync.App.Controls
                     var objTypeNode = new ObjectTypeNode(typeGrp.Key, typeGrp.Count());
                     actionNode.Nodes.Add(objTypeNode);
 
-                    foreach (var action in typeGrp.OrderBy(scr => scr.ObjectName))
+                    foreach (var action in typeGrp)
                     {
                         var objNode = nodeCreator.Invoke(action);
                         objTypeNode.Nodes.Add(objNode);

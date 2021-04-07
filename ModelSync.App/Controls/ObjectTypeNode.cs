@@ -8,7 +8,7 @@ namespace ModelSync.App.Controls
     {
         public ObjectTypeNode(ObjectType objectType, int count)
         {
-            Text = $"{objectType.ToString()} ({count})";
+            Text = $"{objectType} ({count})";
             ObjectType = objectType;
             ImageKey = ObjectTypeIcons[objectType];
             SelectedImageKey = ImageKey;
