@@ -15,7 +15,7 @@ You're welcome to clone and examine this repo of course. If you use Model Sync f
 If you buy a license, the PayPal notification will make me [create a key for you](https://github.com/adamfoneil/AOLicensing/blob/master/AOLicensing.KeyManager/Program.cs#L22), and you'll [receive](https://github.com/adamfoneil/AOLicensing/blob/master/AOLicensing.Functions/CreateKey.cs#L65) it by email.
 
 ## Limitations
-- ModelSync works only with .NET Standard assemblies that have no dependencies. The only allowed dependency is [AO.Models](https://www.nuget.org/packages/AO.Models)
+- ModelSync works only with .NET Standard 2.0 assemblies that have no dependencies. The only allowed dependency is [AO.Models](https://www.nuget.org/packages/AO.Models)
 - Works only with SQL Server
 - Requires some finesse in complex cases, meaning you have to run script blocks in a manual order or in multiple passes sometimes
 
