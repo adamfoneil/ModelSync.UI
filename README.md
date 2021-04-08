@@ -17,7 +17,7 @@ If you buy a license, the PayPal notification will make me [create a key for you
 ## Limitations
 - ModelSync works only with .NET Standard assemblies that have no dependencies, except for [AO.Models](https://www.nuget.org/packages/AO.Models)
 - Works only with SQL Server
-- Requires some finesse in complex cases, meaning you have to run script blocks in a manual order or in multiple passes
+- Requires some finesse in complex cases, meaning you have to run script blocks in a manual order or in multiple passes sometimes
 
 ## About the Repo
 - The WinForms UI is the [App](https://github.com/adamfoneil/ModelSync.WinForms/tree/master/ModelSync.App) project, this repo. Note there is a [post build event](https://github.com/adamfoneil/ModelSync.WinForms/blob/master/ModelSync.App/ModelSync.App.csproj#L194) using my [AzDeploy](https://github.com/adamfoneil/AzDeploy) project that won't work on your machine that you will need to remove.
