@@ -177,11 +177,11 @@ namespace ModelSync.App.Controls
 
         private static void LoadScriptActions<T>(TreeNode rootNode, IEnumerable<T> actions, Func<T, TreeNode> nodeCreator) where T : IActionable
         {
-            Dictionary<ActionType, string> actionTypeIcons = new Dictionary<ActionType, string>()
+            var actionTypeIcons = new Dictionary<ActionType, string>()
             {
-                { ActionType.Create, "create" },
-                { ActionType.Alter, "update" },
-                { ActionType.Drop, "delete" }
+                [ActionType.Create] = "create",
+                [ActionType.Alter] = "update",
+                [ActionType.Drop] = "delete"
             };
 
             foreach (var actionGrp in actions.GroupBy(scr => scr.Type).Select(grp => new { grp.Key, Icon = actionTypeIcons[grp.Key], Items = grp }))
