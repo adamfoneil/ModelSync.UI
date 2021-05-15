@@ -3,6 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>ModelSync.CLI</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>AO.ModelSync.ExportModel</PackageId>
+    <Authors>Adam O'Neil</Authors>
+    <Product>AO.ModelSync.ExportModel</Product>
+    <Copyright>Copyright (c) 2021 Adam O'Neil</Copyright>
+    <PackageProjectUrl>https://github.com/adamfoneil/ModelSync.WinForms</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/adamfoneil/ModelSync.WinForms</RepositoryUrl>
+    <Description>Enables you to build your data model in SQL Server using ModelSync
+https://aosoftware.net/modelsync/</Description>
   </PropertyGroup>
 
   <ItemGroup>
