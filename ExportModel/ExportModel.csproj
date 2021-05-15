@@ -10,7 +10,7 @@
     <Copyright>Copyright (c) 2021 Adam O'Neil</Copyright>
     <PackageProjectUrl>https://github.com/adamfoneil/ModelSync.WinForms</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/ModelSync.WinForms</RepositoryUrl>
-    <Description>Enables you to build your data model in SQL Server using ModelSync
+    <Description>Enables you to build your data model with ModelSync in advanced cases
 https://aosoftware.net/modelsync/</Description>
   </PropertyGroup>
 
