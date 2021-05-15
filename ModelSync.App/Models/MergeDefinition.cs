@@ -9,7 +9,8 @@ namespace ModelSync.App.Models
     public enum SourceType
     {
         Assembly,
-        Connection
+        Connection,
+        JsonFile
     }
 
     public class MergeDefinition

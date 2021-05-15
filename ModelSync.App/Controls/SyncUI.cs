@@ -78,17 +78,12 @@ namespace ModelSync.App.Controls
 
         public string SolutionPath { get; set; }
 
-        private static Dictionary<SourceType, string> SourceTypes
-        {
-            get
-            {
-                return new Dictionary<SourceType, string>()
-                {
-                    { SourceType.Assembly, "From Assembly" },
-                    { SourceType.Connection, "From Connection" }
-                };
-            }
-        }
+        private static Dictionary<SourceType, string> SourceTypes => new Dictionary<SourceType, string>()
+        { 
+            [SourceType.Assembly] = "From Assembly",
+            [SourceType.Connection] = "From Connection",
+            [SourceType.JsonFile] = "From Json File"
+        };
 
         private static Dictionary<string, SourceType> SourceTypeValues
         {
@@ -123,6 +118,7 @@ namespace ModelSync.App.Controls
             _sourceModel =
                 (_binder.Document.SourceType == SourceType.Assembly) ? await GetAssemblyModelAsync(tbSource.Text) :
                 (_binder.Document.SourceType == SourceType.Connection) ? await GetConnectionModelAsync(tbSource.Text) :
+                (_binder.Document.SourceType == SourceType.JsonFile) ? await GetModelFromFileAsync(tbSource.Text) :
                 throw new Exception($"Unknown source type {_binder.Document.Source}");
 
             _destModel = await GetConnectionModelAsync(tbDest.Text);
@@ -217,6 +213,25 @@ namespace ModelSync.App.Controls
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
+            }
+        }
+
+        private async Task<DataModel> GetModelFromFileAsync(string text)
+        {
+            try
+            {
+                OperationStarted?.Invoke("Reading model data...", new EventArgs());
+                
+                var model = DataModel.FromJsonFile(text);
+                return await Task.FromResult(model);
+            }
+            catch (Exception exc)
+            {
+                throw new Exception($"Error reading model data: {exc.Message}", exc);
+            }
+            finally
+            {
+                OperationComplete?.Invoke(this, new EventArgs());
             }
         }
 
@@ -497,6 +512,10 @@ namespace ModelSync.App.Controls
             {
                 case SourceType.Assembly:
                     tbSource.SelectFile("Assemblies|*.dll", e);
+                    break;
+
+                case SourceType.JsonFile:
+                    tbSource.SelectFile("Json Files|*.json", e);
                     break;
 
                 case SourceType.Connection:
