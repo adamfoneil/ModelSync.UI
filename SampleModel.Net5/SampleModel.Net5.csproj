@@ -1,0 +1,71 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SampleModel\Appointment.cs" Link="Appointment.cs" />
+    <Compile Include="..\SampleModel\AppointmentStatus.cs" Link="AppointmentStatus.cs" />
+    <Compile Include="..\SampleModel\AppointmentType.cs" Link="AppointmentType.cs" />
+    <Compile Include="..\SampleModel\AppTable.cs" Link="AppTable.cs" />
+    <Compile Include="..\SampleModel\BaseTable.cs" Link="BaseTable.cs" />
+    <Compile Include="..\SampleModel\Breed.cs" Link="Breed.cs" />
+    <Compile Include="..\SampleModel\Calendar.cs" Link="Calendar.cs" />
+    <Compile Include="..\SampleModel\Client.cs" Link="Client.cs" />
+    <Compile Include="..\SampleModel\Clinic.cs" Link="Clinic.cs" />
+    <Compile Include="..\SampleModel\CountCapacityDefault.cs" Link="CountCapacityDefault.cs" />
+    <Compile Include="..\SampleModel\CountCapacityOverride.cs" Link="CountCapacityOverride.cs" />
+    <Compile Include="..\SampleModel\DeclinedSurgeryReason.cs" Link="DeclinedSurgeryReason.cs" />
+    <Compile Include="..\SampleModel\FeeSchedule.cs" Link="FeeSchedule.cs" />
+    <Compile Include="..\SampleModel\Invoice.cs" Link="Invoice.cs" />
+    <Compile Include="..\SampleModel\Item.cs" Link="Item.cs" />
+    <Compile Include="..\SampleModel\ItemCategory.cs" Link="ItemCategory.cs" />
+    <Compile Include="..\SampleModel\ItemPrice.cs" Link="ItemPrice.cs" />
+    <Compile Include="..\SampleModel\ItemType.cs" Link="ItemType.cs" />
+    <Compile Include="..\SampleModel\KennelCapacity.cs" Link="KennelCapacity.cs" />
+    <Compile Include="..\SampleModel\KennelSize.cs" Link="KennelSize.cs" />
+    <Compile Include="..\SampleModel\Microchip.cs" Link="Microchip.cs" />
+    <Compile Include="..\SampleModel\MicrochipItem.cs" Link="MicrochipItem.cs" />
+    <Compile Include="..\SampleModel\MicrochipProvider.cs" Link="MicrochipProvider.cs" />
+    <Compile Include="..\SampleModel\MobileDestination.cs" Link="MobileDestination.cs" />
+    <Compile Include="..\SampleModel\MobileSchedule.cs" Link="MobileSchedule.cs" />
+    <Compile Include="..\SampleModel\MobileUnit.cs" Link="MobileUnit.cs" />
+    <Compile Include="..\SampleModel\Patient.cs" Link="Patient.cs" />
+    <Compile Include="..\SampleModel\PatientAppointment.cs" Link="PatientAppointment.cs" />
+    <Compile Include="..\SampleModel\PaymentMethod.cs" Link="PaymentMethod.cs" />
+    <Compile Include="..\SampleModel\PendingPatientItem.cs" Link="PendingPatientItem.cs" />
+    <Compile Include="..\SampleModel\Permission.cs" Link="Permission.cs" />
+    <Compile Include="..\SampleModel\PermissionEnum.cs" Link="PermissionEnum.cs" />
+    <Compile Include="..\SampleModel\PointCapacityDefault.cs" Link="PointCapacityDefault.cs" />
+    <Compile Include="..\SampleModel\PointCapacityOverride.cs" Link="PointCapacityOverride.cs" />
+    <Compile Include="..\SampleModel\PostedPatientItem.cs" Link="PostedPatientItem.cs" />
+    <Compile Include="..\SampleModel\RabiesTag.cs" Link="RabiesTag.cs" />
+    <Compile Include="..\SampleModel\RabiesVaccine.cs" Link="RabiesVaccine.cs" />
+    <Compile Include="..\SampleModel\RabiesVaccineItem.cs" Link="RabiesVaccineItem.cs" />
+    <Compile Include="..\SampleModel\Sex.cs" Link="Sex.cs" />
+    <Compile Include="..\SampleModel\SexEnum.cs" Link="SexEnum.cs" />
+    <Compile Include="..\SampleModel\SexSpeciesPointValue.cs" Link="SexSpeciesPointValue.cs" />
+    <Compile Include="..\SampleModel\Species.cs" Link="Species.cs" />
+    <Compile Include="..\SampleModel\SterilizationStatus.cs" Link="SterilizationStatus.cs" />
+    <Compile Include="..\SampleModel\SterilizationStatusEnum.cs" Link="SterilizationStatusEnum.cs" />
+    <Compile Include="..\SampleModel\TimeslotCapacityDefault.cs" Link="TimeslotCapacityDefault.cs" />
+    <Compile Include="..\SampleModel\TimeslotCapacityOverride.cs" Link="TimeslotCapacityOverride.cs" />
+    <Compile Include="..\SampleModel\TimeUnit.cs" Link="TimeUnit.cs" />
+    <Compile Include="..\SampleModel\Transaction.cs" Link="Transaction.cs" />
+    <Compile Include="..\SampleModel\TransactionType.cs" Link="TransactionType.cs" />
+    <Compile Include="..\SampleModel\UserProfile.cs" Link="UserProfile.cs" />
+    <Compile Include="..\SampleModel\Veterinarian.cs" Link="Veterinarian.cs" />
+    <Compile Include="..\SampleModel\VolumeClient.cs" Link="VolumeClient.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AO.Models" Version="1.1.32" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.1.0" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="&quot;C:\Users\adamo\Source\Repos\ModelSync.WinForms\ExportModel.Console\bin\Debug\net5.0\ExportModel.CLI.exe&quot; &quot;$(TargetPath)&quot;" />
+  </Target>
+
+</Project>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ExportModel.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\adamo\\Source\\Repos\\ModelSync.WinForms\\SampleModel.Net5\\bin\\Debug\\net5.0\\SampleModel.Net5.dll\""
+    }
+  }
+}
