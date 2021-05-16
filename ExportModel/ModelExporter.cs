@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ModelSync.CLI
 {
-    public static class ModelExporer
+    public static class ModelExporter
     {
         public static void Execute(string[] args)
         {

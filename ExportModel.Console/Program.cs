@@ -4,6 +4,6 @@ namespace ExportModel.Console
 {
     class Program
     {
-        static void Main(string[] args) => ModelExporer.Execute(args);       
+        static void Main(string[] args) => ModelExporter.Execute(args);       
     }
 }
