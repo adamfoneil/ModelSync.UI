@@ -234,6 +234,7 @@
             this.imageList1.Images.SetKeyName(10, "exclude");
             this.imageList1.Images.SetKeyName(11, "warning");
             this.imageList1.Images.SetKeyName(12, "repo");
+            this.imageList1.Images.SetKeyName(13, "check");
             // 
             // toolStrip2
             // 
@@ -266,6 +267,7 @@
             this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbScriptOutput.IsReplaceMode = false;
             this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbScriptOutput.LeftBracket = '(';

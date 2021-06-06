@@ -22,7 +22,8 @@ namespace ModelSync.App.Controls
             { ObjectType.Table, "table" },
             { ObjectType.Column, "column" },
             { ObjectType.Index, "key" },
-            { ObjectType.ForeignKey, "shortcut" }
+            { ObjectType.ForeignKey, "shortcut" },
+            { ObjectType.CheckConstraint, "check" }
         };
     }
 }
