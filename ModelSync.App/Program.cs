@@ -32,9 +32,6 @@ namespace ModelSync.App
             Application.Run(new frmMain() { StartupArgs = args });
         }
 
-        private static bool StartLicensing()
-        {
-            return new AppGatekeeper().StartLicensing();
-        }
+        private static bool StartLicensing() => new AppGatekeeper().StartLicensing();        
     }
 }
