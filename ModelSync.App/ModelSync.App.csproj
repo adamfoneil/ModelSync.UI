@@ -50,9 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\CloudLicensing\CloudLicensing.Server\Models\Product.cs">
-      <Link>Models\Product.cs</Link>
-    </Compile>
     <Compile Include="Controls\ExcludeActionNode.cs" />
     <Compile Include="Controls\MergeDefinitionTab.cs">
       <SubType>Component</SubType>
