@@ -12,10 +12,18 @@
     <RepositoryUrl>https://github.com/adamfoneil/ModelSync.WinForms</RepositoryUrl>
     <Description>Enables you to build your data model with ModelSync in advanced cases
 https://aosoftware.net/modelsync/</Description>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ModelSync\ModelSync.Library\ModelSync.Library.csproj" />
+    <None Include="license.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AO.ModelSync.Library" Version="2.2.15" />
   </ItemGroup>
 
 </Project>
