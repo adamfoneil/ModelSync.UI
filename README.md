@@ -20,5 +20,5 @@ If you buy a license, the PayPal notification will make me [create a key for you
 - Requires some finesse in complex cases, meaning you have to run script blocks in a manual order or in multiple passes sometimes
 
 ## About the Repo
-- The WinForms UI is the [App](https://github.com/adamfoneil/ModelSync.WinForms/tree/master/ModelSync.App) project, this repo. Note there is a [post build event](https://github.com/adamfoneil/ModelSync.WinForms/blob/master/ModelSync.App/ModelSync.App.csproj#L194) using my [AzDeploy](https://github.com/adamfoneil/AzDeploy) project that won't work on your machine that you will need to remove.
+- The WinForms UI is the [App](https://github.com/adamfoneil/ModelSync.WinForms/tree/master/ModelSync.App) project, this repo. Note there is a [post build event](https://github.com/adamfoneil/ModelSync.WinForms/blob/master/ModelSync.App/ModelSync.App.csproj#L191) using my [AzDeploy](https://github.com/adamfoneil/AzDeploy) project that won't work on your machine that you will need to remove.
 - You will also need to clone the [ModelSync library](https://github.com/adamfoneil/ModelSync) project because the App references the `ModelSync` library as a project within the solution. This allowed me to get the best debug experience.
