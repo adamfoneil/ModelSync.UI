@@ -23,7 +23,10 @@ namespace ModelSync.App.Controls
             { ObjectType.Column, "column" },
             { ObjectType.Index, "key" },
             { ObjectType.ForeignKey, "shortcut" },
-            { ObjectType.CheckConstraint, "check" }
+            { ObjectType.CheckConstraint, "check" },
+            { ObjectType.Procedure, "proc" },
+            { ObjectType.View, "view" },
+            { ObjectType.TableFunction, "table-func" }
         };
     }
 }
