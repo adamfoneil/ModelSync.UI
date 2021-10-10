@@ -26,7 +26,8 @@ namespace ModelSync.App.Controls
             { ObjectType.CheckConstraint, "check" },
             { ObjectType.Procedure, "proc" },
             { ObjectType.View, "view" },
-            { ObjectType.TableFunction, "table-func" }
+            { ObjectType.TableFunction, "table-func" },
+            { ObjectType.TableType, "table" }
         };
     }
 }
