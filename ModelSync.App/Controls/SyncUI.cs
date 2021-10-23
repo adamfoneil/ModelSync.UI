@@ -122,6 +122,16 @@ namespace ModelSync.App.Controls
                 throw new Exception($"Unknown source type {_binder.Document.Source}");
 
             _destModel = await GetConnectionModelAsync(tbDest.Text);
+
+            if (_binder.Document.SourceType == SourceType.Assembly)
+            {
+                // since we don't have constraint names in assembly model sources,
+                // we need to import them from the dest model so that we can
+                // properly detect column drop dependencies, see 
+                // https://github.com/adamfoneil/ModelSync.WinForms/issues/26
+                DataModel.CopyDatabaseSpecificObjects(_destModel, _sourceModel);
+            }
+
             _diff = DataModel.Compare(_sourceModel, _destModel).ToList();
 
             tvObjects.Nodes.Clear();
