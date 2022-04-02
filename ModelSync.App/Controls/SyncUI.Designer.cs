@@ -49,13 +49,13 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.tbScriptOutput = new FastColoredTextBoxNS.FastColoredTextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.btnGenerateScript = new System.Windows.Forms.ToolStripButton();
             this.btnExecute = new System.Windows.Forms.ToolStripButton();
             this.ddbSave = new System.Windows.Forms.ToolStripSplitButton();
             this.testCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCopy = new System.Windows.Forms.ToolStripButton();
             this.btnTest = new System.Windows.Forms.ToolStripButton();
             this.cmConnections = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnGenerateScript = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             this.cmAssemblies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -63,6 +63,7 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.cmDiff.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbScriptOutput)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -242,6 +243,8 @@
             // toolStrip2
             // 
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnGenerateScript});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(227, 25);
@@ -270,6 +273,7 @@
             this.tbScriptOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbScriptOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbScriptOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbScriptOutput.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbScriptOutput.IsReplaceMode = false;
             this.tbScriptOutput.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbScriptOutput.LeftBracket = '(';
@@ -289,7 +293,6 @@
             // 
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnGenerateScript,
             this.btnExecute,
             this.ddbSave,
             this.btnCopy,
@@ -299,15 +302,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(450, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // btnGenerateScript
-            // 
-            this.btnGenerateScript.Image = ((System.Drawing.Image)(resources.GetObject("btnGenerateScript.Image")));
-            this.btnGenerateScript.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnGenerateScript.Name = "btnGenerateScript";
-            this.btnGenerateScript.Size = new System.Drawing.Size(107, 22);
-            this.btnGenerateScript.Text = "Generate Script";
-            this.btnGenerateScript.Click += new System.EventHandler(this.btnGenerateScript_Click);
             // 
             // btnExecute
             // 
@@ -364,6 +358,15 @@
             this.cmConnections.Name = "cmConnections";
             this.cmConnections.Size = new System.Drawing.Size(61, 4);
             // 
+            // btnGenerateScript
+            // 
+            this.btnGenerateScript.Image = ((System.Drawing.Image)(resources.GetObject("btnGenerateScript.Image")));
+            this.btnGenerateScript.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnGenerateScript.Name = "btnGenerateScript";
+            this.btnGenerateScript.Size = new System.Drawing.Size(107, 22);
+            this.btnGenerateScript.Text = "Generate Script";
+            this.btnGenerateScript.Click += new System.EventHandler(this.btnGenerateScript_Click);
+            // 
             // SyncUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -383,6 +386,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.cmDiff.ResumeLayout(false);
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbScriptOutput)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -402,7 +407,6 @@
         private WinForms.Library.Controls.BuilderTextBox tbSource;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton btnGenerateScript;
         private System.Windows.Forms.ToolStripButton btnExecute;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ContextMenuStrip cmAssemblies;
@@ -418,5 +422,6 @@
         private System.Windows.Forms.ToolStripMenuItem setDefaultToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton btnTest;
         private System.Windows.Forms.ToolStripMenuItem excludeSharedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton btnGenerateScript;
     }
 }
