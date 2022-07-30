@@ -64,8 +64,4 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.1.0" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="&quot;C:\Users\adamo\Source\Repos\ModelSync.WinForms\ExportModel.Console\bin\Debug\net5.0\ExportModel.CLI.exe&quot; &quot;$(TargetPath)&quot;" />
-  </Target>
-
 </Project>
