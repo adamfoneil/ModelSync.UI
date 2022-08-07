@@ -1,0 +1,13 @@
+{
+  "versionSourceFile": "C:\\Users\\Adamo\\Source\\Repos\\ModelSync.WinForms\\ModelSync.App\\bin\\Release\\ModelSync.App.exe",
+  "storageAccount": {
+    "name": "aosoftware",
+    "key": "vj31uA+RiRPlpaA1EG94d56kS00xbVFoXrC7RMLXZd8J1kUwPZroaYXQFndNUIdJPznapCLHyGpwhm32euEvJg==",
+    "container": "install"
+  },
+  "installer": {
+    "command": "C:\\Program Files\\Just Great Software\\DeployMaster\\DeployMasterCmd.exe",
+    "arguments": "\"C:\\Users\\Adamo\\Source\\Repos\\ModelSync.WinForms\\installer.deploy\" /ver %version% /b"
+  },
+  "installerExe": "C:\\Users\\Adamo\\Source\\Repos\\ModelSync.WinForms\\ModelSyncSetup.exe"
+}

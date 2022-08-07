@@ -188,6 +188,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Users\Adamo\Source\Repos\AzDeploy\AzDeploy.Build\bin\Release\netcoreapp3.1\AzDeploy.Build.exe" "C:\Users\Adamo\Source\Repos\ModelSync.WinForms\AzDeploy.json"</PostBuildEvent>
+    <PostBuildEvent>"C:\Users\Adamo\Source\Repos\AzDeploy\AzDeploy.Build\bin\Release\netcoreapp3.1\AzDeploy.Build.exe" "C:\Users\Adamo\Source\Repos\ModelSync.UI\AzDeploy.json"</PostBuildEvent>
   </PropertyGroup>
 </Project>
