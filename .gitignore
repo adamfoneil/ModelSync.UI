@@ -342,3 +342,4 @@ healthchecksdb
 /ModelSync.exclude.json
 /AzDeploy.json
 /ModelSync.App/AzDeploy.json
+/ModelSync.WinForms/AzDeploy.json
