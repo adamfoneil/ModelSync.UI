@@ -69,7 +69,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 17);
+            this.label1.Location = new System.Drawing.Point(12, 73);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(105, 13);
             this.label1.TabIndex = 0;
@@ -80,7 +80,7 @@
             this.cbSolution.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbSolution.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbSolution.FormattingEnabled = true;
-            this.cbSolution.Location = new System.Drawing.Point(12, 33);
+            this.cbSolution.Location = new System.Drawing.Point(12, 89);
             this.cbSolution.Name = "cbSolution";
             this.cbSolution.Size = new System.Drawing.Size(423, 21);
             this.cbSolution.TabIndex = 1;
@@ -88,7 +88,7 @@
             // llSolutionFolder
             // 
             this.llSolutionFolder.AutoSize = true;
-            this.llSolutionFolder.Location = new System.Drawing.Point(12, 111);
+            this.llSolutionFolder.Location = new System.Drawing.Point(12, 31);
             this.llSolutionFolder.Name = "llSolutionFolder";
             this.llSolutionFolder.Size = new System.Drawing.Size(97, 13);
             this.llSolutionFolder.TabIndex = 3;
@@ -99,7 +99,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 90);
+            this.label2.Location = new System.Drawing.Point(12, 10);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(97, 13);
             this.label2.TabIndex = 2;
@@ -107,7 +107,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 63);
+            this.progressBar1.Location = new System.Drawing.Point(12, 119);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(331, 15);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
@@ -116,7 +116,7 @@
             // 
             // lblSolutionCount
             // 
-            this.lblSolutionCount.Location = new System.Drawing.Point(349, 63);
+            this.lblSolutionCount.Location = new System.Drawing.Point(349, 119);
             this.lblSolutionCount.Name = "lblSolutionCount";
             this.lblSolutionCount.Size = new System.Drawing.Size(122, 15);
             this.lblSolutionCount.TabIndex = 7;
@@ -142,7 +142,7 @@
             // btnReloadSolutions
             // 
             this.btnReloadSolutions.Image = ((System.Drawing.Image)(resources.GetObject("btnReloadSolutions.Image")));
-            this.btnReloadSolutions.Location = new System.Drawing.Point(441, 31);
+            this.btnReloadSolutions.Location = new System.Drawing.Point(441, 87);
             this.btnReloadSolutions.Name = "btnReloadSolutions";
             this.btnReloadSolutions.Size = new System.Drawing.Size(30, 23);
             this.btnReloadSolutions.TabIndex = 11;
@@ -179,7 +179,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
-            this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

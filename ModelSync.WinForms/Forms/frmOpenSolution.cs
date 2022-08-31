@@ -117,6 +117,10 @@ namespace ModelSync.App.Forms
                 SolutionFolder = dlg.SelectedPath;
                 var solutions = await FindSolutionsAsync();
                 cbSolution.Fill(solutions);
+                if (cbSolution.Items.Count == 1)
+                {
+                    cbSolution.SelectedItem = cbSolution.Items[0];
+                }
             }
         }
 
