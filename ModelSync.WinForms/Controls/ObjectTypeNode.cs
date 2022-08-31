@@ -24,10 +24,10 @@ namespace ModelSync.App.Controls
             { ObjectType.Index, "key" },
             { ObjectType.ForeignKey, "shortcut" },
             { ObjectType.CheckConstraint, "check" },
-            { ObjectType.Procedure, "proc" },
-            { ObjectType.View, "view" },
-            { ObjectType.TableFunction, "table-func" },
-            { ObjectType.TableType, "table" }
+            //{ ObjectType.Procedure, "proc" },
+            //{ ObjectType.View, "view" },
+            //{ ObjectType.TableFunction, "table-func" },
+            //{ ObjectType.TableType, "table" }
         };
     }
 }
