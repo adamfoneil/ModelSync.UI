@@ -262,7 +262,7 @@ namespace ModelSync.App.Controls
                 // help from https://docs.microsoft.com/en-us/dotnet/framework/deployment/best-practices-for-assembly-loading
                 OperationStarted?.Invoke("Analyzing assembly...", new EventArgs());
                 var assembly = Assembly.LoadFrom(text);
-                var result = new AssemblyModelBuilder().GetDataModel(assembly);                
+                var result = new AssemblyModelBuilder().GetDataModel(assembly,"dbo","ID");                
                 return await Task.FromResult(result);
             }
             catch (Exception exc)
