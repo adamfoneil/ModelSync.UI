@@ -1,3 +1,7 @@
+**Note** I'm not really updating this anymore, and I took down the product page. Please see my new iteration of this [Ensync](https://github.com/adamfoneil/Ensync).
+
+---
+
 This is a diff/merge app for C# model classes to SQL Server. You can also merge from database to database. Here's my main [product page](https://aosoftware.net/modelsync/).
 
 [![download](https://img.shields.io/badge/Download-Installer-blue.svg)](https://aosoftware.blob.core.windows.net/install/ModelSyncSetup.exe)
